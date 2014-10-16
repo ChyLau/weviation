@@ -1,0 +1,13 @@
+# Python
+*.pyc
+*.pyo
+
+# Latex
+*.pdf
+*.aux
+*.log
+*.toc
+*.bbl
+*.blg
+*.out
+*.synctex.gz
