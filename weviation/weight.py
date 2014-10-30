@@ -190,6 +190,35 @@ def w_pi(k_p, n_p, b, d_p, p_to):
 def w_tr(n_e, w_e):
     return 0.18*n_e*w_e
 
+"""
+TORENBEEK EQUIPMENT GROUP
+"""
+## 19) torenbeek APU
+# k_apu = 16 (lb), k_apu = 11.7 (kg)
+def w_apu(k_apu, w_ba):
+    return k_apu*w_ba**(3/5)
+
+## 20) torenbeek instruments and NAV/COM
+# propeller-powered utility airplanes -- k_navp = 40 (lb), k_navp = 18.1 (kg)
+def w_navp(k_navp, w_to):
+    return k_navp + 0.008*w_to
+
+# low-subsonic transports -- k_navt = 120 (lb), k_navtt = 20 (lb), k_navt = 54.4 (kg), k_navtt = 9.1 (kg)
+def w_navt(k_navt, k_navtt, n_e, w_to):
+    return k_navt + k_navtt*n_e + 0.006*w_to
+
+# high-subsonic jet transports -- k_ieg = 0.575 (lb), k_ieg = 0.347 (kg)
+def w_ieg(k_ieg, w_de, r_d):
+    return k_ieg*w_de**(5/9)*r_d**(1/4)
+
+## 21) torenbeek hydraulic, pneumatic, electrical
+# DC electrical weight -- k_eldc = 400 (lb), k_eldc = 181 (kg)
+def w_eldc(w_to, k_eldc):
+    0.02*w_to + k_eldc
+
+# AC electrical weight -- k_elac = (lb), k_elac = (kg)
+def w_elac():
+    k_elac*p_el*(1 - 0.033*math.sqrt(p_el))
 
 """
 RAYMER STRUCTURES GROUP
