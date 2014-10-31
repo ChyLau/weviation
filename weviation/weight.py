@@ -217,8 +217,8 @@ def w_eldc(w_to, k_eldc):
     0.02*w_to + k_eldc
 
 # AC electrical weight -- k_elac = (lb), k_elac = (kg)
-def w_elac():
-    k_elac*p_el*(1 - 0.033*math.sqrt(p_el))
+def w_elac(k_elac, p_el):
+    k_elac*p_el*(1 - 0.033*p_el**0.5)
 
 """
 RAYMER STRUCTURES GROUP
