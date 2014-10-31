@@ -497,48 +497,48 @@ class Raymer:
 RAYMER STRUCTURES GROUP
 """
 ## 1) raymer wing weight estimation w_w
-    def w_w(w_dg, n_z, s_w, a, t, c, _lambda, Lambda, s_csw):
+    def w_w(self, _dg, n_z, s_w, a, t, c, _lambda, Lambda, s_csw):
         return 0.0051*(w_dg*n_z)**0.557*s_w**0.649*a**0.5*(t/c)**-0.4*(1 + _lambda)**0.1*(math.cos(Lambda))**-1.0*s_csw**0.1
 
 ## 2) raymer tail weight estimation
 # horizontal tail
-    def w_htail(k_uht, f_w, b_h, w_dg, n_z, s_ht, l_t, k_y, Lambda_ht, a_h, s_e, s_ht):
+    def w_htail(self, k_uht, f_w, b_h, w_dg, n_z, s_ht, l_t, k_y, Lambda_ht, a_h, s_e, s_ht):
         return 0.0379*k_uht*(1 + f_w/b_h)**-0.25*w_dg**0.639*n_z**0.10*s_ht**0.75*l_t**-1.0*k_y**0.704*(math.cos(Lambda_ht))**-1.0*a_h**0.166*(1 + s_e/s_ht)**0.1
 
 # vertical tail
-    def w_vtail(h_t, h_v, w_dg, n_z, l_t, s_vt, k_z, Lambda_vt, a_v, t, c):
+    def w_vtail(self, h_t, h_v, w_dg, n_z, l_t, s_vt, k_z, Lambda_vt, a_v, t, c):
         return 0.0026*(1 + h_t/h_v)**0.225*w_dg**0.556*n_z**0.536*l_t**-0.5*s_vt**0.5*k_z**0.875*(math.cos(Lambda_vt))**-1*a_v**0.35*(t/c)**-0.5
 
 ## 3) raymer fuselage weight estimation
-    def w_f(k_door, k_lg, w_dg, n_z, l, s_f, k_ws, d):
+    def w_f(self, k_door, k_lg, w_dg, n_z, l, s_f, k_ws, d):
         return 0.3280*k_door*k_lg*(w_dg*n_z)**0.5*l**0.25*s_f**0.302*(1 + k_ws)**0.04*(l/d)**0.10
 
 ## 4) raymer landing gear weight estimation
 # main landing gear
-    def w_ucm(k_mp, w_l, n_l, l_m, n_mw, n_mss, v_stall):
+    def w_ucm(self, k_mp, w_l, n_l, l_m, n_mw, n_mss, v_stall):
         return 0.0106*k_mp*w_l**0.888*n_l**0.25*l_m**0.4*n_mw**0.321*n_mss**-0.5*v_stall**0.1
 
 # nose landing gear
-    def w_ucn(k_np, w_l, n_l, l_n, n_nw):
+    def w_ucn(self, k_np, w_l, n_l, l_n, n_nw):
         return 0.032*k_np*w_l**0.646*n_l**0.2*l_n**0.5*n_nw**0.45
 
 ## 5) raymer nacelle (engine) weight estimation
-    def w_n(k_ng, n_lt, n_w, n_z, w_ec, n_en, s_n):
+    def w_n(self, k_ng, n_lt, n_w, n_z, w_ec, n_en, s_n):
         return 0.6724*k_ng*n_lt**0.10*n_w**0.294*n_z**0.119*w_ec**0.611*n_en**0.984*s_n**0.224
 
 """
 RAYMER PROPULSION GROUP
 """
 ## 6) raymer engine controls weight estimation
-    def w_enc(n_en, l_ec):
+    def w_enc(self, n_en, l_ec):
         return 5.0*n_en + 0.80*l_ec
 
 ## 7) raymer started (pneumatic) weight estimation
-    def w_s(n_en, w_en):
+    def w_s(self, n_en, w_en):
         return 49.19*(n_en*w_en/1000)**0.541
 
 ## 8) raymer fuel system weight estimation
-    def w_fs(v_t, v_i, v_p, n_t):
+    def w_fs(self, v_t, v_i, v_p, n_t):
         return 2.405*v_t**0.606*(1 + v_i/v_t)**-1.0*(1 + v_p/v_t)*n_t**0.5
 
 
@@ -546,46 +546,46 @@ RAYMER PROPULSION GROUP
 RAYMER EQUIPMENT GROUP
 """
 ## 9) raymer flight controls weight estimation
-    def w_fc(n_f, n_m, s_cs, i_y):
+    def w_fc(self, n_f, n_m, s_cs, i_y):
         return 145.9*n_f**0.554*(1 + n_m/n_f)**-1.0*s_cs**0.20*(i_y*1e-6)**0.07
 
 ## 10) raymer APU installed weight estimation
-    def w_apui(w_apuu):
+    def w_apui(self, w_apuu):
         return 2.2*w_apuu
 
 ## 11) raymer instruments weight estimation
-    def w_instr(k_r, k_tp, n_c, n_en, l_f, b_w):
+    def w_instr(self, k_r, k_tp, n_c, n_en, l_f, b_w):
         return 4.509*k_r*k_tp*n_c**0.541*n_en*(l_f + b_w)**0.5
 
 ## 12) raymer hydraulics weight estimation
-    def w_hydr(n_f, l_f, b_w):
+    def w_hydr(self, n_f, l_f, b_w):
         return 0.2673*n_f*(l_f + b_w)**0.937
 
 ## 13) raymer electrical weight estimation
-    def w_el(r_kva, l_a, n_gen):
+    def w_el(self, r_kva, l_a, n_gen):
         return 7.291*r_kva**0.782*l_a**0.346*n_gen**0.10
 
 ## 14) raymer avionics weight estimation
-    def w_av(w_uav):
+    def w_av(self, w_uav):
         return 1.73*w_uav**0.983
 
 ## 15) raymer furnishings weight estimation
-    def w_furn(n_c, w_c, s_f):
+    def w_furn(self, n_c, w_c, s_f):
         return 0.0577*n_c**0.1*w_c**0.393*s_f**0.75
 
 ## 16) raymer air conditioning weight estimation
-    def w_ac(n_p, v_pr, w_uav):
+    def w_ac(self, n_p, v_pr, w_uav):
         return 62.36*n_p**0.25*(v_pr/1000)**0.604*w_uav**0.10
 
 ## 17) raymer anti-ice weight estimation
-    def w_ai(w_dg):
+    def w_ai(self, w_dg):
         return 0.002*w_dg
 
 ## 18) raymer handling gear weight estimation
-    def w_hand(w_dg):
+    def w_hand(self, w_dg):
         return 3.0e-4*w_dg
 
 ## 19) raymer military cargo handling system
 #s_cf (cargo floot area, ft^2)
-    def w_mil(s_cf):
+    def w_mil(self, s_cf):
         return 2.4*s_cf
