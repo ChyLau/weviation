@@ -1,5 +1,13 @@
 <?xml version="1.0"?>
 
 <parameters>
-
+    <torenbeek>
+        <w_g>1</w_g>
+        <b_ref>2</b_ref>
+        <Lambda>3</Lambda>
+        <b>4</b>
+        <n_ult>5</n_ult>
+        <s>6</s>
+        <t_r>7</t_r>
+    </torenbeek>
 </parameters>
