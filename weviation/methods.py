@@ -589,3 +589,235 @@ RAYMER EQUIPMENT GROUP
 #s_cf (cargo floot area, ft^2)
     def w_mil(self, s_cf):
         return 2.4*s_cf
+
+
+class Gd:
+"""
+GD STRUCTURES GROUP
+"""
+## 1) GD wing
+# m_h from 0.4 to 0.8, tcm from 0.08 to 0.15, a from 4 to 12
+    def w_w(self, s, a, m_h, w_to, n_ult, _lambda, tcm, _Lambda_12):
+        return (0.00428*s**0.48*a*m_h**0.43*(w_to*n_ult)**0.84*_lambda**0.14)/((100*tcm)**0.76*math.cos(_Lambda_12)**1.54)
+
+## 2) GD tail
+# horizontal tail
+    def w_h(self, w_to, n_ult, s_h, b_h, t_rh, c, l_h):
+        return 0.0034*((w_to*n_ult)**0.813*s_h**0.584*(b_h/t_rh)**0.033*(c/l_h)**0.28)**0.915
+
+# vertical tail
+    def w_v(self, z_h, b_v, w_to, n_ult, s_v, m_h, l_v, s_r, s_v, a_v, _lambda_v, _Lambda_14v):
+        return 0.19*((1 + z_h/b_v)**0.5*(w_to*n_ult)**0.363*s_v**1.089*m_h**0.601*l_v**-0.726*(1 + s_r/s_v)**0.217*a_v**0.337*(1 + _lambda_v)**0.363*math.cos(_Lambda_14v)**-0.484)**1.014
+
+## 3) GD fuselage
+    def w_f(self,q_d, w_to, l_f, h_f, inlets):
+        if inlets == 'in':
+            k_inl = 1.25
+        elif inlets == 'out':
+            k_inl = 1.0
+        else:
+            print "USAGE: 'inlets' is 'in' or 'out'."
+
+        return 2*10.43*k_inl**1.42*(q_d/100)**0.283*(w_to/1000)**0.95*(l_f/h_f)**0.71
+
+## 4) GD nacelle
+    def w_n(self, n_inl, a_in, l_n, p_2, dtype):
+        if dtype == 'turbojet':
+            k_n = 3.0
+        elif dtype == 'turbofan':
+            k_n = 7.435
+        else:
+            print "USAGE: 'dtype' is 'turbojet' or 'turbofan'."
+
+        return k_n*n_inl*(a_in**0.5*l_n*p_2)**0.731
+
+## 5) GD landing gear
+    def w_g(self, w_to):
+        return 62.61*(w_to/1000)**0.84
+
+"""
+GD PROPULSION GROUP
+"""
+
+## 7) GD engine: THIS ONE LOOK AT p. 85 roskam
+    def w_e(self, n_e, w_eng):
+        return n_e*w_eng
+
+## 8) GD air induction
+# p_2 from 15 to 50
+    def w_ai(self, n_inl, l_d, a_inl, p_2, cross, m_d):
+        if cross == 'flat':
+            k_d = 1.33
+        elif cross == 'curved':
+            k_d = 1.0
+        else:
+            print "USAGE: 'cross' is 'flat' or 'curved'."
+
+        if m_d == 'below':
+            k_m = 1.0
+        elif m_d == 'above':
+            k_m = 1.5
+        else:
+            print "USAGE: 'm_d' is 'below' or 'above'."
+
+        return 0.32*n_inl*l_d*a_inl**0.65*p_2**0.6 + 1.735*(l_d*n_inl*a_inl**0.5*p_2*k_d*k_m)**0.7331
+
+## 9) GD propeller
+    def w_prop(self, n_p, n_bl, d_p, p_to, n_e, prop):
+        if prop == 'above':
+            k_prop = 24.0
+        elif prop == 'below':
+            k_prop = 31.92
+        else:
+            print "USAGE: 'prop' is 'above' or 'below'."
+
+        return k_prop*n_p*n_bl**0.391*(d_p*(p_to/n_e)/1000)**0.782
+
+## 10) GD fuel system
+    def w_fs(self, w_f, k_fsp, w_supp, sealing):
+        if sealing == 'self':
+            k_fs = 41.6
+            e_fs = 0.818
+        elif sealing == 'nonself':
+            k_fs = 23.1
+            e_fs = 0.758
+        else:
+            print "USAGE: 'sealing' is 'self' or 'nonself'."
+
+        return k_fs*((w_f/k_fsp)/1000)**e_fs + w_supp
+
+## 11) GD propulsion system
+# engine controls: fuselage/wing-root mounted jet engines
+    def w_ec(self, l_f, n_e, afterburning):
+        if afterburning == 'no':
+            k_ec = 0.686
+        elif afterburning == 'yes':
+            k_ec = 1.080
+        else:
+            print "USAGE: 'afterburning' is 'no' or 'yes'."
+
+        return k_ec*(l_f*n_e)**0.792
+
+# engine controls: wing mounted jet engines
+    def w_ecw(self, l_f, b, n_e, mounted):
+        if mounted == 'jet':
+            k_ecw = 88.46
+            e_ecw = 0.294
+        elif mounted == 'turboprops':
+            k_ecw = 56.84
+            e_ecw = 0.514
+        elif mounted == 'piston':
+            k_ecw = 60.27
+            e_ecw = 0.724
+        else:
+            print "USAGE: 'mounted' is 'jet' or 'turboprops' or 'piston'."
+
+        return k_ecw*((l_f + b)*n_e/100)**e_ecw
+
+# engine starting systems:
+    def w_ess(self, w_e):
+        if system == 'jetcp': # one or two jet engines using cartridge or pneumatic ss
+            k_ess = 9.33
+            e_ess = 1.078
+        elif system == 'jetp': # four or more jet engines using pneumatic ss
+            k_ess = 49.19
+            e_ess = 0.541
+        elif system == 'jete': # jet engines using electric ss
+            k_ess = 38.93
+            e_ess = 0.918
+        elif system == 'turboprop':
+            k_ess = 12.05
+            e_ess = 1.458
+        elif system = 'piston':
+            k_ess = 50.38
+            e_ess = 0.459
+        else:
+            print "USAGE: 'system' is 'jetcp' or 'jetp' or 'jete' or 'turboprop' or 'piston'."
+
+        return k_ess*(w_e/1000)**e_ess
+
+# propeller controls:
+    def w_pc(self, n_bl, n_p, d_p, p_to, n_e):
+        if propeller == 'turboprop':
+            k_pc = 0.322
+            e_pc1 = 0.589
+            e_pc2 = 1.178
+        elif propeller == 'piston':
+            k_pc = 4.552
+            e_pc1 = 0.379
+            e_pc2 = 0.759
+        else:
+            print "USAGE: 'propeller' is 'turboprop' or 'piston'."
+
+        return k_pc*n_bl**e_pc1*((n_p*d_p*p_to/n_e)/1000)**e_pc2
+
+"""
+GD EQUIPMENT GROUP
+"""
+
+## 12) GD flight control system
+    def w_fc(self, w_to, q_d):
+        return 56.01*(w_to*q_d/100000)**0.576
+
+## 13) GD hydraulic / pneumatic system
+# k_hydr = 0.0060 - 0.0120
+    def w_hydr(self, k_hydr):
+        return k_hydr*w_to
+
+## 14) GD electrical system
+    def w_els(self, w_fs, w_iae):
+        return 1163*((w_fs + w_iae)/1000)**0.506
+
+## 15) GD instrumentation, avionics, electronics
+    def w_i(self, n_pil, w_to, n_e):
+        return n_pil*(15 + 0.032*(w_to/1000)) + n_e*(5 + 0.006*(w_to/1000)) + 0.15*(w_to/1000) + 0.012*w_to
+
+## 16) GD air-conditioning, pressurization, anti- and deicing systems
+    def w_api(self, v_pax, n_cr, n_pax):
+        return 469*(v_pax*(n_cr + n_pax)/10000)**0.419
+
+## 17) GD oxygen system
+    def w_ox(self, n_cr, n_pax):
+        return 7*(n_cr + n_pax)**0.702
+
+## 18) GD auxiliary power unit
+# k_apu = 0.004 to 0.013
+    def w_apu(self, k_apu):
+        return k_apu*w_to
+
+## 19) GD furnishing CHECK RANGE 'LONG' -> k_buf
+    def w_fur(self, n_fdc, n_pax, n_cc, p_c, w_to, drange):
+        if drange == 'business':
+            k_lav = 3.90
+            k_buf = 5.68
+        elif drange == 'short':
+            k_lav = 0.31
+            k_buf = 1.02
+        elif drange == 'long':
+            k_lav = 1.11
+            k_buf = 5.68
+        else:
+            print "USAGE: 'drange' is 'business' or 'long' or 'short'."
+
+        return 55*n_fdc + 32*n_pax + 15*n_cc + k_lav*n_pax**1.33 + k_buf*n_pax**1.12 + 109*(n_pax*(1 + p_c)/100)**0.505 + 0.771*(w_to/1000)
+
+## 20) GD baggage and cargo handling THIS IS FOR MILITARY PASSENGER TRANSPORT THOUGH!
+    def w_bc(self, ):
+        if preload == 'no':
+            k_bc = 0.0646
+        elif preload == 'yes':
+            k_bc = 0.316
+        else:
+            print "USAGE: 'preload' is 'no' or 'yes'."
+
+        return k_bc*n_pax**1.456
+
+## 21) GD auxiliary gear
+    def w_aux(self, w_e):
+        return 0.01*w_e
+
+## 22) GD paint
+# k_pt = 0.003 - 0.006
+    def w_pt(self, k_pt, w_to):
+        return k_pt*w_to
+
