@@ -26,12 +26,12 @@ class Torenbeek:
         else:
             print "USAGE: 'unit' is 'im' or 'si'."
 
-        return k_w*w_g*(b_ref/math.cos(Lambda))**0.75*(1 + (b_ref*math.cos(Lambda)/b)**0.5)*n_ult**0.55*(b*s/(w_g*t_r*math.cos(Lambda)))**0.3
+        return k_w*w_g*(b_ref/math.cos(Lambda*math.pi/180))**0.75*(1 + (b_ref*math.cos(Lambda*math.pi/180)/b)**0.5)*n_ult**0.55*(b*s/(w_g*t_r*math.cos(Lambda*math.pi/180)))**0.3
 
 ## 2) torenbeek tail (empennage) weight estimation w_tail
 # k_wt = 0.04, w_tail (lb), s_tail (ft^2)
 # k_wt = 0.64, w_tail (kg), s_tail (m^2)
-    def w_tail(self, n_ult, s_tail, unit):
+    def w_tail(self, n_ult, s_vtail, s_htail, unit):
         if unit == 'im':
             k_wt = 0.04
         elif unit == 'si':
@@ -39,7 +39,7 @@ class Torenbeek:
         else:
             print "USAGE: 'unit' is 'im' or 'si'."
 
-        return k_wt*(n_ult*s_tail**2)**0.75
+        return k_wt*(n_ult*(s_vtail + s_htail)**2)**0.75
 
 # k_h = 1.0 (fixed incidence stabilizers)
 # k_h = 1.1 (variable incidence stabilizers)

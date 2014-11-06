@@ -16,10 +16,18 @@ def parse_xml():
         for element in method.findall('*'):
             data[element.tag] = float(element.text)
 
+    for method in fp.findall('raymer'):
+        for element in method.findall('*'):
+            data[element.tag] = float(element.text)
+
+    for method in fp.findall('gd'):
+        for element in method.findall('*'):
+            data[element.tag] = float(element.text)
+
     return data
 
 def main():
-    parse_xml()
+    print parse_xml()
 
 
 if __name__ == "__main__":

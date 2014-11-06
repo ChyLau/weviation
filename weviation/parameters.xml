@@ -2,12 +2,28 @@
 
 <parameters>
     <torenbeek>
-        <w_g>1</w_g>
-        <b_ref>2</b_ref>
-        <Lambda>3</Lambda>
-        <b>4</b>
-        <n_ult>5</n_ult>
-        <s>6</s>
-        <t_r>7</t_r>
+        <!-- WING -->
+        <w_g>170500</w_g>
+        <b_ref>1.905</b_ref>
+        <Lambda>28</Lambda>
+        <b>16.26</b>
+        <n_ult>2.5</n_ult>
+        <s>260</s>
+        <t_r>1.4301</t_r>
+
+        <!-- TAIL -->
+        <s_vtail>45.20</s_vtail>
+        <s_htail>69.45</s_htail>
+
+
+
     </torenbeek>
+
+    <raymer>
+        <w_test>100</w_test>
+    </raymer>
+
+    <gd>
+        <w_test2>200</w_test2>
+    </gd>
 </parameters>
