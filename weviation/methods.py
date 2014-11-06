@@ -6,15 +6,15 @@ references:
 "Weight estimation techniques for composite airplanes in general aviation industry", T. Paramasivam, Walter J. Horn, and James Ritter
 """
 
+from __future__ import division
 import numpy as np
 import math
-from __future__ import division
 
 class Torenbeek:
 
-"""
-TORENBEEK STRUCTURES GROUP
-"""
+    """
+    TORENBEEK STRUCTURES GROUP
+    """
 ## 1) torenbeek wing weight estimation w_w
 # k_w = 0.00125, w_g = MTOW (lb), b (ft), s (ft^2), w_w (lb)
 # k_w = 0.00490, w_g = MTOW (kg), b (m), s (m^2), w_w (kg)
@@ -81,7 +81,7 @@ TORENBEEK STRUCTURES GROUP
             k_f = 1.08
         elif f_type == 'main':
             k_f = 1.07
-        elif f_type = 'cargo'
+        elif f_type == 'cargo':
             k_f = 1.10
         else:
             print "USAGE: 'f_type' is 'pressurized' or 'main' or 'cargo'."
@@ -173,18 +173,18 @@ TORENBEEK STRUCTURES GROUP
 
         if control == 'light':
             k_sc = 0.23
-        elif control == 'transport'
+        elif control == 'transport':
             k_sc = 0.44
-        elif control == 'transportplus'
+        elif control == 'transportplus':
             k_sc = 0.64
         else:
             print "USAGE: 'control' is 'light' or 'transport' or 'transportplus'."
 
         return k_multi*k_sc*w_to**(2/3)
 
-"""
-TORENBEEK PROPULSION GROUP: SIMPLE APPROX
-"""
+    """
+    TORENBEEK PROPULSION GROUP: SIMPLE APPROX
+    """
 ## 7) torenbeek propulsion group weight estimation
 # k_pg = 1.16 (single tractor propeller in fuselage)
 # k_pg = 1.35 (multi-engine propeller airplanes)
@@ -214,7 +214,7 @@ TORENBEEK PROPULSION GROUP: SIMPLE APPROX
     def w_pgj(self, n_e, w_e, reversers, engine):
         if engine == 'jet':
             k_pg = 1.15
-        elif engine = 'light':
+        elif engine == 'light':
             k_pg = 1.40
         else:
             print "USAGE: 'engine' is 'jet' or 'light'."
@@ -228,9 +228,9 @@ TORENBEEK PROPULSION GROUP: SIMPLE APPROX
 
         return k_pg*k_thr*n_e*w_e
 
-"""
-TORENBEEK PROPULSION GROUP: DETAILED
-"""
+    """
+    TORENBEEK PROPULSION GROUP: DETAILED
+    """
 ## 8) torenbeek engine installed
     def w_eni(self, n_e, w_e):
         return n_e*w_e
@@ -340,7 +340,7 @@ TORENBEEK PROPULSION GROUP: DETAILED
 # turbojet/turbofan/turboprop -- integral tanks
 # k_fs = 80 (lb), k_fs = 36.3 (kg)
 # k_fss = 15 (lb), k_fss = 4.366 (kg)
-    def w_fsi(self, n_e, n_ft, n_ft, v_ft, unit):
+    def w_fsi(self, n_e, n_ft, v_ft, unit):
         if unit == 'im':
             k_fs = 80
             k_fss = 15
@@ -417,9 +417,9 @@ TORENBEEK PROPULSION GROUP: DETAILED
     def w_tr(self, n_e, w_e):
         return 0.18*n_e*w_e
 
-"""
-TORENBEEK EQUIPMENT GROUP
-"""
+    """
+    TORENBEEK EQUIPMENT GROUP
+    """
 ## 19) torenbeek APU
 # k_apu = 16 (lb), k_apu = 11.7 (kg)
     def w_apu(self, w_ba, unit):
@@ -493,16 +493,16 @@ TORENBEEK EQUIPMENT GROUP
 
 
 class Raymer:
-"""
-RAYMER STRUCTURES GROUP
-"""
+    """
+    RAYMER STRUCTURES GROUP
+    """
 ## 1) raymer wing weight estimation w_w
     def w_w(self, _dg, n_z, s_w, a, t, c, _lambda, Lambda, s_csw):
         return 0.0051*(w_dg*n_z)**0.557*s_w**0.649*a**0.5*(t/c)**-0.4*(1 + _lambda)**0.1*(math.cos(Lambda))**-1.0*s_csw**0.1
 
 ## 2) raymer tail weight estimation
 # horizontal tail
-    def w_htail(self, k_uht, f_w, b_h, w_dg, n_z, s_ht, l_t, k_y, Lambda_ht, a_h, s_e, s_ht):
+    def w_htail(self, k_uht, f_w, b_h, w_dg, n_z, s_ht, l_t, k_y, Lambda_ht, a_h, s_e):
         return 0.0379*k_uht*(1 + f_w/b_h)**-0.25*w_dg**0.639*n_z**0.10*s_ht**0.75*l_t**-1.0*k_y**0.704*(math.cos(Lambda_ht))**-1.0*a_h**0.166*(1 + s_e/s_ht)**0.1
 
 # vertical tail
@@ -526,9 +526,9 @@ RAYMER STRUCTURES GROUP
     def w_n(self, k_ng, n_lt, n_w, n_z, w_ec, n_en, s_n):
         return 0.6724*k_ng*n_lt**0.10*n_w**0.294*n_z**0.119*w_ec**0.611*n_en**0.984*s_n**0.224
 
-"""
-RAYMER PROPULSION GROUP
-"""
+    """
+    RAYMER PROPULSION GROUP
+    """
 ## 6) raymer engine controls weight estimation
     def w_enc(self, n_en, l_ec):
         return 5.0*n_en + 0.80*l_ec
@@ -542,9 +542,9 @@ RAYMER PROPULSION GROUP
         return 2.405*v_t**0.606*(1 + v_i/v_t)**-1.0*(1 + v_p/v_t)*n_t**0.5
 
 
-"""
-RAYMER EQUIPMENT GROUP
-"""
+    """
+    RAYMER EQUIPMENT GROUP
+    """
 ## 9) raymer flight controls weight estimation
     def w_fc(self, n_f, n_m, s_cs, i_y):
         return 145.9*n_f**0.554*(1 + n_m/n_f)**-1.0*s_cs**0.20*(i_y*1e-6)**0.07
@@ -592,9 +592,9 @@ RAYMER EQUIPMENT GROUP
 
 
 class Gd:
-"""
-GD STRUCTURES GROUP
-"""
+    """
+    GD STRUCTURES GROUP
+    """
 ## 1) GD wing
 # m_h from 0.4 to 0.8, tcm from 0.08 to 0.15, a from 4 to 12
     def w_w(self, s, a, m_h, w_to, n_ult, _lambda, tcm, _Lambda_12):
@@ -606,7 +606,7 @@ GD STRUCTURES GROUP
         return 0.0034*((w_to*n_ult)**0.813*s_h**0.584*(b_h/t_rh)**0.033*(c/l_h)**0.28)**0.915
 
 # vertical tail
-    def w_v(self, z_h, b_v, w_to, n_ult, s_v, m_h, l_v, s_r, s_v, a_v, _lambda_v, _Lambda_14v):
+    def w_v(self, z_h, b_v, w_to, n_ult, s_v, m_h, l_v, s_r, a_v, _lambda_v, _Lambda_14v):
         return 0.19*((1 + z_h/b_v)**0.5*(w_to*n_ult)**0.363*s_v**1.089*m_h**0.601*l_v**-0.726*(1 + s_r/s_v)**0.217*a_v**0.337*(1 + _lambda_v)**0.363*math.cos(_Lambda_14v)**-0.484)**1.014
 
 ## 3) GD fuselage
@@ -635,9 +635,9 @@ GD STRUCTURES GROUP
     def w_g(self, w_to):
         return 62.61*(w_to/1000)**0.84
 
-"""
-GD PROPULSION GROUP
-"""
+    """
+    GD PROPULSION GROUP
+    """
 
 ## 7) GD engine: THIS ONE LOOK AT p. 85 roskam
     def w_e(self, n_e, w_eng):
@@ -728,7 +728,7 @@ GD PROPULSION GROUP
         elif system == 'turboprop':
             k_ess = 12.05
             e_ess = 1.458
-        elif system = 'piston':
+        elif system == 'piston':
             k_ess = 50.38
             e_ess = 0.459
         else:
@@ -751,9 +751,9 @@ GD PROPULSION GROUP
 
         return k_pc*n_bl**e_pc1*((n_p*d_p*p_to/n_e)/1000)**e_pc2
 
-"""
-GD EQUIPMENT GROUP
-"""
+    """
+    GD EQUIPMENT GROUP
+    """
 
 ## 12) GD flight control system
     def w_fc(self, w_to, q_d):
