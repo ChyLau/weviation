@@ -6,16 +6,17 @@ from xml.etree.ElementTree import parse
 
 
 def parse_xml():
+    """
+    Stores all the parameters in a dictionary
+    """
     fp = parse('parameters.xml')
+    data = {}
+
     for method in fp.findall('torenbeek'):
-        w_g = method.findtext('w_g')
-        print w_g
+        for element in method.findall('*'):
+            data[element.tag] = float(element.text)
 
-    # extract data
-
-    # store in parsed data (dictionary)
-
-    # return parsed_data
+    return data
 
 def main():
     parse_xml()
