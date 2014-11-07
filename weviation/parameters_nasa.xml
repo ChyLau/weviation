@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<parameters>
+    <torenbeek>
+        <!-- WING -->
+        <w_g>15000</w_g>
+        <b_ref>6.25</b_ref>
+        <Lambda>13</Lambda>
+        <b>35.58</b>
+        <n_ult>4.5</n_ult>
+        <s>231.77</s>
+        <t_r>0.509</t_r>
+
+        <!-- TAIL -->
+        <s_vtail>37.37</s_vtail>
+        <s_htail>54</s_htail>
+        <Lambda_h>25</Lambda_h>
+        <Lambda_v>48</Lambda_v>
+
+        <!-- FUSELAGE -->
+        <v_d>290</v_d>
+        <l_t>20.553</l_t>
+        <b_f>5.25</b_f>
+        <h_f>5.25</h_f>
+        <s_g>685.2</s_g>
+
+        <!-- NACELLE -->
+        <p_to>2950</p_to>
+
+        <!-- LANDING GEAR-->
+        <a_m>33</a_m>
+        <b_m>0.04</b_m>
+        <c_m>0.021</c_m>
+        <d_m>0</d_m>
+        <w_to>15000</w_to>
+        <a_n>12</a_n>
+        <b_n>0.06</b_n>
+        <c_n>0</c_n>
+        <d_n>0</d_n>
+
+    </torenbeek>
+
+    <raymer>
+        <w_test>100</w_test>
+    </raymer>
+
+    <gd>
+        <w_test2>200</w_test2>
+    </gd>
+</parameters>

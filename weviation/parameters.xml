@@ -15,7 +15,12 @@
         <s_vtail>45.20</s_vtail>
         <s_htail>69.45</s_htail>
 
-
+        <!-- FUSELAGE -->
+        <v_d></v_d>
+        <l_t></l_t>
+        <b_f></b_f>
+        <h_f></h_f>
+        <s_g></s_g>
 
     </torenbeek>
 

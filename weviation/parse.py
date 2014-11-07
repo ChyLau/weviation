@@ -9,7 +9,7 @@ def parse_xml():
     """
     Stores all the parameters in a dictionary
     """
-    fp = parse('parameters.xml')
+    fp = parse('parameters_nasa.xml')
     data = {}
 
     for method in fp.findall('torenbeek'):

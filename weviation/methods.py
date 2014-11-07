@@ -8,7 +8,7 @@ references:
 
 from __future__ import division
 import numpy as np
-import math
+from math import *
 
 class Torenbeek:
 
@@ -26,7 +26,7 @@ class Torenbeek:
         else:
             print "USAGE: 'unit' is 'im' or 'si'."
 
-        return k_w*w_g*(b_ref/math.cos(Lambda*math.pi/180))**0.75*(1 + (b_ref*math.cos(Lambda*math.pi/180)/b)**0.5)*n_ult**0.55*(b*s/(w_g*t_r*math.cos(Lambda*math.pi/180)))**0.3
+        return k_w*w_g*(b_ref/cos(radians(Lambda)))**0.75*(1 + (b_ref*cos(radians(Lambda))/b)**0.5)*n_ult**0.55*(b*s/(w_g*t_r*cos(radians(Lambda))))**0.3
 
 ## 2) torenbeek tail (empennage) weight estimation w_tail
 # k_wt = 0.04, w_tail (lb), s_tail (ft^2)
@@ -51,7 +51,7 @@ class Torenbeek:
         else:
             print "USAGE: 'stabilizers' is 'fixed' or 'variable'."
 
-        return k_h*s_h*f*(s_h**0.2*v_d/(math.cos(Lambda_h))**0.5)
+        return k_h*s_h*f*(s_h**0.2*v_d/(cos(radians(Lambda_h)))**0.5)
 
 # k_v = 1.0 (fuselage mounted horizontal tails)
 # k_v = (1 + 0.15*(s_h*z_h/(s_v*b_v)))  (fin mounted horizontal tails)
@@ -63,7 +63,7 @@ class Torenbeek:
         else:
             print "USAGE: 'mounted' is 'fuselage' or 'fin'."
 
-        return k_v*s_v*f*(s_v**0.2*v_d/(math.cos(Lambda_v))**0.5)
+        return k_v*s_v*f*(s_v**0.2*v_d/(cos(radians(Lambda_v)))**0.5)
 
 ## 3) torenbeek body (fuselage) weight estimation w_f
 # k_wf = 0.021 (lb), v_d (kts), s_g (ft^2)
@@ -498,16 +498,16 @@ class Raymer:
     """
 ## 1) raymer wing weight estimation w_w
     def w_w(self, _dg, n_z, s_w, a, t, c, _lambda, Lambda, s_csw):
-        return 0.0051*(w_dg*n_z)**0.557*s_w**0.649*a**0.5*(t/c)**-0.4*(1 + _lambda)**0.1*(math.cos(Lambda))**-1.0*s_csw**0.1
+        return 0.0051*(w_dg*n_z)**0.557*s_w**0.649*a**0.5*(t/c)**-0.4*(1 + _lambda)**0.1*(cos(radians(Lambda)))**-1.0*s_csw**0.1
 
 ## 2) raymer tail weight estimation
 # horizontal tail
     def w_htail(self, k_uht, f_w, b_h, w_dg, n_z, s_ht, l_t, k_y, Lambda_ht, a_h, s_e):
-        return 0.0379*k_uht*(1 + f_w/b_h)**-0.25*w_dg**0.639*n_z**0.10*s_ht**0.75*l_t**-1.0*k_y**0.704*(math.cos(Lambda_ht))**-1.0*a_h**0.166*(1 + s_e/s_ht)**0.1
+        return 0.0379*k_uht*(1 + f_w/b_h)**-0.25*w_dg**0.639*n_z**0.10*s_ht**0.75*l_t**-1.0*k_y**0.704*(cos(radians(Lambda_ht)))**-1.0*a_h**0.166*(1 + s_e/s_ht)**0.1
 
 # vertical tail
     def w_vtail(self, h_t, h_v, w_dg, n_z, l_t, s_vt, k_z, Lambda_vt, a_v, t, c):
-        return 0.0026*(1 + h_t/h_v)**0.225*w_dg**0.556*n_z**0.536*l_t**-0.5*s_vt**0.5*k_z**0.875*(math.cos(Lambda_vt))**-1*a_v**0.35*(t/c)**-0.5
+        return 0.0026*(1 + h_t/h_v)**0.225*w_dg**0.556*n_z**0.536*l_t**-0.5*s_vt**0.5*k_z**0.875*(mcos(radians(Lambda_vt)))**-1*a_v**0.35*(t/c)**-0.5
 
 ## 3) raymer fuselage weight estimation
     def w_f(self, k_door, k_lg, w_dg, n_z, l, s_f, k_ws, d):
@@ -598,7 +598,7 @@ class Gd:
 ## 1) GD wing
 # m_h from 0.4 to 0.8, tcm from 0.08 to 0.15, a from 4 to 12
     def w_w(self, s, a, m_h, w_to, n_ult, _lambda, tcm, _Lambda_12):
-        return (0.00428*s**0.48*a*m_h**0.43*(w_to*n_ult)**0.84*_lambda**0.14)/((100*tcm)**0.76*math.cos(_Lambda_12)**1.54)
+        return (0.00428*s**0.48*a*m_h**0.43*(w_to*n_ult)**0.84*_lambda**0.14)/((100*tcm)**0.76*cos(radians(_Lambda_12))**1.54)
 
 ## 2) GD tail
 # horizontal tail
@@ -607,7 +607,7 @@ class Gd:
 
 # vertical tail
     def w_v(self, z_h, b_v, w_to, n_ult, s_v, m_h, l_v, s_r, a_v, _lambda_v, _Lambda_14v):
-        return 0.19*((1 + z_h/b_v)**0.5*(w_to*n_ult)**0.363*s_v**1.089*m_h**0.601*l_v**-0.726*(1 + s_r/s_v)**0.217*a_v**0.337*(1 + _lambda_v)**0.363*math.cos(_Lambda_14v)**-0.484)**1.014
+        return 0.19*((1 + z_h/b_v)**0.5*(w_to*n_ult)**0.363*s_v**1.089*m_h**0.601*l_v**-0.726*(1 + s_r/s_v)**0.217*a_v**0.337*(1 + _lambda_v)**0.363*cos(radians(_Lambda_14v))**-0.484)**1.014
 
 ## 3) GD fuselage
     def w_f(self,q_d, w_to, l_f, h_f, inlets):
