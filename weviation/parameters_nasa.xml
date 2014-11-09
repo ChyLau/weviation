@@ -12,8 +12,8 @@
         <t_r>0.509</t_r>
 
         <!-- TAIL -->
-        <s_vtail>37.37</s_vtail>
-        <s_htail>54</s_htail>
+        <s_v>37.37</s_v>
+        <s_h>54</s_h>
         <Lambda_h>25</Lambda_h>
         <Lambda_v>48</Lambda_v>
 
@@ -32,16 +32,17 @@
         <b_m>0.04</b_m>
         <c_m>0.021</c_m>
         <d_m>0</d_m>
-        <w_to>15000</w_to>
         <a_n>12</a_n>
         <b_n>0.06</b_n>
         <c_n>0</c_n>
         <d_n>0</d_n>
+        <w_to>15000</w_to>
+
 
     </torenbeek>
 
     <raymer>
-        <w_test>100</w_test>
+        <w_g>10</w_g>
     </raymer>
 
     <gd>

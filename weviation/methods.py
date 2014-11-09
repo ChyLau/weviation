@@ -31,7 +31,7 @@ class Torenbeek:
 ## 2) torenbeek tail (empennage) weight estimation w_tail
 # k_wt = 0.04, w_tail (lb), s_tail (ft^2)
 # k_wt = 0.64, w_tail (kg), s_tail (m^2)
-    def w_tail(self, n_ult, s_vtail, s_htail, unit):
+    def w_tail(self, n_ult, s_v, s_h, unit):
         if unit == 'im':
             k_wt = 0.04
         elif unit == 'si':
@@ -39,11 +39,11 @@ class Torenbeek:
         else:
             print "USAGE: 'unit' is 'im' or 'si'."
 
-        return k_wt*(n_ult*(s_vtail + s_htail)**2)**0.75
+        return k_wt*(n_ult*(s_v + s_h)**2)**0.75
 
 # k_h = 1.0 (fixed incidence stabilizers)
 # k_h = 1.1 (variable incidence stabilizers)
-    def w_htail(self, s_h, f, v_d, Lambda_h, stabilizers):
+    def w_htail(self, s_h, v_d, Lambda_h, stabilizers):
         if stabilizers == 'fixed':
             k_h = 1.0
         elif stabilizers == 'variable':
@@ -51,11 +51,11 @@ class Torenbeek:
         else:
             print "USAGE: 'stabilizers' is 'fixed' or 'variable'."
 
-        return k_h*s_h*f*(s_h**0.2*v_d/(cos(radians(Lambda_h)))**0.5)
+        return k_h*s_h*(3.81*(s_h**0.2*v_d)/(1000*cos(radians(Lambda_h))**0.5) - 0.287)
 
 # k_v = 1.0 (fuselage mounted horizontal tails)
 # k_v = (1 + 0.15*(s_h*z_h/(s_v*b_v)))  (fin mounted horizontal tails)
-    def w_vtail(self, s_v, f, v_d, Lambda_v, mounted, s_h=None, z_h=None, b_v=None):
+    def w_vtail(self, s_v, v_d, Lambda_v, mounted, s_h=None, z_h=None, b_v=None):
         if mounted == 'fuselage':
             k_v = 1.0
         elif mounted == 'fin':
@@ -63,7 +63,7 @@ class Torenbeek:
         else:
             print "USAGE: 'mounted' is 'fuselage' or 'fin'."
 
-        return k_v*s_v*f*(s_v**0.2*v_d/(cos(radians(Lambda_v)))**0.5)
+        return k_v*s_v*(3.81*(s_v**0.2*v_d)/(1000*cos(radians(Lambda_v))**0.5) - 0.287)
 
 ## 3) torenbeek body (fuselage) weight estimation w_f
 # k_wf = 0.021 (lb), v_d (kts), s_g (ft^2)
