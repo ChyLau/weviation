@@ -279,7 +279,7 @@ class Torenbeek:
 
 ## 11) torenbeek exhaust system
 # tailpipes -- k_ext = 3 (lb), a (ft^2), k_ext = 14.63 (kg), a (m^2)
-    def w_ext(self, a, unit):
+    def w_ext(self, ax, unit):
         if unit == 'im':
             k_ext = 3
         elif unit == 'si':
@@ -287,7 +287,7 @@ class Torenbeek:
         else:
             print "USAGE: 'unit' is 'im' or 'si'."
 
-        return k_ext*a
+        return k_ext*ax
 
 # silencers
     def w_exs(self, n_e, t_to):
@@ -402,7 +402,7 @@ class Torenbeek:
 
 ## 17) torenbeek propeller installation
 # turboprop -- k_p = 0.108 (lb), k_p = 0.124 (kg) or k_p = 0.144 (lb), k_p = 0.165 (kg)
-    def w_pi(self, n_p, b, d_p, p_to, unit):
+    def w_pi(self, n_p, b_p, d_p, p_to, unit):
         if unit == 'im':
             k_p = 0.108 # or 0.144
         elif unit == 'si':
@@ -410,7 +410,7 @@ class Torenbeek:
         else:
             print "USAGE: 'unit' is 'im' or 'si'."
 
-        return k_p*n_p*b*(d_p*p_to)**0.78174
+        return k_p*n_p*b_p*(d_p*p_to)**0.78174
 
 ## 18) torenbeek thrust reversers
 # turbojet/turbofan
@@ -469,6 +469,72 @@ class Torenbeek:
         return k_ieg*w_de**(5/9)*r_d**(1/4)
 
 ## 21) torenbeek hydraulic, pneumatic, electrical
+# hydraulic and electrical
+    def w_heu(self, w_e, unit, dtype):
+        if unit == 'im':
+            if dtype == 'utility':
+                k_heu = 0.00780
+                e_heu = 6/5
+            elif dtype == 'jet':
+                k_heu = 0.064
+                e_heu = 1
+            elif dtype == 'propeller':
+                k_heu = 0.325
+                e_heu = 4/5
+            else:
+                print "USAGE: 'dtype' is 'utility' or 'jet' or 'propeller'."
+        elif unit == 'si':
+            if dtype == 'utility':
+                k_heu = 0.00914
+                e_heu = 6/5
+            elif dtype == 'jet':
+                k_heu = 0.064
+                e_heu = 1
+            elif dtype == 'propeller':
+                k_heu = 0.277
+                e_heu = 4/5
+            else:
+                print "USAGE: 'dtype' is 'utility' or 'jet' or 'propeller'."
+        else:
+            print "USAGE: 'unit' is 'im' or 'si'."
+
+        return k_heu*w_e**e_heu
+
+# hydraulic and pneumatic for jet
+    def w_hp(self, w_de, unit, control):
+        if unit == 'im':
+            if control == 'no':
+                k_hp1 = 0.004
+                k_hp2 = 100
+            elif control == 'boosted':
+                k_hp1 = 0.007
+                k_hp2 = 200
+            elif control == 'duplicated':
+                k_hp1 = 0.011
+                k_hp2 = 400
+            elif control == 'triplex':
+                k_hp1 = 0.015
+                k_hp2 = 600
+            else:
+                print "USAGE: 'control' is 'no' or 'boosted' or 'duplicated' or 'triplex'."
+        elif unit == 'si':
+            if control == 'no':
+                k_hp1 = 0.004
+                k_hp2 = 45
+            elif control == 'boosted':
+                k_hp1 = 0.007
+                k_hp2 = 91
+            elif control == 'duplicated':
+                k_hp1 = 0.011
+                k_hp2 = 181
+            elif control == 'triplex':
+                k_hp1 = 0.015
+                k_hp2 = 272
+        else:
+            print "USAGE: 'unit' is 'im' or 'si'."
+
+        return k_hp1*w_de + k_hp2
+
 # DC electrical weight -- k_eldc = 400 (lb), k_eldc = 181 (kg)
     def w_eldc(self, w_to, unit):
         if unit == 'im':
@@ -483,13 +549,51 @@ class Torenbeek:
 # AC electrical weight -- k_elac = (lb), k_elac = (kg)
     def w_elac(self, p_el, unit):
         if unit == 'im':
-            k_elac = 0
+            k_elac = 36
         elif unit == 'si':
-            k_elac = 0
+            k_elac = 16.3
         else:
             print "USAGE: 'unit' is 'im' or 'si'."
 
         return k_elac*p_el*(1 - 0.033*p_el**0.5)
+
+## 22) torenbeek air-conditioning, pressurization, ant-ice
+    def w_api(self, l_pax):
+        if unit == 'im':
+            k_api = 6.75
+        elif unit == 'si':
+            k_api = 14.0
+        else:
+            print "USAGE: 'unit' is 'im' or 'si'."
+
+        return k_api*l_pax**1.28
+
+## 23) torenbeek oxygen system
+    def w_ox(self, n_pax):
+        if flight == 'below':
+            k_ox1 = 20
+            k_ox2 = 0.5
+        elif flight == 'above':
+            k_ox1 = 30
+            k_ox2 = 1.2
+        elif flight == 'overwater':
+            k_ox1 = 40
+            k_ox2 = 2.4
+        else:
+            print "USAGE: 'flight' is 'below' or 'above' or 'overwater'."
+
+        return k_ox1 + k_ox2*n_pax
+
+## 24) torenbeek furnishing
+    def w_fur(self, w_zf):
+        if unit == 'im':
+            k_zf = 0.211
+        elif unit == 'si':
+            k_zf = 0.196
+        else:
+            print "USAGE: 'unit' is 'im' or 'si'."
+
+        return k_zf*w_zf**0.91
 
 
 class Raymer:

@@ -24,10 +24,10 @@
         <h_f>5.25</h_f>
         <s_g>685.2</s_g>
 
-        <!-- NACELLE -->
+        <!-- NACELLE, ENGINE, PROPELLER INSTALL.,  -->
         <p_to>2950</p_to>
 
-        <!-- LANDING GEAR-->
+        <!-- LANDING GEAR, INSTRUMENTS, HYDRAULICS, ELECTRICAL-->
         <a_m>33</a_m>
         <b_m>0.04</b_m>
         <c_m>0.021</c_m>
@@ -38,7 +38,52 @@
         <d_n>0</d_n>
         <w_to>15000</w_to>
 
+        <!-- ENGINE, ACCESSORRY, EXHAUST, SUPER CHARGER, OIL, FUEL, THRUST REVERS., HPE-->
+        <n_e>1</n_e>
+        <w_e>1</w_e>
 
+        <!-- ACCESSORY -->
+        <w_fto>1</w_fto>
+
+        <!-- AIR INDUCTION-->
+        <l_d>1</l_d>
+        <n_i>1</n_i>
+        <a_i>1</a_i>
+
+        <!-- EXHAUST -->
+        <ax>1</ax>
+        <t_to>1</t_to>
+
+        <!-- FUEL -->
+        <n_ft>1</n_ft>
+        <v_ft>1</v_ft>
+
+        <!-- WATER INJECTION-->
+        <v_wt>1</v_wt>
+
+        <!-- PROPELLER INSTALL. -->
+        <n_p>1</n_p>
+        <b_p>1</b_p>
+        <d_p>1</d_p>
+
+        <!-- APU -->
+        <w_ba>1</w_ba>
+
+        <!-- INSTRUMENTS, HPE-->
+        <w_de>1</w_de>
+        <r_d>1</r_d>
+
+        <!-- ELECTRICAL -->
+        <p_el>1</p_el>
+
+        <!-- AIR-CONDITIONING-->
+        <l_pax>1</l_pax>
+
+        <!-- OXYGEN -->
+        <n_pax>1</n_pax>
+
+        <!-- FURNISHING-->
+        <w_zf>1</w_zf>
     </torenbeek>
 
     <raymer>
