@@ -10,30 +10,32 @@ def parse_xml():
     Stores all the parameters in a dictionary
     """
     fp = parse('parameters_nasa.xml')
-    data = {}
+    data1 = {}
+    data2 = {}
+    data3 = {}
 
     for method in fp.findall('torenbeek'):
         for element in method.findall('*'):
-            if element.tag in data:
-                raise ValueError("Key %r already exists."% element.tag)
+            if element.tag in data1:
+                raise ValueError("In <torenbeek> key %r already exists."% element.tag)
             else:
-                data[element.tag] = float(element.text)
+                data1[element.tag] = float(element.text)
 
     for method in fp.findall('raymer'):
         for element in method.findall('*'):
-            if element.tag in data:
-                raise ValueError("Key %r already exists." % element.tag)
+            if element.tag in data2:
+                raise ValueError("In <raymer> key %r already exists." % element.tag)
             else:
-                data[element.tag] = float(element.text)
+                data2[element.tag] = float(element.text)
 
     for method in fp.findall('gd'):
         for element in method.findall('*'):
-            if element.tag in data:
-                raise ValueError("Key %r already exists." % element.tag)
+            if element.tag in data3:
+                raise ValueError("In <gd> key %r already exists." % element.tag)
             else:
-                data[element.tag] = float(element.text)
+                data3[element.tag] = float(element.text)
 
-    return data
+    return data1, data2, data3
 
 def main():
     print parse_xml()

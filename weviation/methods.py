@@ -601,7 +601,7 @@ class Raymer:
     RAYMER STRUCTURES GROUP
     """
 ## 1) raymer wing weight estimation w_w
-    def w_w(self, _dg, n_z, s_w, a, t, c, _lambda, Lambda, s_csw):
+    def w_w(self, w_dg, n_z, s_w, a, t, c, _lambda, Lambda, s_csw):
         return 0.0051*(w_dg*n_z)**0.557*s_w**0.649*a**0.5*(t/c)**-0.4*(1 + _lambda)**0.1*(cos(radians(Lambda)))**-1.0*s_csw**0.1
 
 ## 2) raymer tail weight estimation
