@@ -723,6 +723,20 @@ class Raymer:
 
 ## 11) raymer instruments weight estimation
     def w_instr(self, k_r, k_tp, n_c, n_en, l_f, b_w):
+        if engine == 'reciprocating':
+            k_r = 1.133
+        elif engine == 'other':
+            k_r = 1.0
+        else:
+            print "USAGE: 'engine' is 'reciprocrating' or 'other'."
+
+        if dtype == 'turboprop':
+            k_tp = 0.793
+        elif dtype == 'other':
+            k_tp = 1.0
+        else:
+            print "USAGE: 'dtype' is 'turboprop' or 'other'."
+
         return 4.509*k_r*k_tp*n_c**0.541*n_en*(l_f + b_w)**0.5
 
 ## 12) raymer hydraulics weight estimation
@@ -765,8 +779,8 @@ class Gd:
     """
 ## 1) GD wing
 # m_h from 0.4 to 0.8, tcm from 0.08 to 0.15, a from 4 to 12
-    def w_w(self, s, a, m_h, w_to, n_ult, _lambda, tcm, _Lambda_12):
-        return (0.00428*s**0.48*a*m_h**0.43*(w_to*n_ult)**0.84*_lambda**0.14)/((100*tcm)**0.76*cos(radians(_Lambda_12))**1.54)
+    def w_w(self, s, a, m_h, w_to, n_ult, _lambda, t_cm, _Lambda_12):
+        return (0.00428*s**0.48*a*m_h**0.43*(w_to*n_ult)**0.84*_lambda**0.14)/((100*t_cm)**0.76*cos(radians(_Lambda_12))**1.54)
 
 ## 2) GD tail
 # horizontal tail
@@ -842,7 +856,7 @@ class Gd:
         return k_prop*n_p*n_bl**0.391*(d_p*(p_to/n_e)/1000)**0.782
 
 ## 10) GD fuel system
-    def w_fs(self, w_f, k_fsp, w_supp, sealing):
+    def w_fs(self, w_f, w_supp, sealing, fuel):
         if sealing == 'self':
             k_fs = 41.6
             e_fs = 0.818
@@ -851,6 +865,13 @@ class Gd:
             e_fs = 0.758
         else:
             print "USAGE: 'sealing' is 'self' or 'nonself'."
+
+        if fuel == 'aviation':
+            k_fsp = 5.87
+        elif fuel == 'jp4':
+            k_fsp = 6.55
+        else:
+            print "USAGE: 'fuel' is 'aviation' or 'jp4'."
 
         return k_fs*((w_f/k_fsp)/1000)**e_fs + w_supp
 
@@ -950,7 +971,7 @@ class Gd:
 
 ## 18) GD auxiliary power unit
 # k_apu = 0.004 to 0.013
-    def w_apu(self, k_apu):
+    def w_apu(self, k_apu, w_to):
         return k_apu*w_to
 
 ## 19) GD furnishing CHECK RANGE 'LONG' -> k_buf
@@ -970,7 +991,7 @@ class Gd:
         return 55*n_fdc + 32*n_pax + 15*n_cc + k_lav*n_pax**1.33 + k_buf*n_pax**1.12 + 109*(n_pax*(1 + p_c)/100)**0.505 + 0.771*(w_to/1000)
 
 ## 20) GD baggage and cargo handling THIS IS FOR MILITARY PASSENGER TRANSPORT THOUGH!
-    def w_bc(self, ):
+    def w_bc(self, n_pax, preload):
         if preload == 'no':
             k_bc = 0.0646
         elif preload == 'yes':
