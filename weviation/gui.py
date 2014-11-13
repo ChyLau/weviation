@@ -102,7 +102,7 @@ class MainFrame(wx.Frame):
         sizer.Add(line1, pos=(1,0), span=(1,1), flag=wx.EXPAND|wx.BOTTOM, border=10)
 
         notebook = NotebookDemo(panel)
-        sizer.Add(notebook, pos=(2,0), span=(1,1), flag=wx.EXPAND|wx.BOTTOM, border=5)
+        sizer.Add(notebook, pos=(2,0), span=(14,1), flag=wx.EXPAND|wx.BOTTOM, border=5)
 
         text2 = wx.StaticText(panel, label="Output pie chart")
         sizer.Add(text2, pos=(0,2), flag=wx.TOP|wx.LEFT|wx.BOTTOM, border=15)
@@ -119,8 +119,8 @@ class MainFrame(wx.Frame):
         line3 = wx.StaticLine(panel)
         sizer.Add(line3, pos=(4,2), span=(1,1), flag=wx.EXPAND|wx.BOTTOM, border=10)
 
-        tc1 = wx.TextCtrl(panel)
-        sizer.Add(tc1, pos=(5,2), span=(1, 1), flag=wx.EXPAND)
+        tc1 = wx.TextCtrl(panel, style=wx.TE_MULTILINE)
+        sizer.Add(tc1, pos=(5,2), span=(10, 1), flag=wx.EXPAND)
 
         panel.SetSizer(sizer)
         self.Layout()
