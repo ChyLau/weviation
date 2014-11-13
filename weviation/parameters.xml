@@ -128,7 +128,7 @@
         <v_stall>1</v_stall>
         <l_n>1</l_n>
 
-        <!-- NACELLE, ENGINE -->
+        <!-- NACELLE, ENGINE, INSTRUMENTS -->
         <n_lt>1</n_lt>
         <n_w>1</n_w>
         <w_ec>1</w_ec>
@@ -147,16 +147,36 @@
         <v_p>1</v_p>
         <n_t>1</n_t>
 
-        <!-- FLIGHT CONTROLS -->
+        <!-- FLIGHT CONTROLS, HYDRAULICS -->
         <n_f>1</n_f>
         <n_m>1</n_m>
         <s_cs>1</s_cs>
         <i_y>1</i_y>
 
         <!-- APU -->
-        <w_apuu></w_apuu>
+        <w_apuu>1</w_apuu>
 
-        <!-- INSTRUMENTS -->
+        <!-- INSTRUMENTS, FURNISHING -->
+        <n_c>1</n_c>
+        <l_f>1</l_f>
+
+        <!-- ELECTRICAL -->
+        <r_kva>1</r_kva>
+        <l_a>1</l_a>
+        <n_gen>1</n_gen>
+
+        <!-- AVIONICS -->
+        <w_uav>1</w_uav>
+
+        <!-- FURNISHING -->
+        <w_c>1</w_c>
+
+        <!-- AIR COND. -->
+        <n_p>1</n_p>
+        <v_pr>1</v_pr>
+
+        <!-- MILITARY CARGO -->
+        <s_cf>1</s_cf>
     </raymer>
 
     <gd>
