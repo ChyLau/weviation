@@ -22,7 +22,19 @@ def weight():
     tor['w_sc'] = torenbeek.w_sc(d1['w_to'], 'im', 'light')
     tor['w_eni'] = torenbeek.w_eni(d1['n_e'], d1['w_e'])
     tor['w_acc'] = torenbeek.w_acc(d1['n_e'], d1['w_fto'], 'im')
-
+    tor['w_airi'] = torenbeek.w_airi(d1['l_d'], d1['n_i'], d1['a_i'], 'im', 'single')
+    tor['w_ext'] = torenbeek.w_ext(d1['ax'], 'im')
+    tor['w_oc'] = torenbeek.w_oc(d1['n_e'], d1['w_e'])
+    tor['w_fsi'] = torenbeek.w_fsi(d1['n_e'], d1['n_ft'], d1['v_ft'], 'im')
+    tor['w_wis'] = torenbeek.w_wis(d1['v_wt'], 'im')
+    tor['w_pi'] = torenbeek.w_pi(d1['n_p'], d1['b_p'], d1['d_p'], d1['p_to'], 'im')
+    tor['w_tr'] = torenbeek.w_tr(d1['n_e'], d1['w_e'])
+    tor['w_apu'] = torenbeek.w_apu(d1['w_ba'], 'im')
+    tor['w_navp'] = torenbeek.w_navp(d1['w_to'], 'im')
+    tor['w_heu'] = torenbeek.w_heu(d1['w_e'], 'im', 'utility')
+    tor['w_api'] = torenbeek.w_api(d1['l_pax'], 'im')
+    tor['w_ox'] = torenbeek.w_ox(d1['n_pax'], 'below')
+    tor['w_fur'] = torenbeek.w_fur(d1['w_zf'], 'im')
 
     raymer = methods.Raymer()
 
@@ -49,6 +61,19 @@ def main():
     print "surface controls", tor['w_sc']
     print "engine", tor['w_eni']
     print "accessory", tor['w_acc']
+    print "air induction", tor['w_airi']
+    print "exhaust", tor['w_ext']
+    print "oil/cooler", tor['w_oc']
+    print "fuel", tor['w_fsi']
+    print "water injection", tor['w_wis']
+    print "propeller install.", tor['w_pi']
+    print "thrust reversers", tor['w_tr']
+    print "apu", tor['w_apu']
+    print "instruments", tor['w_navp']
+    print "hydraulic/electrical", tor['w_heu']
+    print "air-cond./pressure/anti-ice", tor['w_api']
+    print "oxygen", tor['w_ox']
+    print "furnishing", tor['w_fur']
     print "torenbeek total", sum(tor.values())
 
     print "----------- RAYMER -----------"

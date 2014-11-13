@@ -558,7 +558,7 @@ class Torenbeek:
         return k_elac*p_el*(1 - 0.033*p_el**0.5)
 
 ## 22) torenbeek air-conditioning, pressurization, ant-ice
-    def w_api(self, l_pax):
+    def w_api(self, l_pax, unit):
         if unit == 'im':
             k_api = 6.75
         elif unit == 'si':
@@ -569,7 +569,7 @@ class Torenbeek:
         return k_api*l_pax**1.28
 
 ## 23) torenbeek oxygen system
-    def w_ox(self, n_pax):
+    def w_ox(self, n_pax, flight):
         if flight == 'below':
             k_ox1 = 20
             k_ox2 = 0.5
@@ -585,7 +585,7 @@ class Torenbeek:
         return k_ox1 + k_ox2*n_pax
 
 ## 24) torenbeek furnishing
-    def w_fur(self, w_zf):
+    def w_fur(self, w_zf, unit):
         if unit == 'im':
             k_zf = 0.211
         elif unit == 'si':
