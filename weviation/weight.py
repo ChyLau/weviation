@@ -11,7 +11,7 @@ def weight():
     torenbeek = methods.Torenbeek()
 
     tor = {}
-    tor['w_w'] = torenbeek.w_w(d1['w_g'], d1['b_ref'], d1['Lambda'], d1['b'], d1['n_ult'], d1['s'], d1['t_r'], 'si')
+    tor['w_w'] = torenbeek.w_w(d1['w_g'], d1['b_ref'], d1['Lambda'], d1['b'], d1['n_ult'], d1['s_w'], d1['t_r'], 'si')
     tor['w_tail'] = torenbeek.w_tail(d1['n_ult'], d1['s_v'], d1['s_h'], 'im')
     tor['w_htail'] = torenbeek.w_htail(d1['s_h'], d1['v_d'], d1['Lambda_h'], 'fixed')
     tor['w_vtail'] = torenbeek.w_vtail(d1['s_v'], d1['v_d'], d1['Lambda_v'], 'fuselage')
@@ -23,10 +23,21 @@ def weight():
     tor['w_eni'] = torenbeek.w_eni(d1['n_e'], d1['w_e'])
     tor['w_acc'] = torenbeek.w_acc(d1['n_e'], d1['w_fto'], 'im')
 
-    return tor
+
+    raymer = methods.Raymer()
+
+    ray = {}
+
+
+    gd = methods.Gd()
+
+    gd = {}
+
+    return tor, ray, gd
 
 def main():
-    tor = weight()
+    tor, ray, gd = weight()
+    print "--------- TORENBEEK ----------"
     print "wing", tor['w_w']
     print "tail", tor['w_tail']
     print "htail", tor['w_htail']
@@ -40,6 +51,9 @@ def main():
     print "accessory", tor['w_acc']
     print "torenbeek total", sum(tor.values())
 
+    print "----------- RAYMER -----------"
+
+    print "------------- GD -------------"
 
 if __name__ == "__main__":
     main()

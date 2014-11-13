@@ -9,7 +9,7 @@ def parse_xml():
     """
     Stores all the parameters in a dictionary
     """
-    fp = parse('parameters_nasa.xml')
+    fp = parse('parameters.xml')
     data1 = {}
     data2 = {}
     data3 = {}

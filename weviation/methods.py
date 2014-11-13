@@ -601,33 +601,97 @@ class Raymer:
     RAYMER STRUCTURES GROUP
     """
 ## 1) raymer wing weight estimation w_w
-    def w_w(self, w_dg, n_z, s_w, a, t, c, _lambda, Lambda, s_csw):
-        return 0.0051*(w_dg*n_z)**0.557*s_w**0.649*a**0.5*(t/c)**-0.4*(1 + _lambda)**0.1*(cos(radians(Lambda)))**-1.0*s_csw**0.1
+    def w_w(self, w_dg, n_z, s_w, a, t_c, _lambda, Lambda, s_csw):
+        return 0.0051*(w_dg*n_z)**0.557*s_w**0.649*a**0.5*t_c**-0.4*(1 + _lambda)**0.1*(cos(radians(Lambda)))**-1.0*s_csw**0.1
 
 ## 2) raymer tail weight estimation
 # horizontal tail
-    def w_htail(self, k_uht, f_w, b_h, w_dg, n_z, s_ht, l_t, k_y, Lambda_ht, a_h, s_e):
+    def w_htail(self, f_w, b_h, w_dg, n_z, s_ht, l_t, Lambda_ht, a_h, s_e):
+        if dtype == 'allmoving':
+            k_uht = 1.143
+        elif dtype == 'other':
+            k_uht = 1.0
+        else:
+            print "USAGE: 'dtype' is 'allmoving' or 'other'."
+
+        k_y = 0.3*l_t
+
         return 0.0379*k_uht*(1 + f_w/b_h)**-0.25*w_dg**0.639*n_z**0.10*s_ht**0.75*l_t**-1.0*k_y**0.704*(cos(radians(Lambda_ht)))**-1.0*a_h**0.166*(1 + s_e/s_ht)**0.1
 
 # vertical tail
-    def w_vtail(self, h_t, h_v, w_dg, n_z, l_t, s_vt, k_z, Lambda_vt, a_v, t, c):
-        return 0.0026*(1 + h_t/h_v)**0.225*w_dg**0.556*n_z**0.536*l_t**-0.5*s_vt**0.5*k_z**0.875*(mcos(radians(Lambda_vt)))**-1*a_v**0.35*(t/c)**-0.5
+    def w_vtail(self, w_dg, n_z, l_t, s_vt, Lambda_vt, a_v, t_c, h_t=None, h_v=None, dtype=None):
+        k_z = l_t
+
+        if h_t == h_v == None:
+            if dtype == 'conv':
+                h_t = 0
+                h_v = 1
+            elif dtype == 'ttail':
+                h_t = 1
+                h_v = 1
+            else:
+                print "USAGE: 'dtype' is 'conv' or 'ttail'."
+
+        return 0.0026*(1 + h_t/h_v)**0.225*w_dg**0.556*n_z**0.536*l_t**-0.5*s_vt**0.5*k_z**0.875*(mcos(radians(Lambda_vt)))**-1*a_v**0.35*(t_c)**-0.5
 
 ## 3) raymer fuselage weight estimation
-    def w_f(self, k_door, k_lg, w_dg, n_z, l, s_f, k_ws, d):
+    def w_f(self, w_dg, n_z, l, s_f, d, _lambda, Lambda, b_w, door, landing):
+        if door == 'nocargo':
+            k_door = 1.0
+        elif door == 'onecargo':
+            k_door = 1.06
+        elif door == 'twocargo':
+            k_door = 1.12
+        elif door == 'clam':
+            k_door = 1.12
+        elif door == 'cargoclam':
+            k_door = 1.25
+        else:
+            print "USAGE: 'door' is 'nocargo' or  'onecargo' or  'twocargo' or  'clam' or 'cargoclam'."
+
+        if landing == 'fuselage':
+            k_lg = 1.12
+        elif landing == 'other':
+            k_lg = 1.0
+        else:
+            print "USAGE: 'landing' is 'fuselage' or 'other'."
+
+        k_ws = 0.75*((1 + 2*_lambda)/(1 + _lambda))*(b_w*tan(Lambda)/l)
+
         return 0.3280*k_door*k_lg*(w_dg*n_z)**0.5*l**0.25*s_f**0.302*(1 + k_ws)**0.04*(l/d)**0.10
 
 ## 4) raymer landing gear weight estimation
 # main landing gear
-    def w_ucm(self, k_mp, w_l, n_l, l_m, n_mw, n_mss, v_stall):
+    def w_ucm(self, w_l, n_l, l_m, n_mw, n_mss, v_stall, dtype):
+        if dtype == 'kneeling':
+            k_mp = 1.126
+        elif dtype == 'other':
+            k_mp = 1.0
+        else:
+            print "USAGE: 'dtype' is 'kneeling' or 'other'."
+
         return 0.0106*k_mp*w_l**0.888*n_l**0.25*l_m**0.4*n_mw**0.321*n_mss**-0.5*v_stall**0.1
 
 # nose landing gear
-    def w_ucn(self, k_np, w_l, n_l, l_n, n_nw):
+    def w_ucn(self, w_l, n_l, l_n, n_nw, dtype):
+        if dtype == 'kneeling':
+            k_np = 1.15
+        elif dtype == 'other':
+            k_np = 1.0
+        else:
+            print "USAGE: 'dtype' is 'kneeling' or 'other'."
+
         return 0.032*k_np*w_l**0.646*n_l**0.2*l_n**0.5*n_nw**0.45
 
 ## 5) raymer nacelle (engine) weight estimation
-    def w_n(self, k_ng, n_lt, n_w, n_z, w_ec, n_en, s_n):
+    def w_n(self, n_lt, n_w, n_z, w_ec, n_en, s_n, dtype):
+        if dtype == 'pylon':
+            k_ng = 1.017
+        elif dtype == 'other':
+            k_ng = 1.0
+        else:
+            print "USAGE: 'dtype' is 'pylon' or 'other'."
+
         return 0.6724*k_ng*n_lt**0.10*n_w**0.294*n_z**0.119*w_ec**0.611*n_en**0.984*s_n**0.224
 
     """
