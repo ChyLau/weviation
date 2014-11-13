@@ -4,6 +4,7 @@ The weight estimation is done by summing the necessary equations of each method.
 
 import parse as p
 import methods
+import cairoplot
 
 def weight():
     d1, d2, d3 = p.parse_xml()
@@ -47,6 +48,10 @@ def weight():
 
     return tor, ray, gd
 
+def pie_chart(data1):
+    tor = data1
+    cairoplot.pie_plot("piechart", tor, 500, 500, (0,0,0), True, False, None)
+
 def main():
     tor, ray, gd = weight()
     print "--------- TORENBEEK ----------"
@@ -79,6 +84,8 @@ def main():
     print "----------- RAYMER -----------"
 
     print "------------- GD -------------"
+
+    pie_chart(tor)
 
 if __name__ == "__main__":
     main()
