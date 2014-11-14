@@ -40,17 +40,40 @@ def weight():
     raymer = methods.Raymer()
 
     ray = {}
-
-
+    ray['w_w'] = raymer.w_w(d2['w_dg'], d2['n_z'], d2['s_w'], d2['a'], d2['t_c'], d2['lambda'], d2['Lambda'], d2['s_csw'])
+    ray['w_htail'] = raymer.w_htail(d2['f_w'], d2['b_h'], d2['w_dg'], d2['n_z'], d2['s_ht'], d2['l_t'], d2['Lambda_ht'], d2['a_h'], d2['s_e'], 'allmoving')
+    ray['w_vtail'] = raymer.w_vtail(d2['w_dg'], d2['n_z'], d2['l_t'], d2['s_vt'], d2['Lambda_vt'], d2['a_v'], d2['t_c'], None, None, 'ttail')
+    ray['w_f'] = raymer.w_f(d2['w_dg'], d2['n_z'], d2['l'], d2['s_f'], d2['d'], d2['lambda'], d2['Lambda'], d2['b_w'], 'nocargo', 'fuselage')
+    ray['w_ucm'] = raymer.w_ucm(d2['w_l'], d2['n_l'], d2['l_m'], d2['n_mw'], d2['n_mss'], d2['v_stall'], 'kneeling')
+    ray['w_ucn'] = raymer.w_ucn(d2['w_l'], d2['n_l'], d2['l_n'], d2['n_nw'], 'kneeling')
+    ray['w_n'] = raymer.w_n(d2['n_lt'], d2['n_w'], d2['n_z'], d2['w_ec'], d2['n_en'], d2['s_n'], 'pylon')
+    ray['w_enc'] = raymer.w_enc(d2['n_en'], d2['l_ec'])
+    ray['w_s'] = raymer.w_s(d2['n_en'], d2['w_en'])
+    ray['w_fs'] = raymer.w_fs(d2['v_t'], d2['v_i'], d2['v_p'], d2['n_t'])
+    ray['w_fc'] = raymer.w_fc(d2['n_f'], d2['n_m'], d2['s_cs'], d2['i_y'])
+    ray['w_apui'] = raymer.w_apui(d2['w_apuu'])
+    ray['w_instr'] = raymer.w_instr(d2['n_c'], d2['n_en'], d2['l_f'], d2['b_w'], 'reciprocating', 'turboprop')
+    ray['w_hydr'] = raymer.w_hydr(d2['n_f'], d2['l_f'], d2['b_w'])
+    ray['w_el'] = raymer.w_el(d2['r_kva'], d2['l_a'], d2['n_gen'])
+    ray['w_av'] = raymer.w_av(d2['w_uav'])
+    ray['w_furn'] = raymer.w_furn(d2['n_c'], d2['w_c'], d2['s_f'])
+    ray['w_ac'] = raymer.w_ac(d2['n_p'], d2['v_pr'], d2['w_uav'])
+    ray['w_ai'] = raymer.w_ai(d2['w_dg'])
+    ray['w_hand'] = raymer.w_hand(d2['w_dg'])
+    ray['w_mil'] = raymer.w_mil(d2['s_cf'])
     gd = methods.Gd()
 
     gd = {}
 
     return tor, ray, gd
 
-def pie_chart(data1):
+def pie_chart(data1, data2):
     tor = data1
-    cairoplot.pie_plot("piechart", tor, 500, 500, (0,0,0), True, False, None)
+    cairoplot.pie_plot("piechart1", tor, 500, 500, (0,0,0), True, False, None)
+
+    ray = data2
+    cairoplot.pie_plot("piechart2", ray, 500, 500, (0,0,0), True, False, None)
+
 
 def main():
     tor, ray, gd = weight()
@@ -82,10 +105,32 @@ def main():
     print "torenbeek total", sum(tor.values())
 
     print "----------- RAYMER -----------"
+    print "wing", ray['w_w']
+    print "htail", ray['w_htail']
+    print "vtail", ray['w_vtail']
+    print "fuselage", ray['w_f']
+    print "landing main", ray['w_ucm']
+    print "landing nose", ray['w_ucn']
+    print "nacelle", ray['w_n']
+    print "engine control", ray['w_enc']
+    print "pneumatic", ray['w_s']
+    print "fuel", ray['w_fs']
+    print "flight controls", ray['w_fc']
+    print "apu", ray['w_apui']
+    print "instruments", ray['w_instr']
+    print "hydraulics", ray['w_hydr']
+    print "electrical", ray['w_el']
+    print "avionics", ray['w_av']
+    print "furnishing", ray['w_furn']
+    print "air-cond.", ray['w_ac']
+    print "anti-ice", ray['w_ai']
+    print "handling gear", ray['w_hand']
+    print "military cargo", ray['w_mil']
+    print "raymer total", sum(ray.values())
 
     print "------------- GD -------------"
 
-    pie_chart(tor)
+    pie_chart(tor, ray)
 
 if __name__ == "__main__":
     main()

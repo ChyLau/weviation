@@ -606,7 +606,7 @@ class Raymer:
 
 ## 2) raymer tail weight estimation
 # horizontal tail
-    def w_htail(self, f_w, b_h, w_dg, n_z, s_ht, l_t, Lambda_ht, a_h, s_e):
+    def w_htail(self, f_w, b_h, w_dg, n_z, s_ht, l_t, Lambda_ht, a_h, s_e, dtype):
         if dtype == 'allmoving':
             k_uht = 1.143
         elif dtype == 'other':
@@ -632,7 +632,7 @@ class Raymer:
             else:
                 print "USAGE: 'dtype' is 'conv' or 'ttail'."
 
-        return 0.0026*(1 + h_t/h_v)**0.225*w_dg**0.556*n_z**0.536*l_t**-0.5*s_vt**0.5*k_z**0.875*(mcos(radians(Lambda_vt)))**-1*a_v**0.35*(t_c)**-0.5
+        return 0.0026*(1 + h_t/h_v)**0.225*w_dg**0.556*n_z**0.536*l_t**-0.5*s_vt**0.5*k_z**0.875*(cos(radians(Lambda_vt)))**-1*a_v**0.35*(t_c)**-0.5
 
 ## 3) raymer fuselage weight estimation
     def w_f(self, w_dg, n_z, l, s_f, d, _lambda, Lambda, b_w, door, landing):
@@ -722,7 +722,7 @@ class Raymer:
         return 2.2*w_apuu
 
 ## 11) raymer instruments weight estimation
-    def w_instr(self, k_r, k_tp, n_c, n_en, l_f, b_w):
+    def w_instr(self, n_c, n_en, l_f, b_w, engine, dtype):
         if engine == 'reciprocating':
             k_r = 1.133
         elif engine == 'other':

@@ -127,6 +127,7 @@
         <n_mss>1</n_mss>
         <v_stall>1</v_stall>
         <l_n>1</l_n>
+        <n_nw>1</n_nw>
 
         <!-- NACELLE, ENGINE, INSTRUMENTS -->
         <n_lt>1</n_lt>
