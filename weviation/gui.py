@@ -89,7 +89,7 @@ class MainFrame(wx.Frame):
     def __init__(self):
         wx.Frame.__init__(self, None, wx.ID_ANY,
                           "Weviation",
-                          size=(1000,800)
+                          size=(800,830)
                           )
         panel = wx.Panel(self)
 
@@ -102,7 +102,7 @@ class MainFrame(wx.Frame):
         sizer.Add(line1, pos=(1,0), span=(1,1), flag=wx.EXPAND|wx.BOTTOM, border=10)
 
         notebook = NotebookDemo(panel)
-        sizer.Add(notebook, pos=(2,0), span=(14,1), flag=wx.EXPAND|wx.BOTTOM, border=5)
+        sizer.Add(notebook, pos=(2,0), span=(14,1), flag=wx.EXPAND|wx.LEFT, border=10)
 
         text2 = wx.StaticText(panel, label="Output pie chart")
         sizer.Add(text2, pos=(0,2), flag=wx.TOP|wx.LEFT|wx.BOTTOM, border=15)

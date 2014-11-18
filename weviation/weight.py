@@ -13,7 +13,7 @@ def weight():
 
     tor = {}
     tor['w_w'] = torenbeek.w_w(d1['w_g'], d1['b_ref'], d1['Lambda'], d1['b'], d1['n_ult'], d1['s_w'], d1['t_r'], 'si')
-    tor['w_tail'] = torenbeek.w_tail(d1['n_ult'], d1['s_v'], d1['s_h'], 'im')
+    #tor['w_tail'] = torenbeek.w_tail(d1['n_ult'], d1['s_v'], d1['s_h'], 'im')
     tor['w_htail'] = torenbeek.w_htail(d1['s_h'], d1['v_d'], d1['Lambda_h'], 'fixed')
     tor['w_vtail'] = torenbeek.w_vtail(d1['s_v'], d1['v_d'], d1['Lambda_v'], 'fuselage')
     tor['w_f'] = torenbeek.w_f(d1['v_d'], d1['l_t'], d1['b_f'], d1['h_f'], d1['s_g'], 'im', 'main')
@@ -79,7 +79,7 @@ def main():
     tor, ray, gd = weight()
     print "--------- TORENBEEK ----------"
     print "wing", tor['w_w']
-    print "tail", tor['w_tail']
+    #print "tail", tor['w_tail']
     print "htail", tor['w_htail']
     print "vtail", tor['w_vtail']
     print "fuselage", tor['w_f']

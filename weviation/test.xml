@@ -1,0 +1,7 @@
+<parameters>
+    <test>
+        <wing unit='im'>
+            <w_g>1</w_g>
+        </wing>
+    </test>
+</parameters>
