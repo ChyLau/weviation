@@ -12,30 +12,30 @@ def weight():
     torenbeek = methods.Torenbeek()
 
     tor = {}
-    tor['w_w'] = torenbeek.w_w(d1['w_g'], d1['b_ref'], d1['Lambda'], d1['b'], d1['n_ult'], d1['s_w'], d1['t_r'], 'si')
-    #tor['w_tail'] = torenbeek.w_tail(d1['n_ult'], d1['s_v'], d1['s_h'], 'im')
-    tor['w_htail'] = torenbeek.w_htail(d1['s_h'], d1['v_d'], d1['Lambda_h'], 'fixed')
-    tor['w_vtail'] = torenbeek.w_vtail(d1['s_v'], d1['v_d'], d1['Lambda_v'], 'fuselage')
-    tor['w_f'] = torenbeek.w_f(d1['v_d'], d1['l_t'], d1['b_f'], d1['h_f'], d1['s_g'], 'im', 'main')
-    tor['w_n'] = torenbeek.w_n(d1['p_to'], 'im')
-    tor['w_ucm'] = torenbeek.w_uc(d1['a_m'], d1['b_m'], d1['c_m'], d1['d_m'], d1['w_to'], 'im', 'low')
-    tor['w_ucn'] = torenbeek.w_uc(d1['a_n'], d1['b_n'], d1['c_n'], d1['d_n'], d1['w_to'], 'im', 'low')
-    tor['w_sc'] = torenbeek.w_sc(d1['w_to'], 'im', 'light')
+    tor['w_w'] = torenbeek.w_w(d1['w_g'], d1['b_ref'], d1['Lambda'], d1['b'], d1['n_ult'], d1['s_w'], d1['t_r'], d1['tunit_w'])
+    tor['w_tail'] = torenbeek.w_tail(d1['n_ult'], d1['s_v'], d1['s_h'], d1['tunit_tail'])
+    tor['w_htail'] = torenbeek.w_htail(d1['s_h'], d1['v_d'], d1['Lambda_h'], d1['ttype_htail'])
+    tor['w_vtail'] = torenbeek.w_vtail(d1['s_v'], d1['v_d'], d1['Lambda_v'], d1['ttype_vtail'])
+    tor['w_f'] = torenbeek.w_f(d1['v_d'], d1['l_t'], d1['b_f'], d1['h_f'], d1['s_g'], d1['tunit_f'], d1['ttype_f'])
+    tor['w_n'] = torenbeek.w_n(d1['p_to'], d1['tunit_n'])
+    tor['w_ucm'] = torenbeek.w_uc(d1['a_m'], d1['b_m'], d1['c_m'], d1['d_m'], d1['w_to'], d1['tunit_ucm'], d1['ttype_ucm'])
+    tor['w_ucn'] = torenbeek.w_uc(d1['a_n'], d1['b_n'], d1['c_n'], d1['d_n'], d1['w_to'], d1['tunit_ucn'], d1['ttype_ucn'])
+    tor['w_sc'] = torenbeek.w_sc(d1['w_to'], d1['tunit_sc'], d1['ttype_sc'])
     tor['w_eni'] = torenbeek.w_eni(d1['n_e'], d1['w_e'])
-    tor['w_acc'] = torenbeek.w_acc(d1['n_e'], d1['w_fto'], 'im')
-    tor['w_airi'] = torenbeek.w_airi(d1['l_d'], d1['n_i'], d1['a_i'], 'im', 'single')
-    tor['w_ext'] = torenbeek.w_ext(d1['ax'], 'im')
+    tor['w_acc'] = torenbeek.w_acc(d1['n_e'], d1['w_fto'], d1['tunit_acc'])
+    tor['w_airi'] = torenbeek.w_airi(d1['l_d'], d1['n_i'], d1['a_i'], d1['tunit_airi'], d1['ttype_airi'])
+    tor['w_ext'] = torenbeek.w_ext(d1['ax'], d1['tunit_ext'])
     tor['w_oc'] = torenbeek.w_oc(d1['n_e'], d1['w_e'])
-    tor['w_fsi'] = torenbeek.w_fsi(d1['n_e'], d1['n_ft'], d1['v_ft'], 'im')
-    tor['w_wis'] = torenbeek.w_wis(d1['v_wt'], 'im')
-    tor['w_pi'] = torenbeek.w_pi(d1['n_p'], d1['b_p'], d1['d_p'], d1['p_to'], 'im')
+    tor['w_fsi'] = torenbeek.w_fsi(d1['n_e'], d1['n_ft'], d1['v_ft'], d1['tunit_fsi'])
+    tor['w_wis'] = torenbeek.w_wis(d1['v_wt'], d1['tunit_wis'])
+    tor['w_pi'] = torenbeek.w_pi(d1['n_p'], d1['b_p'], d1['d_p'], d1['p_to'], d1['tunit_pi'])
     tor['w_tr'] = torenbeek.w_tr(d1['n_e'], d1['w_e'])
-    tor['w_apu'] = torenbeek.w_apu(d1['w_ba'], 'im')
-    tor['w_navp'] = torenbeek.w_navp(d1['w_to'], 'im')
-    tor['w_heu'] = torenbeek.w_heu(d1['w_e'], 'im', 'utility')
-    tor['w_api'] = torenbeek.w_api(d1['l_pax'], 'im')
-    tor['w_ox'] = torenbeek.w_ox(d1['n_pax'], 'below')
-    tor['w_fur'] = torenbeek.w_fur(d1['w_zf'], 'im')
+    tor['w_apu'] = torenbeek.w_apu(d1['w_ba'], d1['tunit_apu'])
+    tor['w_navp'] = torenbeek.w_navp(d1['w_to'], d1['tunit_navp'])
+    tor['w_heu'] = torenbeek.w_heu(d1['w_e'], d1['tunit_heu'], d1['ttype_heu'])
+    tor['w_api'] = torenbeek.w_api(d1['l_pax'], d1['tunit_api'])
+    tor['w_ox'] = torenbeek.w_ox(d1['n_pax'], d1['ttype_ox'])
+    tor['w_fur'] = torenbeek.w_fur(d1['w_zf'], d1['tunit_fur'])
 
     raymer = methods.Raymer()
 
@@ -79,7 +79,7 @@ def main():
     tor, ray, gd = weight()
     print "--------- TORENBEEK ----------"
     print "wing", tor['w_w']
-    #print "tail", tor['w_tail']
+    print "tail", tor['w_tail']
     print "htail", tor['w_htail']
     print "vtail", tor['w_vtail']
     print "fuselage", tor['w_f']
