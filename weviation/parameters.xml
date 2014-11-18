@@ -31,7 +31,19 @@
             <tunit_fur>im</tunit_fur>
         </unit>
 
-        <components>
+        <type>
+            <ttype_htail>fixed</ttype_htail>
+            <ttype_vtail>fuselage</ttype_vtail>
+            <ttype_f>main</ttype_f>
+            <ttype_ucm>low</ttype_ucm>
+            <ttype_ucn>low</ttype_ucn>
+            <ttype_sc>light</ttype_sc>
+            <ttype_airi>single</ttype_airi>
+            <ttype_heu>utility</ttype_heu>
+            <ttype_ox>below</ttype_ox>
+        </type>
+
+        <component>
             <!-- WING -->
             <w_g>15000</w_g>
             <b_ref>6.25</b_ref>
@@ -114,101 +126,115 @@
 
             <!-- FURNISHING-->
             <w_zf>1</w_zf>
-        </components>
+        </component>
     </torenbeek>
 
     <raymer>
-        <!-- WING, HTAIL, VTAIL, FUSELAGE -->
-        <w_dg>1</w_dg>
-        <n_z>1</n_z>
-        <s_w>1</s_w>
-        <a>1</a>
-        <t_c>1</t_c>
-        <lambda>1</lambda>
-        <Lambda>1</Lambda>
-        <s_csw>1</s_csw>
+        <type>
+            <rtype_htail>allmoving</rtype_htail>
+            <rtype_vtail>ttail</rtype_vtail>
+            <rtype_f1>nocargo</rtype_f1>
+            <rtype_f2>fuselage</rtype_f2>
+            <rtype_ucm>kneeling</rtype_ucm>
+            <rtype_ucn>kneeling</rtype_ucn>
+            <rtype_n>pylon</rtype_n>
+            <rtype_instr1>reciprocating</rtype_instr1>
+            <rtype_instr2>turboprop</rtype_instr2>
+        </type>
 
-        <!-- HTAIL -->
-        <f_w>1</f_w>
-        <b_h>1</b_h>
-        <s_ht>1</s_ht>
-        <l_t>1</l_t>
-        <Lambda_ht>1</Lambda_ht>
-        <a_h>1</a_h>
-        <s_e>1</s_e>
+        <component>
+            <!-- WING, HTAIL, VTAIL, FUSELAGE -->
+            <w_dg>1</w_dg>
+            <n_z>1</n_z>
+            <s_w>1</s_w>
+            <a>1</a>
+            <t_c>1</t_c>
+            <lambda>1</lambda>
+            <Lambda>1</Lambda>
+            <s_csw>1</s_csw>
 
-        <!-- VTAIL -->
-        <s_vt>1</s_vt>
-        <Lambda_vt>1</Lambda_vt>
-        <a_v>1</a_v>
-        <h_t>1</h_t>
-        <h_v>1</h_v>
+            <!-- HTAIL -->
+            <f_w>1</f_w>
+            <b_h>1</b_h>
+            <s_ht>1</s_ht>
+            <l_t>1</l_t>
+            <Lambda_ht>1</Lambda_ht>
+            <a_h>1</a_h>
+            <s_e>1</s_e>
 
-        <!-- FUSELAGE -->
-        <l>1</l>
-        <s_f>1</s_f>
-        <d>1</d>
-        <b_w>1</b_w>
+            <!-- VTAIL -->
+            <s_vt>1</s_vt>
+            <Lambda_vt>1</Lambda_vt>
+            <a_v>1</a_v>
+            <h_t>1</h_t>
+            <h_v>1</h_v>
 
-        <!-- LANDING GEAR -->
-        <w_l>1</w_l>
-        <n_l>1</n_l>
-        <l_m>1</l_m>
-        <n_mw>1</n_mw>
-        <n_mss>1</n_mss>
-        <v_stall>1</v_stall>
-        <l_n>1</l_n>
-        <n_nw>1</n_nw>
+            <!-- FUSELAGE -->
+            <l>1</l>
+            <s_f>1</s_f>
+            <d>1</d>
+            <b_w>1</b_w>
 
-        <!-- NACELLE, ENGINE, INSTRUMENTS -->
-        <n_lt>1</n_lt>
-        <n_w>1</n_w>
-        <w_ec>1</w_ec>
-        <n_en>1</n_en>
-        <s_n>1</s_n>
+            <!-- LANDING GEAR -->
+            <w_l>1</w_l>
+            <n_l>1</n_l>
+            <l_m>1</l_m>
+            <n_mw>1</n_mw>
+            <n_mss>1</n_mss>
+            <v_stall>1</v_stall>
+            <l_n>1</l_n>
+            <n_nw>1</n_nw>
 
-        <!-- ENGINE -->
-        <l_ec>1</l_ec>
+            <!-- NACELLE, ENGINE, INSTRUMENTS -->
+            <n_lt>1</n_lt>
+            <n_w>1</n_w>
+            <w_ec>1</w_ec>
+            <n_en>1</n_en>
+            <s_n>1</s_n>
 
-        <!-- PNEUMATIC -->
-        <w_en>1</w_en>
+            <!-- ENGINE -->
+            <l_ec>1</l_ec>
 
-        <!-- FUEL SYSTEM -->
-        <v_t>1</v_t>
-        <v_i>1</v_i>
-        <v_p>1</v_p>
-        <n_t>1</n_t>
+            <!-- PNEUMATIC -->
+            <w_en>1</w_en>
 
-        <!-- FLIGHT CONTROLS, HYDRAULICS -->
-        <n_f>1</n_f>
-        <n_m>1</n_m>
-        <s_cs>1</s_cs>
-        <i_y>1</i_y>
+            <!-- FUEL SYSTEM -->
+            <v_t>1</v_t>
+            <v_i>1</v_i>
+            <v_p>1</v_p>
+            <n_t>1</n_t>
 
-        <!-- APU -->
-        <w_apuu>1</w_apuu>
+            <!-- FLIGHT CONTROLS, HYDRAULICS -->
+            <n_f>1</n_f>
+            <n_m>1</n_m>
+            <s_cs>1</s_cs>
+            <i_y>1</i_y>
 
-        <!-- INSTRUMENTS, FURNISHING -->
-        <n_c>1</n_c>
-        <l_f>1</l_f>
+            <!-- APU -->
+            <w_apuu>1</w_apuu>
 
-        <!-- ELECTRICAL -->
-        <r_kva>1</r_kva>
-        <l_a>1</l_a>
-        <n_gen>1</n_gen>
+            <!-- INSTRUMENTS, FURNISHING -->
+            <n_c>1</n_c>
+            <l_f>1</l_f>
 
-        <!-- AVIONICS -->
-        <w_uav>1</w_uav>
+            <!-- ELECTRICAL -->
+            <r_kva>1</r_kva>
+            <l_a>1</l_a>
+            <n_gen>1</n_gen>
 
-        <!-- FURNISHING -->
-        <w_c>1</w_c>
+            <!-- AVIONICS -->
+            <w_uav>1</w_uav>
 
-        <!-- AIR COND. -->
-        <n_p>1</n_p>
-        <v_pr>1</v_pr>
+            <!-- FURNISHING -->
+            <w_c>1</w_c>
 
-        <!-- MILITARY CARGO -->
-        <s_cf>1</s_cf>
+            <!-- AIR COND. -->
+            <n_p>1</n_p>
+            <v_pr>1</v_pr>
+
+            <!-- MILITARY CARGO -->
+            <s_cf>1</s_cf>
+        </component>
     </raymer>
 
     <gd>
