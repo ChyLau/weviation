@@ -9,6 +9,7 @@ import cairoplot
 def weight():
     d1, d2, d3 = p.parse_xml()
 
+
     torenbeek = methods.Torenbeek()
 
     tor = {}
@@ -37,22 +38,23 @@ def weight():
     tor['w_ox'] = torenbeek.w_ox(d1['n_pax'], d1['ttype_ox'])
     tor['w_fur'] = torenbeek.w_fur(d1['w_zf'], d1['tunit_fur'])
 
+
     raymer = methods.Raymer()
 
     ray = {}
     ray['w_w'] = raymer.w_w(d2['w_dg'], d2['n_z'], d2['s_w'], d2['a'], d2['t_c'], d2['lambda'], d2['Lambda'], d2['s_csw'])
-    ray['w_htail'] = raymer.w_htail(d2['f_w'], d2['b_h'], d2['w_dg'], d2['n_z'], d2['s_ht'], d2['l_t'], d2['Lambda_ht'], d2['a_h'], d2['s_e'], 'allmoving')
-    ray['w_vtail'] = raymer.w_vtail(d2['w_dg'], d2['n_z'], d2['l_t'], d2['s_vt'], d2['Lambda_vt'], d2['a_v'], d2['t_c'], None, None, 'ttail')
-    ray['w_f'] = raymer.w_f(d2['w_dg'], d2['n_z'], d2['l'], d2['s_f'], d2['d'], d2['lambda'], d2['Lambda'], d2['b_w'], 'nocargo', 'fuselage')
-    ray['w_ucm'] = raymer.w_ucm(d2['w_l'], d2['n_l'], d2['l_m'], d2['n_mw'], d2['n_mss'], d2['v_stall'], 'kneeling')
-    ray['w_ucn'] = raymer.w_ucn(d2['w_l'], d2['n_l'], d2['l_n'], d2['n_nw'], 'kneeling')
-    ray['w_n'] = raymer.w_n(d2['n_lt'], d2['n_w'], d2['n_z'], d2['w_ec'], d2['n_en'], d2['s_n'], 'pylon')
+    ray['w_htail'] = raymer.w_htail(d2['f_w'], d2['b_h'], d2['w_dg'], d2['n_z'], d2['s_ht'], d2['l_t'], d2['Lambda_ht'], d2['a_h'], d2['s_e'], d2['rtype_htail'])
+    ray['w_vtail'] = raymer.w_vtail(d2['w_dg'], d2['n_z'], d2['l_t'], d2['s_vt'], d2['Lambda_vt'], d2['a_v'], d2['t_c'], None, None, d2['rtype_vtail'])
+    ray['w_f'] = raymer.w_f(d2['w_dg'], d2['n_z'], d2['l'], d2['s_f'], d2['d'], d2['lambda'], d2['Lambda'], d2['b_w'], d2['rtype_f1'], d2['rtype_f2'])
+    ray['w_ucm'] = raymer.w_ucm(d2['w_l'], d2['n_l'], d2['l_m'], d2['n_mw'], d2['n_mss'], d2['v_stall'], d2['rtype_ucm'])
+    ray['w_ucn'] = raymer.w_ucn(d2['w_l'], d2['n_l'], d2['l_n'], d2['n_nw'], d2['rtype_ucn'])
+    ray['w_n'] = raymer.w_n(d2['n_lt'], d2['n_w'], d2['n_z'], d2['w_ec'], d2['n_en'], d2['s_n'], d2['rtype_n'])
     ray['w_enc'] = raymer.w_enc(d2['n_en'], d2['l_ec'])
     ray['w_s'] = raymer.w_s(d2['n_en'], d2['w_en'])
     ray['w_fs'] = raymer.w_fs(d2['v_t'], d2['v_i'], d2['v_p'], d2['n_t'])
     ray['w_fc'] = raymer.w_fc(d2['n_f'], d2['n_m'], d2['s_cs'], d2['i_y'])
     ray['w_apui'] = raymer.w_apui(d2['w_apuu'])
-    ray['w_instr'] = raymer.w_instr(d2['n_c'], d2['n_en'], d2['l_f'], d2['b_w'], 'reciprocating', 'turboprop')
+    ray['w_instr'] = raymer.w_instr(d2['n_c'], d2['n_en'], d2['l_f'], d2['b_w'], d2['rtype_instr1'], d2['rtype_instr2'])
     ray['w_hydr'] = raymer.w_hydr(d2['n_f'], d2['l_f'], d2['b_w'])
     ray['w_el'] = raymer.w_el(d2['r_kva'], d2['l_a'], d2['n_gen'])
     ray['w_av'] = raymer.w_av(d2['w_uav'])
@@ -61,18 +63,48 @@ def weight():
     ray['w_ai'] = raymer.w_ai(d2['w_dg'])
     ray['w_hand'] = raymer.w_hand(d2['w_dg'])
     ray['w_mil'] = raymer.w_mil(d2['s_cf'])
-    gd = methods.Gd()
+
+
+    gendyn = methods.Gd()
 
     gd = {}
+    gd['w_w'] = gendyn.w_w(d3['s'], d3['a'], d3['m_h'], d3['w_to'], d3['n_ult'], d3['lambda'], d3['t_cm'], d3['Lambda_12'])
+    gd['w_h'] = gendyn.w_h(d3['w_to'], d3['n_ult'], d3['s_h'], d3['b_h'], d3['t_rh'], d3['c'], d3['l_h'])
+    gd['w_v'] = gendyn.w_v(d3['z_h'], d3['b_v'], d3['w_to'], d3['n_ult'], d3['s_v'], d3['m_h'], d3['l_v'], d3['s_r'], d3['a_v'], d3['lambda_v'], d3['Lambda_14v'])
+    gd['w_f'] = gendyn.w_f(d3['q_d'], d3['w_to'], d3['l_f'], d3['h_f'], d3['gtype_f'])
+    gd['w_n'] = gendyn.w_n(d3['n_inl'], d3['a_in'], d3['l_n'], d3['p_2'], d3['gtype_n'])
+    gd['w_g'] = gendyn.w_g(d3['w_to'])
+    gd['w_e'] = gendyn.w_e(d3['n_e'], d3['w_eng'])
+    gd['w_ai'] = gendyn.w_ai(d3['n_inl'], d3['l_d'], d3['a_inl'], d3['p_2'], d3['gtype_ai1'], d3['gtype_ai2'])
+    gd['w_prop'] = gendyn.w_prop(d3['n_p'], d3['n_bl'], d3['d_p'], d3['p_to'], d3['n_e'], d3['gtype_prop'])
+    gd['w_fs'] = gendyn.w_fs(d3['w_f'], d3['w_supp'], d3['gtype_fs1'], d3['gtype_fs2'])
+    gd['w_ec'] = gendyn.w_ec(d3['l_f'], d3['n_e'], d3['gtype_ec'])
+    gd['w_ecw'] = gendyn.w_ecw(d3['l_f'], d3['b'], d3['n_e'], d3['gtype_ecw'])
+    gd['w_ess'] = gendyn.w_ess(gd['w_e'], d3['gtype_ess'])
+    gd['w_pc'] = gendyn.w_pc(d3['n_bl'], d3['n_p'], d3['d_p'], d3['p_to'], d3['n_e'], d3['gtype_pc'])
+    gd['w_fc'] = gendyn.w_fc(d3['w_to'], d3['q_d'])
+    gd['w_hydr'] = gendyn.w_hydr(d3['k_hydr'], d3['w_to'])
+    gd['w_els'] = gendyn.w_els(d3['w_fs'], d3['w_iae'])
+    gd['w_i'] = gendyn.w_i(d3['n_pil'], d3['w_to'], d3['n_e'])
+    gd['w_api'] = gendyn.w_api(d3['v_pax'], d3['n_cr'], d3['n_pax'])
+    gd['w_ox'] =  gendyn.w_ox(d3['n_cr'], d3['n_pax'])
+    gd['w_apu'] = gendyn.w_apu(d3['k_apu'], d3['w_to'])
+    gd['w_fur'] = gendyn.w_fur(d3['n_fdc'], d3['n_pax'], d3['n_cc'], d3['p_c'], d3['w_to'], d3['gtype_fur'])
+    gd['w_bc'] = gendyn.w_bc(d3['n_pax'], d3['gtype_bc'])
+    gd['w_aux'] = gendyn.w_aux(gd['w_e'])
+    gd['w_pt'] = gendyn.w_pt(d3['k_pt'], d3['w_to'])
 
     return tor, ray, gd
 
-def pie_chart(data1, data2):
+def pie_chart(data1, data2, data3):
     tor = data1
     cairoplot.pie_plot("piechart1", tor, 500, 500, (0,0,0), True, False, None)
 
     ray = data2
     cairoplot.pie_plot("piechart2", ray, 500, 500, (0,0,0), True, False, None)
+
+    gd = data3
+    cairoplot.pie_plot("piechart3", gd, 500, 500, (0,0,0), True, False, None)
 
 
 def main():
@@ -129,8 +161,34 @@ def main():
     print "raymer total", sum(ray.values())
 
     print "------------- GD -------------"
+    print "wing", gd['w_w']
+    print "htail", gd['w_h']
+    print "vtail", gd['w_v']
+    print "fuselage", gd['w_f']
+    print "nacelle", gd['w_n']
+    print "landing gear", gd['w_g']
+    print "engine", gd['w_e']
+    print "air induction", gd['w_ai']
+    print "propeller", gd['w_prop']
+    print "fuel", gd['w_fs']
+    print "engine controls 1", gd['w_ec']
+    print "engine controls 2", gd['w_ecw']
+    print "engine ss", gd['w_ess']
+    print "propeller controls", gd['w_pc']
+    print "flight control", gd['w_fc']
+    print "hydraulic/pneumatic", gd['w_hydr']
+    print "electrical", gd['w_els']
+    print "instruments/avionics/electronics", gd['w_i']
+    print "api", gd['w_api']
+    print "oxygen", gd['w_ox']
+    print "apu", gd['w_apu']
+    print "furnishing", gd['w_fur']
+    print "baggage", gd['w_bc']
+    print "auxiliary", gd['w_aux']
+    print "paint", gd['w_pt']
+    print "gd total", sum(gd.values())
 
-    pie_chart(tor, ray)
+    pie_chart(tor, ray, gd)
 
 if __name__ == "__main__":
     main()

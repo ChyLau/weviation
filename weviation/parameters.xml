@@ -238,89 +238,108 @@
     </raymer>
 
     <gd>
-        <!-- WING -->
-        <s>1</s>
-        <a>1</a>
-        <m_h>1</m_h>
-        <w_to>1</w_to>
-        <n_ult>1</n_ult>
-        <lambda>1</lambda>
-        <t_cm>1</t_cm>
-        <Lambda_12>1</Lambda_12>
+        <type>
+            <gtype_f>in</gtype_f>
+            <gtype_n>turbojet</gtype_n>
+            <gtype_ai1>flat</gtype_ai1>
+            <gtype_ai2>above</gtype_ai2>
+            <gtype_prop>above</gtype_prop>
+            <gtype_fs1>self</gtype_fs1>
+            <gtype_fs2>aviation</gtype_fs2>
+            <gtype_ec>no</gtype_ec>
+            <gtype_ecw>jet</gtype_ecw>
+            <gtype_ess>jetcp</gtype_ess>
+            <gtype_pc>turboprop</gtype_pc>
+            <gtype_fur>business</gtype_fur>
+            <gtype_bc>no</gtype_bc>
+        </type>
 
-        <!-- HTAIL -->
-        <s_h>1</s_h>
-        <b_h>1</b_h>
-        <t_rh>1</t_rh>
-        <c>1</c>
-        <l_h>1</l_h>
+        <component>
+            <!-- WING -->
+            <s>1</s>
+            <a>1</a>
+            <m_h>1</m_h>
+            <w_to>1</w_to>
+            <n_ult>1</n_ult>
+            <lambda>1</lambda>
+            <t_cm>1</t_cm>
+            <Lambda_12>1</Lambda_12>
 
-        <!-- VTAIL -->
-        <z_h>1</z_h>
-        <b_v>1</b_v>
-        <s_v>1</s_v>
-        <l_v>1</l_v>
-        <s_r>1</s_r>
-        <a_v>1</a_v>
-        <lambda_v>1</lambda_v>
-        <Lambda_14v>1</Lambda_14v>
+            <!-- HTAIL -->
+            <s_h>1</s_h>
+            <b_h>1</b_h>
+            <t_rh>1</t_rh>
+            <c>1</c>
+            <l_h>1</l_h>
 
-        <!-- FUSELAGE -->
-        <q_d>1</q_d>
-        <l_f>1</l_f>
-        <h_f>1</h_f>
+            <!-- VTAIL -->
+            <z_h>1</z_h>
+            <b_v>1</b_v>
+            <s_v>1</s_v>
+            <l_v>1</l_v>
+            <s_r>1</s_r>
+            <a_v>1</a_v>
+            <lambda_v>1</lambda_v>
+            <Lambda_14v>1</Lambda_14v>
 
-        <!-- NACELLE -->
-        <n_inl>1</n_inl>
-        <a_in>1</a_in>
-        <l_n>1</l_n>
-        <p_2>1</p_2>
+            <!-- FUSELAGE -->
+            <q_d>1</q_d>
+            <l_f>1</l_f>
+            <h_f>1</h_f>
 
-        <!-- ENGINE, PROPELLER -->
-        <n_e>1</n_e>
-        <w_eng>1</w_eng>
+            <!-- NACELLE -->
+            <n_inl>1</n_inl>
+            <a_in>1</a_in>
+            <l_n>1</l_n>
+            <p_2>1</p_2>
 
-        <!-- AIR INDUCTION -->
-        <l_d>1</l_d>
+            <!-- ENGINE, PROPELLER -->
+            <n_e>1</n_e>
+            <w_eng>1</w_eng>
 
-        <!-- PROPELLER -->
-        <n_p>1</n_p>
-        <n_bl>1</n_bl>
-        <d_p>1</d_p>
-        <p_to>1</p_to>
+            <!-- AIR INDUCTION -->
+            <l_d>1</l_d>
+            <a_inl>1</a_inl>
 
-        <!-- FUEL SYSTEM -->
-        <w_f>1</w_f>
-        <w_supp>1</w_supp>
+            <!-- PROPELLER -->
+            <n_p>1</n_p>
+            <n_bl>1</n_bl>
+            <d_p>1</d_p>
+            <p_to>1</p_to>
 
-        <!-- PROPULSION -->
-        <b>1</b>
+            <!-- FUEL SYSTEM -->
+            <w_f>1</w_f>
+            <w_supp>1</w_supp>
 
-        <!-- HYDRAULICS -->
-        <k_hydr>1</k_hydr>
+            <!-- PROPULSION -->
+            <b>1</b>
 
-        <!-- ELECTRICAL -->
-        <w_fs>1</w_fs>
-        <w_iae>1</w_iae>
+            <!-- HYDRAULICS -->
+            <k_hydr>1</k_hydr>
 
-        <!-- INSTRUMENTS -->
-        <n_pil>1</n_pil>
+            <!-- ELECTRICAL -->
+            <w_fs>1</w_fs>
+            <w_iae>1</w_iae>
 
-        <!-- AIR-COND. -->
-        <v_pax>1</v_pax>
-        <n_cr>1</n_cr>
-        <n_pax>1</n_pax>
+            <!-- INSTRUMENTS -->
+            <n_pil>1</n_pil>
 
-        <!-- AUXILIARY POWER -->
-        <k_apu>1</k_apu>
+            <!-- AIR-COND. -->
+            <v_pax>1</v_pax>
+            <n_cr>1</n_cr>
+            <n_pax>1</n_pax>
 
-        <!-- FURNISHING -->
-        <n_fdc>1</n_fdc>
-        <n_cc>1</n_cc>
-        <p_c>1</p_c>
+            <!-- AUXILIARY POWER -->
+            <k_apu>1</k_apu>
 
-        <!-- PAINT -->
-        <k_pt>1</k_pt>
+            <!-- FURNISHING -->
+            <n_fdc>1</n_fdc>
+            <n_cc>1</n_cc>
+            <p_c>1</p_c>
+
+            <!-- PAINT -->
+            <k_pt>1</k_pt>
+        </component>
     </gd>
 
 </parameters>

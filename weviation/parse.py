@@ -35,11 +35,13 @@ def parse_xml():
                 raise ValueError("In <raymer> key, %r already exists." % element.tag)
 
     for method in fp.findall('gd'):
-        for element in method.findall('*'):
-            if element.tag in data3:
-                raise ValueError("In <gd> key %r already exists." % element.tag)
-            else:
+        for element in method.findall('**'):
+            if ('gtype' in element.tag) and (element.tag not in data3):
+                data3[element.tag] = element.text
+            elif ('gtype' not in element.tag) and (element.tag not in data3):
                 data3[element.tag] = float(element.text)
+            else:
+                raise ValueError("In <gd> key, %r already exists." % element.tag)
 
     return data1, data2, data3
 

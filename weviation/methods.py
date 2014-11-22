@@ -904,7 +904,7 @@ class Gd:
         return k_ecw*((l_f + b)*n_e/100)**e_ecw
 
 # engine starting systems:
-    def w_ess(self, w_e):
+    def w_ess(self, w_e, system):
         if system == 'jetcp': # one or two jet engines using cartridge or pneumatic ss
             k_ess = 9.33
             e_ess = 1.078
@@ -926,7 +926,7 @@ class Gd:
         return k_ess*(w_e/1000)**e_ess
 
 # propeller controls:
-    def w_pc(self, n_bl, n_p, d_p, p_to, n_e):
+    def w_pc(self, n_bl, n_p, d_p, p_to, n_e, propeller):
         if propeller == 'turboprop':
             k_pc = 0.322
             e_pc1 = 0.589
@@ -950,7 +950,7 @@ class Gd:
 
 ## 13) GD hydraulic / pneumatic system
 # k_hydr = 0.0060 - 0.0120
-    def w_hydr(self, k_hydr):
+    def w_hydr(self, k_hydr, w_to):
         return k_hydr*w_to
 
 ## 14) GD electrical system
