@@ -112,6 +112,12 @@ class MainFrame(wx.Frame):
         notebook = NotebookDemo(panel)
         vbox1.Add(notebook, flag=wx.LEFT|wx.RIGHT|wx.EXPAND, border=10)
 
+        vbox1.Add((-1, 5))
+
+        btn1 = wx.Button(panel, label='Calculate', size=(80,30))
+        vbox1.Add(btn1, flag=wx.LEFT, border=10)
+        self.Bind(wx.EVT_BUTTON, self.OnButton, btn1)
+
         # pie chart widget
 
         vbox2 = wx.BoxSizer(wx.VERTICAL)
@@ -142,8 +148,8 @@ class MainFrame(wx.Frame):
 
         vbox3.Add((-1, 10))
 
-        tc1 = wx.TextCtrl(panel, style=wx.TE_MULTILINE)
-        vbox3.Add(tc1, flag=wx.RIGHT|wx.EXPAND, border=10)
+        self.tc1 = wx.TextCtrl(panel, style=wx.TE_READONLY)#, style=wx.TE_MULTILINE)
+        vbox3.Add(self.tc1, proportion=1, flag=wx.EXPAND)
 
         # merge pie chart and output data
         vbox4 = wx.BoxSizer(wx.VERTICAL)
@@ -159,6 +165,12 @@ class MainFrame(wx.Frame):
         self.Layout()
 
         self.Show()
+
+    def OnButton(self, evt):
+        label = evt.GetEventObject().GetLabel()
+
+        if label == 'Calculate':
+            self.tc1.SetValue("OK")
 
 
 if __name__ == "__main__":
