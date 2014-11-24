@@ -14,12 +14,21 @@ class TabPanel(wx.Panel):
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
-        txtOne = wx.TextCtrl(self, wx.ID_ANY, "")
-        txtTwo = wx.TextCtrl(self, wx.ID_ANY, "")
 
-        sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(txtOne, 0, wx.ALL, 5)
-        sizer.Add(txtTwo, 0, wx.ALL, 5)
+        hbox1 = wx.BoxSizer(wx.HORIZONTAL)
+        stxt1 = wx.StaticText(self, label="Gross weight")
+        txtOne = wx.TextCtrl(self, wx.ID_ANY, "")
+        hbox1.Add(stxt1, 0)
+        hbox1.Add(txtOne, 0)
+
+        hbox2 = wx.BoxSizer(wx.HORIZONTAL)
+        stxt2 = wx.StaticText(self, label="Sweep angle")
+        txtTwo = wx.TextCtrl(self, wx.ID_ANY, "")
+        hbox1.Add(stxt2, 0)
+        hbox1.Add(txtTwo, 0)
+
+        sizer.Add(hbox1, 0, wx.ALL, 5)
+        sizer.Add(hbox2, 0, wx.ALL, 5)
 
         self.SetSizer(sizer)
 
@@ -46,6 +55,7 @@ class NotebookDemo(wx.Notebook):
         self.AddPage(tabTwo, "Raymer")
 
         # Create and add the third tab
+
         self.AddPage(TabPanel(self), "General Dynamics")
 
         self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.OnPageChanged)
