@@ -1,4 +1,5 @@
 import wx
+import wx.lib.fancytext as ft
 import numpy
 import matplotlib
 
@@ -6,7 +7,32 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 
 
-class TabPanel(wx.Panel):
+class TabTorenbeek(wx.Panel):
+    """
+    This will be the first notebook tab
+    """
+    def __init__(self, parent):
+        wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
+
+        hbox = wx.BoxSizer(wx.HORIZONTAL)
+
+        xml_str = 'w<sub>g</sub>'
+
+        dlist = ['a', 'b', 'c', 'd']
+        fgs = wx.FlexGridSizer(len(dlist), 2, 5, 5)
+
+        for item in dlist:
+            fstxt = ft.StaticFancyText(self, -1, xml_str)
+            #stxt = wx.StaticText(self, label=item)
+            txt = wx.TextCtrl(self, wx.ID_ANY, "")
+            fgs.Add(fstxt, 0, 0)
+            fgs.Add(txt, 0, 0)
+
+        hbox.Add(fgs, 0, wx.ALL, 5)
+
+        self.SetSizer(hbox)
+
+class TabTorenbeek_backup(wx.Panel):
     """
     This will be the first notebook tab
     """
@@ -18,19 +44,24 @@ class TabPanel(wx.Panel):
         hbox1 = wx.BoxSizer(wx.HORIZONTAL)
         stxt1 = wx.StaticText(self, label="Gross weight")
         txtOne = wx.TextCtrl(self, wx.ID_ANY, "")
+        rb1 = wx.RadioButton(self, label='kg', style=wx.RB_GROUP)
+        rb2 = wx.RadioButton(self, label='lb')
         hbox1.Add(stxt1, 0)
         hbox1.Add(txtOne, 0)
+        hbox1.Add(rb1, 0)
+        hbox1.Add(rb2, 0)
 
         hbox2 = wx.BoxSizer(wx.HORIZONTAL)
         stxt2 = wx.StaticText(self, label="Sweep angle")
         txtTwo = wx.TextCtrl(self, wx.ID_ANY, "")
-        hbox1.Add(stxt2, 0)
-        hbox1.Add(txtTwo, 0)
+        hbox2.Add(stxt2, 0)
+        hbox2.Add(txtTwo, 0)
 
         sizer.Add(hbox1, 0, wx.ALL, 5)
         sizer.Add(hbox2, 0, wx.ALL, 5)
 
         self.SetSizer(sizer)
+
 
 class NotebookDemo(wx.Notebook):
     """
@@ -46,17 +77,17 @@ class NotebookDemo(wx.Notebook):
                              )
 
         # Create the first tab and add it to the notebook
-        tabOne = TabPanel(self)
+        tabOne = TabTorenbeek(self)
         #tabOne.SetBackgroundColour("Gray")
         self.AddPage(tabOne, "Torenbeek")
 
         # Create and add the second tab
-        tabTwo = TabPanel(self)
+        tabTwo = TabTorenbeek(self)
         self.AddPage(tabTwo, "Raymer")
 
         # Create and add the third tab
 
-        self.AddPage(TabPanel(self), "General Dynamics")
+        self.AddPage(TabTorenbeek(self), "General Dynamics")
 
         self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.OnPageChanged)
         self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGING, self.OnPageChanging)
