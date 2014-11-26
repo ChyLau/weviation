@@ -7,12 +7,14 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 
 
-class Tab(wx.Panel):
+class Tab(wx.ScrolledWindow):
     """
     This will be the first notebook tab
     """
     def __init__(self, parent, dlist):
-        wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
+        wx.ScrolledWindow.__init__(self, parent, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL|wx.VSCROLL)
+
+        self.SetScrollRate(5, 5)
 
         hbox = wx.BoxSizer(wx.HORIZONTAL)
 
@@ -33,13 +35,12 @@ class Tab(wx.Panel):
 
         self.SetSizer(hbox)
 
-class TabTorenbeek_backup(wx.Panel):
+class TabTorenbeek_backup(wx.ScrolledWindow):
     """
     This will be the first notebook tab
     """
     def __init__(self, parent):
-        wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
-
+        wx.ScrolledWindow.__init__(self, parent, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL|wx.VSCROLL)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
 
