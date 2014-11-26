@@ -16,17 +16,24 @@ class TabTorenbeek(wx.Panel):
 
         hbox = wx.BoxSizer(wx.HORIZONTAL)
 
-        xml_str = 'w<sub>g</sub>'
+        xml_str = (#'<font style="italic" family="swiss" color="red" weight="bold">'
+                   #'some fancy text y = x<sup>0.5</sup>  now text<sub>with subscript</sub>'
+                   '<Lambda/>')
 
-        dlist = ['a', 'b', 'c', 'd']
-        fgs = wx.FlexGridSizer(len(dlist), 2, 5, 5)
+        dlist = ['w<sub>g</sub>','b<sub>ref</sub>', 'Lambda<sub>1/2</sub>', 'b', 'n<sub>ult</sub>', 'S<sub>w</sub>', 't<sub>r</sub>', 'S<sub>v</sub>', 'S<sub>h</sub>', 'Lambda<sub>h</sub>', 'Lambda<sub>v</sub>', 'V<sub>D</sub>', 'l<sub>t</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>', 'w<sub>g</sub>']
+
+        fgs = wx.FlexGridSizer(len(dlist), 4, 5, 5)
 
         for item in dlist:
-            fstxt = ft.StaticFancyText(self, -1, xml_str)
+            fstxt = ft.StaticFancyText(self, -1, item)
             #stxt = wx.StaticText(self, label=item)
             txt = wx.TextCtrl(self, wx.ID_ANY, "")
+            rb1 = wx.RadioButton(self, label='kg', style=wx.RB_GROUP)
+            rb2 = wx.RadioButton(self, label='lb')
             fgs.Add(fstxt, 0, 0)
             fgs.Add(txt, 0, 0)
+            fgs.Add(rb1, 0, 0)
+            fgs.Add(rb2, 0, 0)
 
         hbox.Add(fgs, 0, wx.ALL, 5)
 
@@ -68,18 +75,22 @@ class NotebookDemo(wx.Notebook):
     Notebook class
     """
     def __init__(self, parent):
-        wx.Notebook.__init__(self, parent, id=wx.ID_ANY, style=
-                             wx.BK_DEFAULT
+        #wx.Notebook.__init__(self, parent, id=wx.ID_ANY, style=
+         #                    wx.BK_DEFAULT
                              #wx.BK_TOP
                              #wx.BK_BOTTOM
                              #wx.BK_LEFT
                              #wx.BK_RIGHT
-                             )
+                            # )
+        wx.Notebook.__init__(self, parent, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL|wx.VSCROLL)
+
 
         # Create the first tab and add it to the notebook
         tabOne = TabTorenbeek(self)
         #tabOne.SetBackgroundColour("Gray")
         self.AddPage(tabOne, "Torenbeek")
+        #wx.ScrolledWindow(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL|wx.VSCROLL)
+
 
         # Create and add the second tab
         tabTwo = TabTorenbeek(self)
@@ -134,6 +145,7 @@ class MainFrame(wx.Frame):
                           )
         self.Centre()
         panel = wx.Panel(self)
+        scrolled = wx.ScrolledWindow(self)
 
         sizer = wx.BoxSizer(wx.HORIZONTAL)
 
@@ -150,7 +162,7 @@ class MainFrame(wx.Frame):
 
         vbox1.Add((-1, 10))
 
-        notebook = NotebookDemo(panel)
+        notebook = NotebookDemo(scrolled)
         vbox1.Add(notebook, flag=wx.LEFT|wx.RIGHT|wx.EXPAND, border=10)
 
         vbox1.Add((-1, 5))
