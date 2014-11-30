@@ -2,19 +2,20 @@ import wx
 import wx.lib.fancytext as ft
 import numpy
 import matplotlib
+import wx.lib.scrolledpanel as scrolled
 
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 
 
-class Tab(wx.ScrolledWindow):
+class Tab(scrolled.ScrolledPanel):
     """
     This will be the first notebook tab
     """
     def __init__(self, parent, dlist):
-        wx.ScrolledWindow.__init__(self, parent, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL|wx.VSCROLL)
+        scrolled.ScrolledPanel.__init__(self, parent, -1)
 
-        self.SetScrollRate(5, 5)
+        #self.SetScrollRate(5, 5)
 
         hbox = wx.BoxSizer(wx.HORIZONTAL)
 
@@ -42,6 +43,8 @@ class TabTorenbeek_backup(wx.ScrolledWindow):
     def __init__(self, parent):
         wx.ScrolledWindow.__init__(self, parent, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.HSCROLL|wx.VSCROLL)
 
+        #self.SetScrollRate(5, 5)
+
         sizer = wx.BoxSizer(wx.VERTICAL)
 
         hbox1 = wx.BoxSizer(wx.HORIZONTAL)
@@ -50,6 +53,7 @@ class TabTorenbeek_backup(wx.ScrolledWindow):
         rb1 = wx.RadioButton(self, label='kg', style=wx.RB_GROUP)
         rb2 = wx.RadioButton(self, label='lb')
         hbox1.Add(stxt1, 0)
+
         hbox1.Add(txtOne, 0)
         hbox1.Add(rb1, 0)
         hbox1.Add(rb2, 0)
@@ -80,6 +84,8 @@ class NotebookDemo(wx.Notebook):
                              )
 
         tlist = ['w<sub>g</sub>','b<sub>ref</sub>', 'Lambda<sub>1/2</sub>', 'b', 'n<sub>ult</sub>', 'S<sub>w</sub>', 't<sub>r</sub>', 'S<sub>v</sub>', 'S<sub>h</sub>', 'Lambda<sub>h</sub>', 'Lambda<sub>v</sub>', 'V<sub>D</sub>', 'l<sub>t</sub>', 'b<sub>f</sub>', 'h<sub>f</sub>', 'S<sub>G</sub>', 'P<sub>to</sub>', 'a<sub>m</sub>', 'b<sub>m</sub>', 'c<sub>m</sub>', 'd<sub>m</sub>', 'a<sub>n</sub>', 'b<sub>n</sub>', 'c<sub>n</sub>', 'd<sub>n</sub>', 'W<sub>to</sub>', 'n<sub>e</sub>', 'W<sub>e</sub>', 'w<sub>fto</sub>', 'l<sub>d</sub>', 'n<sub>i</sub>', 'a<sub>i</sub>', 'a<sub>ex</sub>', 'T<sub>to</sub>', 'n<sub>ft</sub>', 'v<sub>ft</sub>','v<sub>wt</sub>','n<sub>p</sub>','b<sub>p</sub>','d<sub>p</sub>','W<sub>ba</sub>','W<sub>DE</sub>','R<sub>D</sub>','P<sub>el</sub>','l<sub>pax</sub>','n<sub>pax</sub>','W<sub>ZF</sub>']
+
+        print len(tlist)
 
         # Create the first tab and add it to the notebook
         tabOne = Tab(self, tlist)

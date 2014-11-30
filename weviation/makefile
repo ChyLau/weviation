@@ -1,2 +1,2 @@
 all:
-	$(RM) *.svg *.pyc *~
+	$(RM) *.svg *.pyc *~ *.ipynb
