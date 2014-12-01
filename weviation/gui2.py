@@ -2,6 +2,7 @@ import wx
 import wx.lib.fancytext as ft
 import numpy
 import matplotlib
+import methods
 import wx.lib.scrolledpanel as scrolled
 
 from matplotlib.figure import Figure
@@ -62,10 +63,13 @@ class TabTest(wx.Panel):
         hbox.Add(line0, 1, wx.ALL|wx.EXPAND, 5)
 
         vbox0 = wx.BoxSizer(wx.HORIZONTAL)
-        cb0 = wx.CheckBox(self, label='wing')
-        cb1 = wx.CheckBox(self, label='tail')
-        vbox0.Add(cb0, 0)
-        vbox0.Add(cb1, 0)
+        self.cball = wx.CheckBox(self, label='select all')
+        self.cb0 = wx.CheckBox(self, label='wing')
+        self.cb1 = wx.CheckBox(self, label='tail')
+        hbox.Add(self.cball, 0)
+        self.Bind(wx.EVT_CHECKBOX, self.SelectAll, self.cball)
+        vbox0.Add(self.cb0, 0)
+        vbox0.Add(self.cb1, 0)
 
         hbox.Add(vbox0, 0)
 
@@ -75,10 +79,12 @@ class TabTest(wx.Panel):
         j = 0
         clist = [0, 9, 15, 22, 25, 36, 40, 44, ]
         llist = [x+1 for x in clist]
+        self.t = {}
+
         for i in xrange(len(dlist) + len(clist)*2):
             if i in llist:
                 line = wx.StaticLine(self)
-                sizer.Add(line, pos=(i,0), span=(1,2), flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=5)
+                sizer.Add(line, pos=(i,0), span=(1,4), flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=5)
             elif i in clist:
                 stxt2 = wx.StaticText(self, label=comp[j])
                 font = wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD)
@@ -88,6 +94,7 @@ class TabTest(wx.Panel):
             else:
                 stxt = wx.StaticText(self, label=dlist[count])
                 txt = wx.TextCtrl(self, wx.ID_ANY, "")
+                self.t[dlist[count]] = txt
                 sizer.Add(stxt, pos=(i,0))
                 sizer.Add(txt, pos=(i, 1))
                 count += 1
@@ -125,8 +132,27 @@ class TabTest(wx.Panel):
         label = evt.GetEventObject().GetLabel()
 
         if label == 'test':
-            self.tc1.SetValue("OK")
+            d1 = {}
+            for key, value in self.t.iteritems():
+                if value.GetValue() is not u'':
+                    d1[key] = float(value.GetValue())
 
+            torenbeek = methods.Torenbeek()
+            tor = {}
+            if self.cb0.GetValue() == True:
+                tor['w_w'] = torenbeek.w_w(d1['w_g'], d1['b_ref'], d1['Lambda_1/2'], d1['b'], d1['n_ult'], d1['S_w'], d1['t_r'], 'si')
+                print tor['w_w']
+
+            if self.cb1.GetValue() == True:
+                print "OK"
+
+
+    def SelectAll(self, evt):
+        label = evt.GetEventObject().GetValue()
+
+        if label:
+            self.cb0.SetValue(True)
+            self.cb1.SetValue(True)
 
 class NotebookDemo(wx.Notebook):
     """
@@ -150,37 +176,19 @@ class NotebookDemo(wx.Notebook):
             newitem = temp.replace("</sub>", "")
             tlist.append(newitem)
 
-        #sp = scrolled.ScrolledPanel(self)
         # Create the first tab and add it to the notebook
         tabOne = TabTest(self, tlist)
         #tabOne.SetBackgroundColour("Gray")
         self.AddPage(tabOne, "Torenbeek")
 
         # Create and add the second tab
-        tabTwo = TabTorenbeek(self, tlist)
-        #self.AddPage(tabTwo, "Raymer")
+        tabTwo = TabTest(self, tlist)
+        self.AddPage(tabTwo, "Raymer")
 
         # Create and add the third tab
 
-        #self.AddPage(TabTorenbeek(self, tlist), "General Dynamics")
+        self.AddPage(TabTest(self, tlist), "General Dynamics")
 
-        #self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.OnPageChanged)
-        #self.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGING, self.OnPageChanging)
-
-    def OnPageChanged(self, event):
-        old = event.GetOldSelection()
-        new = event.GetSelection()
-        sel = self.GetSelection()
-        print 'OnPageChanged,  old:%d, new:%d, sel:%d\n' % (old, new, sel)
-        event.Skip()
-
-    def OnPageChanging(self, event):
-
-        old = event.GetOldSelection()
-        new = event.GetSelection()
-        sel = self.GetSelection()
-        print 'OnPageChanging, old:%d, new:%d, sel:%d\n' % (old, new, sel)
-        event.Skip()
 
 class OutputData(wx.Panel):
     """
@@ -217,6 +225,8 @@ class MainFrame(wx.Frame):
         vbox1 = wx.BoxSizer(wx.VERTICAL)
 
         text1 = wx.StaticText(panel, label="Input data")
+        font = wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD)
+        text1.SetFont(font)
         vbox1.Add(text1, flag=wx.TOP|wx.LEFT, border=15)
 
         vbox1.Add((-1, 10))
@@ -240,6 +250,8 @@ class MainFrame(wx.Frame):
         vbox2 = wx.BoxSizer(wx.VERTICAL)
 
         text2 = wx.StaticText(panel, label="Output pie chart")
+        font = wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD)
+        text2.SetFont(font)
         vbox2.Add(text2, flag=wx.TOP|wx.LEFT, border=15)
 
         vbox2.Add((-1, 10))
@@ -256,6 +268,8 @@ class MainFrame(wx.Frame):
         vbox3 = wx.BoxSizer(wx.VERTICAL)
 
         text3 = wx.StaticText(panel, label="Output data")
+        font = wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD)
+        text3.SetFont(font)
         vbox3.Add(text3, flag=wx.TOP|wx.LEFT, border=15)
 
         vbox3.Add((-1, 10))
@@ -269,14 +283,16 @@ class MainFrame(wx.Frame):
         vbox3.Add(self.tc1, proportion=1, flag=wx.EXPAND)
 
         # merge pie chart and output data
-        vbox4 = wx.BoxSizer(wx.VERTICAL)
-        vbox4.Add(vbox2)
-        vbox4.Add(vbox3)
+        #vbox4 = wx.BoxSizer(wx.VERTICAL)
+        #vbox4.Add(vbox2)
+        #vbox4.Add(vbox3)
 
         # merge left and right side
         sizer.Add(vbox1, 1, wx.EXPAND)
+        sizer.Add(vbox3, 1, wx.EXPAND)
+        sizer.Add(vbox2, 1, wx.EXPAND)
 
-        sizer.Add(vbox4, 1, wx.EXPAND)
+        #sizer.Add(vbox4, 1, wx.EXPAND)
 
         panel.SetSizer(sizer)
         self.Layout()
