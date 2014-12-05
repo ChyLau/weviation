@@ -1,9 +1,14 @@
 import wx
+import numpy
+import methods
+import matplotlib
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 
-class Frame ( wx.Frame ):
+class Frame (wx.Frame):
 
-    def __init__( self, parent ):
-        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Test", pos = wx.DefaultPosition, size = wx.Size( 600,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+    def __init__(self, parent):
+        wx.Frame.__init__ (self, parent, id = wx.ID_ANY, title = "Test", pos = wx.DefaultPosition, size = wx.Size( 600,300 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL)
 
         self.SetSizeHintsSz( wx.DefaultSize, wx.DefaultSize )
 
