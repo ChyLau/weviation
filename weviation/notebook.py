@@ -129,7 +129,7 @@ class DemoFrame(wx.Frame):
 
         panel = wx.Panel(self)
 
-        # TABS
+        # tabs
         notebook = wx.Notebook(panel)
 
         self.tabOne = TabPanel(notebook, tlist)
@@ -141,19 +141,35 @@ class DemoFrame(wx.Frame):
         self.tabThree = TabPanel(notebook, tlist)
         notebook.AddPage(self.tabThree, "General Dynamics")
 
-        # CALCULATE BUTTON
+        # calculate button
         btnCalc = wx.Button(panel, label='Calculate', size=(80,30))
         self.Bind(wx.EVT_BUTTON, self.calculate_button, btnCalc)
 
-        # DATA OUTPUT
-        self.txt1 = wx.TextCtrl(panel, style=wx.TE_MULTILINE)
+        # method checkbox
+        cb_tor = wx.CheckBox(panel, label='Torenbeek')
+        cb_ray = wx.CheckBox(panel, label='Raymer')
+        cb_gd = wx.CheckBox(panel, label='General Dynamics')
+
+        # data output window
+        self.txt1 = wx.TextCtrl(panel, style=wx.TE_MULTILINE|wx.TE_READONLY)
 
 
-        # ADDING STUFF
+        # adding stuff
         sizer = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(notebook, 1, wx.ALL|wx.EXPAND, 5)
-        sizer.Add(btnCalc)
+
+        vbox0 = wx.BoxSizer(wx.VERTICAL)
+        vbox0.Add(notebook, 1, wx.ALL|wx.EXPAND, 5)
+        hbox0 = wx.BoxSizer(wx.HORIZONTAL)
+
+        hbox0.Add(btnCalc)
+        hbox0.Add(cb_tor)
+        hbox0.Add(cb_ray)
+        hbox0.Add(cb_gd)
+        vbox0.Add(hbox0)
+
+        sizer.Add(vbox0, 1, wx.ALL|wx.EXPAND, 5)
         sizer.Add(self.txt1, 1, wx.ALL|wx.EXPAND, 5)
+
         panel.SetSizer(sizer)
 
         self.Layout()
