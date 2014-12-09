@@ -77,14 +77,16 @@ class Torenbeek:
         else:
             print "USAGE: 'unit' is 'im' or 'si'."
 
-        if f_type == 'presssurized':
+        if f_type == 'pressurized':
             k_f = 1.08
         elif f_type == 'main':
             k_f = 1.07
         elif f_type == 'cargo':
             k_f = 1.10
+        elif f_type == 'rear':
+            k_f = 1.04
         else:
-            print "USAGE: 'f_type' is 'pressurized' or 'main' or 'cargo'."
+            print "USAGE: 'f_type' is 'pressurized' or 'main' or 'cargo' or 'rear'."
 
         return k_wf*k_f*(v_d*l_t/(b_f + h_f))**0.5*s_g**1.2
 

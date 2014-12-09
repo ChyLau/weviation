@@ -12,7 +12,7 @@ class TabPanel(wx.ScrolledWindow):
 
 
     def init_tab(self):
-        self.parameters = ['marker', 'line', 'w_g','b_ref', 'Lambda', 'b', 'n_ult', 's_w', 't_r', 'marker', 'line', 's_v', 's_h', 'Lambda_h', 'Lambda_v', 'marker', 'line', 'v_d', 'l_t', 'b_f', 'h_f', 's_g', 'marker', 'line', 'p_to', 'marker', 'line',  'a_m', 'b_m', 'c_m', 'd_m', 'a_n', 'b_n', 'c_n', 'd_n', 'w_to', 'marker', 'line', 'n_e', 'w_e', 'marker', 'line', 'w_fto', 'marker', 'line', 'l_d', 'n_i', 'a_i', 'marker', 'line', 'ax', 't_to', 'marker', 'line', 'n_ft', 'v_ft', 'marker', 'line', 'v_wt', 'marker', 'line', 'n_p','b_p','d_p', 'marker', 'line', 'w_ba', 'marker', 'line', 'w_de','r_d', 'marker', 'line', 'p_el','marker', 'line', 'l_pax', 'marker', 'line', 'n_pax', 'marker','line', 'w_zf']
+        self.parameters = ['marker', 'line', 'w_g', 'w_to', 'marker', 'line','b_ref', 'Lambda', 'b', 'n_ult', 's_w', 't_r', 'marker', 'line', 'htail type', 'vtail type', 's_v', 's_h', 'Lambda_h', 'Lambda_v', 'marker', 'line', 'fuselage type', 'v_d', 'l_t', 'b_f', 'h_f', 's_g', 'marker', 'line', 'p_to', 'marker', 'line', 'main type', 'nose type', 'a_m', 'b_m', 'c_m', 'd_m', 'a_n', 'b_n', 'c_n', 'd_n', 'marker', 'line', 'surface controls type', 'n_e', 'w_e', 'marker', 'line', 'w_fto', 'marker', 'line', 'air induction type', 'l_d', 'n_i', 'a_i', 'marker', 'line', 'ax', 't_to', 'marker', 'line', 'n_ft', 'v_ft', 'marker', 'line', 'v_wt', 'marker', 'line', 'n_p','b_p','d_p', 'marker', 'line', 'w_ba', 'marker', 'line', 'w_de','r_d', 'marker', 'line', 'hydr./elec. type', 'p_el','marker', 'line', 'l_pax', 'marker', 'line', 'oxygen type', 'n_pax', 'marker','line', 'w_zf']
 
         self.components = ['wing', 'tail', 'fuselage', 'nacelle', 'landing main', 'landing nose', 'surface controls', 'engine', 'accessory', 'air induction', 'exhaust', 'oil/cooler', 'fuel system', 'water injection', 'propeller installation', 'thrust reversers', 'APU', 'instruments', 'hydraulic/lectrical', 'AC/pressure/anti-ice', 'oxygen system', 'furnishing']
 
@@ -37,47 +37,29 @@ class TabPanel(wx.ScrolledWindow):
             vbox0.Add(cb, 0)
             self.cb_dict[item] = cb
 
-        """
-        self.cb_w = wx.CheckBox(self, label='wing')
-        self.cb_t = wx.CheckBox(self, label='tail')
-        self.cb_f = wx.CheckBox(self, label='fuselage')
-        self.cb_n = wx.CheckBox(self, label='nacelle')
-        self.cb_ucm = wx.CheckBox(self, label='landing main')
-        self.cb_ucn = wx.CheckBox(self, label='landing nose')
-        self.cb_sc = wx.CheckBox(self, label='surface controls')
-        self.cb_eni = wx.CheckBox(self, label='engine')
-        self.cb_acc = wx.CheckBox(self, label='accessory')
-        self.cb_airi = wx.CheckBox(self, label='air induction')
-        self.cb_ext = wx.CheckBox(self, label='exhaust')
-        self.cb_oc = wx.CheckBox(self, label='oil/cooler')
-        self.cb_fsi = wx.CheckBox(self, label='fuel system')
-        self.cb_wis = wx.CheckBox(self, label='water injection')
-        self.cb_pi = wx.CheckBox(self, label='propeller install.')
-        self.cb_tr = wx.CheckBox(self, label='thrust reversers')
-        self.cb_apu = wx.CheckBox(self, label='APU')
-        self.cb_navp = wx.CheckBox(self, label='instruments')
-        self.cb_heu = wx.CheckBox(self, label='hydraulic/electrical')
-        self.cb_api = wx.CheckBox(self, label='AC/pressure/anti-ice')
-        self.cb_ox = wx.CheckBox(self, label='oxygen system')
-        self.cb_fur = wx.CheckBox(self, label='furnishing')
-        """
-        # component checkboxes list
-        #self.cb_comp = [self.cb_w, self.cb_t, self.cb_f, self.cb_n, self.cb_ucm, self.cb_ucn, self.cb_sc, self.cb_eni, self.cb_acc, self.cb_airi, self.cb_ext, self.cb_oc, self.cb_fsi, self.cb_wis, self.cb_pi, self.cb_tr, self.cb_apu, self.cb_navp, self.cb_heu, self.cb_api, self.cb_ox, self.cb_fur]
-
-        # add checkboxes
-        """
-        for i, cb in enumerate(self.cb_comp):
-            vbox0.Add(cb, 0)
-        """
-
         hbox.Add(vbox0, 0)
 
         # component list
-        comp_title = ['Wing', 'Tail', 'Fuselage', 'Nacelle,..', 'Landing gear,..', 'Engine,..', 'Accessory', 'Air induction', 'Exhaust', 'Fuel system', 'Water injection', 'Propeller installation', 'APU', 'Instruments, ...', 'Electrical', 'Air conditioning', 'Oxygen system', 'Furnishing']
+        comp_title = ['General', 'Wing', 'Tail', 'Fuselage', 'Nacelle,..', 'Landing gear,..', 'Engine,..', 'Accessory', 'Air induction', 'Exhaust', 'Fuel system', 'Water injection', 'Propeller installation', 'APU', 'Instruments, ...', 'Electrical', 'Air conditioning', 'Oxygen system', 'Furnishing']
+
+        units_im = ['marker', 'line', 'lb', 'lb', 'marker', 'line', 'ft', 'deg', 'ft', '', 'ft^2', 'ft', 'marker', 'line',  '', '', 'ft^2', 'ft^2', 'deg', 'deg', 'marker', 'line', '', 'kts', 'ft', 'ft', 'ft', 'ft^2', 'marker', 'line', 'hp', 'marker', 'line', '', '', '', '', '', '', '', '', '', '', 'marker', 'line', '', '', 'lb', 'marker', 'line', '', 'marker', 'line', '', 'ft', '', 'ft^2', 'marker', 'line', 'ft^2', 'N', 'marker', 'line', '', 'gal', 'marker', 'line', 'gal', 'marker', 'line', '', 'ft', '', 'marker', 'line',  '', 'marker', 'line', 'lb', 'ft', 'marker', 'line', '', 'W', 'marker', 'line', 'ft', 'marker', 'line', '', '', 'marker', 'line', 'ft']
+
+        htail_type = ['Fixed stabilizer', 'Variable-incidence']
+        vtail_type = ['Fuselage-mounted', 'Fin-mounted']
+        fuselage_type = ['Pressurized fuselage', 'Main landing gear', 'Rear fuselage', 'Cargo']
+        ucm_type = ['Low', 'High']
+        ucn_type = ['Low', 'High']
+        sc_type = ['Manually controlled', 'Powered controlled']
+        airi_type = ['Single flat side', 'Multi flat side']
+        heu_type = ['Utility aircraft', 'Jet trainer', 'Propeller transport']
+        ox_type = ['Below 25,000 ft', 'Short flight above', 'Extended overwater']
+        combo_type = [htail_type, vtail_type, fuselage_type, ucm_type, ucn_type, sc_type, airi_type, heu_type, ox_type]
 
         sizer = wx.GridBagSizer(0, 0)
         j = 0 # 'comp' list index
+        k = 0 # 'combo_type' list index
         self.tc_dict = {} # dict of TextCtrl
+        self.ttype = {} # dict of comboboxes
         for i, item in enumerate(self.parameters):
             if item == 'marker':
                 comp_name = wx.StaticText(self, label=comp_title[j])
@@ -88,6 +70,13 @@ class TabPanel(wx.ScrolledWindow):
             elif item == 'line':
                 line = wx.StaticLine(self)
                 sizer.Add(line, pos=(i,0), span=(1,2), flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=5)
+            elif 'type' in item:
+                combo = wx.ComboBox(self, choices=combo_type[k], style=wx.CB_READONLY)
+                combo_title = wx.StaticText(self, label=item)
+                self.ttype[item] = combo
+                sizer.Add(combo, pos=(i,1))
+                sizer.Add(combo_title, pos=(i, 0))
+                k += 1
             else:
                 par = wx.StaticText(self, label=item)
                 tc = wx.TextCtrl(self, wx.ID_ANY, "")
@@ -105,6 +94,62 @@ class TabPanel(wx.ScrolledWindow):
         for key, value in self.tc_dict.iteritems():
             if value.GetValue() is not u'':
                 d1[key] = float(value.GetValue())
+
+        for key, value in self.ttype.iteritems():
+            ret = value.GetValue()
+            if key == 'htail type':
+                if ret == 'Fixed stabilizer':
+                    d1['ttype_htail'] = 'fixed'
+                elif ret == 'Variable-incidence':
+                    d1['ttype_htail'] = 'variable'
+            elif key == 'vtail type':
+                if ret == 'Fuselage-mounted':
+                    d1['ttype_vtail'] = 'fuselage'
+                elif ret == 'Fin-mounted':
+                    d1['ttype_vtail'] = 'fin'
+            elif key == 'fuselage type':
+                if ret == 'Pressurized fuselage':
+                    d1['ttype_f'] = 'pressurized'
+                elif ret == 'Main landing gear':
+                    d1['ttype_f'] = 'main'
+                elif ret == 'Rear fuselage':
+                    d1['ttype_f'] = 'rear'
+                elif ret == 'Cargo':
+                    d1['ttype_f'] = 'cargo'
+            elif key == 'main type':
+                if ret == 'Low':
+                    d1['ttype_ucm'] = 'low'
+                elif ret == 'High':
+                    d1['ttype_ucm'] = 'high'
+            elif key == 'nose type':
+                if ret == 'Low':
+                    d1['ttype_ucn'] = 'low'
+                elif ret == 'High':
+                    d1['ttype_ucn'] = 'high'
+            elif key == 'surface controls type':
+                if ret == 'Manually controlled':
+                    d1['ttype_sc'] = 'transport'
+                elif ret == 'Powered controlled':
+                    d1['ttype_sc'] = 'transportplus'
+            elif key == 'air induction type':
+                if ret == 'Single flat side':
+                    d1['ttype_airi'] = 'single'
+                elif ret == 'Multi flat side':
+                    d1['ttype_airi'] = 'multi'
+            elif key == 'hydr./elec. type':
+                if ret == 'Utility aircraft':
+                    d1['ttype_heu'] = 'utility'
+                elif ret == 'Jet trainer':
+                    d1['ttype_heu'] = 'jet'
+                elif ret == 'Propeller transport':
+                    d1['ttype_heu'] = 'propeller'
+            elif key == 'oxygen type':
+                if ret == 'Below 25,000 ft':
+                    d1['ttype_ox'] = 'below'
+                elif ret == 'Short flight above':
+                    d1['ttype_ox'] = 'above'
+                elif ret == 'Extended overwater':
+                    d1['ttype_ox'] = 'overwater'
 
         torenbeek = methods.Torenbeek()
         tor = {}
@@ -133,15 +178,6 @@ class TabPanel(wx.ScrolledWindow):
         d1['tunit_api']= 'im'
         d1['tunit_ox']= 'im'
         d1['tunit_fur']= 'im'
-        d1['ttype_htail']= 'fixed'
-        d1['ttype_vtail']= 'fuselage'
-        d1['ttype_f']= 'main'
-        d1['ttype_ucm']= 'low'
-        d1['ttype_ucn']= 'low'
-        d1['ttype_sc']= 'light'
-        d1['ttype_airi']= 'single'
-        d1['ttype_heu']= 'utility'
-        d1['ttype_ox']= 'below'
 
         weights = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_ucm', 'w_ucn', 'w_sc', 'w_eni', 'w_acc', 'w_airi', 'w_ext', 'w_oc', 'w_fsi', 'w_wis', 'w_pi', 'w_tr', 'w_apu', 'w_navp', 'w_heu', 'w_api', 'w_ox', 'w_fur']
 
