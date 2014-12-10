@@ -44,6 +44,13 @@ class TabPanel(wx.ScrolledWindow):
 
         units_im = ['marker', 'line', 'lb', 'lb', 'marker', 'line', 'ft', 'deg', 'ft', '', 'ft^2', 'ft', 'marker', 'line',  '', '', 'ft^2', 'ft^2', 'deg', 'deg', 'marker', 'line', '', 'kts', 'ft', 'ft', 'ft', 'ft^2', 'marker', 'line', 'hp', 'marker', 'line', '', '', '', '', '', '', '', '', '', '', 'marker', 'line', '', '', 'lb', 'marker', 'line', '', 'marker', 'line', '', 'ft', '', 'ft^2', 'marker', 'line', 'ft^2', 'N', 'marker', 'line', '', 'gal', 'marker', 'line', 'gal', 'marker', 'line', '', 'ft', '', 'marker', 'line',  '', 'marker', 'line', 'lb', 'ft', 'marker', 'line', '', 'W', 'marker', 'line', 'ft', 'marker', 'line', '', '', 'marker', 'line', 'ft']
 
+        units_im = ['lb', 'lb', 'ft', 'deg', 'ft', '', 'ft^2', 'ft', 'ft^2', 'ft^2', 'deg', 'deg', 'kts', 'ft', 'ft', 'ft', 'ft^2', 'hp', '', '', '', '', '', '', '', '', '', 'lb', '', 'ft', '', 'ft^2', 'ft^2', 'N', '', 'gal', 'gal', '', 'ft', '',  '', 'lb', 'ft', 'W', 'ft', '', 'ft']
+
+        units_si = ['kg', 'kg', 'm', 'rad', 'm', '', 'm^2', 'm', 'm^2', 'm^2', 'rad', 'rad', 'm/s', 'm', 'm', 'm', 'm^2', '', '', '', '', '', '', '', '', '', '', 'kg', '', 'm', '', 'm^2', 'm^2', '', '', 'L', 'L', '', 'm', '',  '', 'kg', 'm', '', 'm', '', 'm']
+
+
+
+
         htail_type = ['Fixed stabilizer', 'Variable-incidence']
         vtail_type = ['Fuselage-mounted', 'Fin-mounted']
         fuselage_type = ['Pressurized fuselage', 'Main landing gear', 'Rear fuselage', 'Cargo']
@@ -58,6 +65,8 @@ class TabPanel(wx.ScrolledWindow):
         sizer = wx.GridBagSizer(0, 0)
         j = 0 # 'comp' list index
         k = 0 # 'combo_type' list index
+        m = 0 # 'units_im' list index
+        n = 0 # 'units_si' list index
         self.tc_dict = {} # dict of TextCtrl
         self.ttype = {} # dict of comboboxes
         for i, item in enumerate(self.parameters):
@@ -81,8 +90,24 @@ class TabPanel(wx.ScrolledWindow):
                 par = wx.StaticText(self, label=item)
                 tc = wx.TextCtrl(self, wx.ID_ANY, "")
                 self.tc_dict[item] = tc
+
                 sizer.Add(par, pos=(i,0))
                 sizer.Add(tc, pos=(i,1))
+                if units_im[m] == '':
+                    m += 1
+                    continue
+                else:
+                    rb1 = wx.RadioButton(self, label=units_im[m], style=wx.RB_GROUP)
+                    sizer.Add(rb1, pos=(i,2))
+                    if units_si[n] == '':
+                        rb2 = wx.RadioButton(self, label=units_si[n])
+                        n += 1
+                        sizer.Add(rb2, pos=(i,3))
+                    else:
+                        filler = wx.StaticText(self, label='')
+                        n += 1
+                        sizer.Add(filler, pos=(i,3))
+
 
         hbox.Add(sizer, 0, wx.ALL, 5)
         self.SetSizer(hbox)
