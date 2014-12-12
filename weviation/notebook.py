@@ -69,6 +69,21 @@ class TabPanel(wx.ScrolledWindow):
         n = 0 # 'units_si' list index
         self.tc_dict = {} # dict of TextCtrl
         self.ttype = {} # dict of comboboxes
+        self.rb_im = {} # dict of radiobuttons 'im'
+        self.rb_si = {} # dict of radiobuttons 'si'
+        self.lb = []
+        self.kg = []
+        self.ft = []
+        self.m = []
+        self.ft2 = []
+        self.m2 = []
+        self.deg = []
+        self.kts = []
+        self.hp = []
+        self.n = []
+        self.w = []
+        self.gal = []
+
         for i, item in enumerate(self.parameters):
             if item == 'marker':
                 comp_name = wx.StaticText(self, label=comp_title[j])
@@ -95,19 +110,22 @@ class TabPanel(wx.ScrolledWindow):
                 sizer.Add(tc, pos=(i,1))
                 if units_im[m] == '':
                     m += 1
+                    n += 1
                     continue
                 else:
                     rb1 = wx.RadioButton(self, label=units_im[m], style=wx.RB_GROUP)
                     sizer.Add(rb1, pos=(i,2))
+                    self.rb_im[item] = rb1
+                    m += 1
                     if units_si[n] == '':
-                        rb2 = wx.RadioButton(self, label=units_si[n])
-                        n += 1
-                        sizer.Add(rb2, pos=(i,3))
-                    else:
                         filler = wx.StaticText(self, label='')
-                        n += 1
                         sizer.Add(filler, pos=(i,3))
-
+                        n += 1
+                    else:
+                        rb2 = wx.RadioButton(self, label=units_si[n])
+                        sizer.Add(rb2, pos=(i,3))
+                        self.rb_si[item] = rb2
+                        n += 1
 
         hbox.Add(sizer, 0, wx.ALL, 5)
         self.SetSizer(hbox)
