@@ -67,22 +67,11 @@ class TabPanel(wx.ScrolledWindow):
         k = 0 # 'combo_type' list index
         m = 0 # 'units_im' list index
         n = 0 # 'units_si' list index
+        self.par_extra = [] # list for units parameters
         self.tc_dict = {} # dict of TextCtrl
         self.ttype = {} # dict of comboboxes
         self.rb_im = {} # dict of radiobuttons 'im'
         self.rb_si = {} # dict of radiobuttons 'si'
-        self.lb = []
-        self.kg = []
-        self.ft = []
-        self.m = []
-        self.ft2 = []
-        self.m2 = []
-        self.deg = []
-        self.kts = []
-        self.hp = []
-        self.n = []
-        self.w = []
-        self.gal = []
 
         for i, item in enumerate(self.parameters):
             if item == 'marker':
@@ -116,6 +105,7 @@ class TabPanel(wx.ScrolledWindow):
                     rb1 = wx.RadioButton(self, label=units_im[m], style=wx.RB_GROUP)
                     sizer.Add(rb1, pos=(i,2))
                     self.rb_im[item] = rb1
+                    self.par_extra.append(item)
                     m += 1
                     if units_si[n] == '':
                         filler = wx.StaticText(self, label='')
@@ -136,7 +126,27 @@ class TabPanel(wx.ScrolledWindow):
 
         for key, value in self.tc_dict.iteritems():
             if value.GetValue() is not u'':
-                d1[key] = float(value.GetValue())
+                if key in self.par_extra:
+                    if self.rb_im[key].GetValue() == True:
+                        k = 1
+                    else:
+                        if self.rb_im[key].GetLabel() == 'lb':
+                            k = 2.20462
+                        elif self.rb_im[key].GetLabel() == 'ft':
+                            k = 3.28084
+                        elif self.rb_im[key].GetLabel() == 'ft^2':
+                            k = 10.7639
+                        elif self.rb_im[key].GetLabel() == 'deg':
+                            k = 57.2957795
+                        elif self.rb_im[key].GetLabel() == 'gal':
+                            k = 4.54609
+                        else:
+                            k = 1
+                            print "[INFO]: key %r not specified." % key
+                else:
+                    k = 1
+            d1[key] = k*float(value.GetValue())
+
 
         for key, value in self.ttype.iteritems():
             ret = value.GetValue()
@@ -229,7 +239,7 @@ class TabPanel(wx.ScrolledWindow):
         for i, weight in enumerate(weights):
             reference[self.components[i]] = weight
 
-        tor['w_w'] = torenbeek.w_w(d1['w_g'], d1['b_ref'], d1['Lambda'], d1['b'], d1['n_ult'], d1['s_w'], d1['t_r'], 'si')
+        tor['w_w'] = torenbeek.w_w(d1['w_g'], d1['b_ref'], d1['Lambda'], d1['b'], d1['n_ult'], d1['s_w'], d1['t_r'], d1['tunit_w'])
         tor['w_tail'] = torenbeek.w_htail(d1['s_h'], d1['v_d'], d1['Lambda_h'], d1['ttype_htail']) + torenbeek.w_vtail(d1['s_v'], d1['v_d'], d1['Lambda_v'], d1['ttype_vtail'])
         tor['w_f'] = torenbeek.w_f(d1['v_d'], d1['l_t'], d1['b_f'], d1['h_f'], d1['s_g'], d1['tunit_f'], d1['ttype_f'])
         tor['w_n'] = torenbeek.w_n(d1['p_to'], d1['tunit_n'])
