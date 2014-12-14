@@ -131,11 +131,11 @@
 
     <raymer>
         <type>
-            <rtype_htail>allmoving</rtype_htail>
+            <rtype_htail>other</rtype_htail>
             <rtype_vtail>ttail</rtype_vtail>
             <rtype_f1>nocargo</rtype_f1>
-            <rtype_f2>fuselage</rtype_f2>
-            <rtype_ucm>kneeling</rtype_ucm>
+            <rtype_f2>other</rtype_f2>
+            <rtype_ucm>other</rtype_ucm>
             <rtype_ucn>kneeling</rtype_ucn>
             <rtype_n>pylon</rtype_n>
             <rtype_instr1>reciprocating</rtype_instr1>
@@ -231,9 +231,6 @@
             <!-- AIR COND. -->
             <n_p>1</n_p>
             <v_pr>1</v_pr>
-
-            <!-- MILITARY CARGO -->
-            <s_cf>1</s_cf>
         </component>
     </raymer>
 

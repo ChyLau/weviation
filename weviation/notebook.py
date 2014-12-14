@@ -312,7 +312,7 @@ class TabRaymer(wx.ScrolledWindow):
 
 
     def init_tab(self):
-        self.parameters = ['marker', 'line', 'w_dg', 'n_z', 'marker', 'line', 'a', 't_c', 'lambda', 'Lambda', 's_w', 's_csw', 'marker', 'line', 'htail type', 'vtail type', 'a_h', 'a_v', 'b_h', 'f_w', 'h_t', 'h_v', 'Lambda_ht', 'Lambda_vt', 'l_t', 's_e', 's_ht', 's_vt', 'marker', 'line', 'fuselage type', 'fuselage door type', 'b_w', 'd', 'l', 's_f', 'marker', 'line', 'nacelle type', 'n_en', 'n_lt', 'n_w', 's_n', 'w_ec', 'marker', 'line', 'main type', 'nose type', 'l_m', 'l_n', 'n_l', 'n_mss', 'n_mw', 'n_nw', 'v_stall', 'w_l', 'marker', 'line', 'l_ec', 'marker', 'line', 'w_en', 'marker', 'line', 'n_t', 'v_i', 'v_p', 'v_t', 'marker', 'line', 'i_y', 'n_f', 'n_m', 's_cs', 'marker', 'line', 'w_puu', 'marker', 'line', 'engine type', 'aircraft type', 'l_f', 'n_c', 'marker', 'line', 'l_a', 'n_gen', 'r_kva', 'marker', 'line', 'w_uav', 'marker', 'line', 'w_c', 'marker', 'line', 'n_p', 'v_pr']
+        self.parameters = ['marker', 'line', 'w_dg', 'n_z', 'marker', 'line', 'a', 't_c', 'lambda', 'Lambda', 's_w', 's_csw', 'marker', 'line', 'htail type', 'vtail type', 'a_h', 'a_v', 'b_h', 'f_w', 'h_t', 'h_v', 'Lambda_ht', 'Lambda_vt', 'l_t', 's_e', 's_ht', 's_vt', 'marker', 'line', 'fuselage type', 'fuselage door type', 'b_w', 'd', 'l', 's_f', 'marker', 'line', 'nacelle type', 'n_en', 'n_lt', 'n_w', 's_n', 'w_ec', 'marker', 'line', 'main type', 'nose type', 'l_m', 'l_n', 'n_l', 'n_mss', 'n_mw', 'n_nw', 'v_stall', 'w_l', 'marker', 'line', 'l_ec', 'marker', 'line', 'w_en', 'marker', 'line', 'n_t', 'v_i', 'v_p', 'v_t', 'marker', 'line', 'i_y', 'n_f', 'n_m', 's_cs', 'marker', 'line', 'w_apuu', 'marker', 'line', 'engine type', 'aircraft type', 'l_f', 'n_c', 'marker', 'line', 'l_a', 'n_gen', 'r_kva', 'marker', 'line', 'w_uav', 'marker', 'line', 'w_c', 'marker', 'line', 'n_p', 'v_pr']
 
 
         self.components = ['wing', 'tail', 'fuselage', 'nacelle', 'landing main', 'landing nose', 'engine controls', 'pneumatic', 'fuel system', 'flight controls', 'APU', 'instruments', 'hydraulics', 'electrical', 'avionics', 'furnishing', 'air conditioning', 'anti-icing', 'handling gear']
@@ -355,7 +355,7 @@ class TabRaymer(wx.ScrolledWindow):
         nacelle_type = ['Pylon-mounted', 'Other']
         ucm_type = ['Kneeling gear', 'Other']
         ucn_type = ['Kneeling gear', 'Other']
-        instr1_type = ['Reciprocating engine', 'Other']
+        instr1_type = ['Reciprocating', 'Other']
         instr2_type = ['Turboprop', 'Other']
 
         combo_type = [htail_type, vtail_type, fuselage1_type, fuselage2_type, nacelle_type, ucm_type, ucn_type, instr1_type, instr2_type]
@@ -420,7 +420,7 @@ class TabRaymer(wx.ScrolledWindow):
 
     def calculate_weight(self):
 
-        d1 = {}
+        d2 = {}
 
         for key, value in self.tc_dict.iteritems():
             if value.GetValue() is not u'':
@@ -449,121 +449,127 @@ class TabRaymer(wx.ScrolledWindow):
                             print "[INFO]: key %r not specified." % key
                 else:
                     k = 1
-            d1[key] = k*float(value.GetValue())
+            d2[key] = k*float(value.GetValue())
 
 
         for key, value in self.rtype.iteritems():
             ret = value.GetValue()
             if key == 'htail type':
-                if ret == 'Fixed stabilizer':
-                    d1['ttype_htail'] = 'fixed'
-                elif ret == 'Variable-incidence':
-                    d1['ttype_htail'] = 'variable'
+                if ret == 'All-moving':
+                    d2['rtype_htail'] = 'allmoving'
+                elif ret == 'Other':
+                    d2['rtype_htail'] = 'other'
             elif key == 'vtail type':
-                if ret == 'Fuselage-mounted':
-                    d1['ttype_vtail'] = 'fuselage'
-                elif ret == 'Fin-mounted':
-                    d1['ttype_vtail'] = 'fin'
+                if ret == 'Conventional':
+                    d2['rtype_vtail'] = 'conv'
+                elif ret == 'T-tail':
+                    d2['rtype_vtail'] = 'ttail'
+            elif key == 'fuselage door type':
+                if ret == 'No cargo door':
+                    d2['rtype_f1'] = 'nocargo'
+                elif ret == 'Single side cargo':
+                    d2['rtype_f1'] = 'onecargo'
+                elif ret == 'Double side cargo':
+                    d2['rtype_f1'] = 'twocargo'
+                elif ret == 'Aft clamshell':
+                    d2['rtype_f1'] = 'clam'
+                elif ret == 'Double side + aft clamshell':
+                    d2['rtype_f1'] = 'cargoclam'
             elif key == 'fuselage type':
-                if ret == 'Pressurized fuselage':
-                    d1['ttype_f'] = 'pressurized'
-                elif ret == 'Main landing gear':
-                    d1['ttype_f'] = 'main'
-                elif ret == 'Rear fuselage':
-                    d1['ttype_f'] = 'rear'
-                elif ret == 'Cargo':
-                    d1['ttype_f'] = 'cargo'
+                if ret == 'Fuselage-mounted main landing gear':
+                    d2['rtype_f2'] = 'fuselage'
+                elif ret == 'Other':
+                    d2['rtype_f2'] = 'other'
+            elif key == 'fuselage door type':
+                if ret == 'No cargo door':
+                    d2['rtype_f2'] = 'nocargo'
+                elif ret == 'Single side cargo':
+                    d2['rtype_f2'] = 'onecargo'
+                elif ret == 'Double side cargo':
+                    d2['rtype_f2'] = 'twocargo'
+                elif ret == 'Aft clamshell':
+                    d2['rtype_f2'] = 'clam'
+                elif ret == 'Double side + aft clamshell':
+                    d2['rtype_f2'] = 'cargoclam'
+            elif key == 'nacelle type':
+                if ret == 'Pylon-mounted':
+                    d2['rtype_n'] = 'pylon'
+                elif ret == 'Other':
+                    d2['rtype_n'] = 'other'
             elif key == 'main type':
-                if ret == 'Low':
-                    d1['ttype_ucm'] = 'low'
-                elif ret == 'High':
-                    d1['ttype_ucm'] = 'high'
+                if ret == 'Kneeling gear':
+                    d2['rtype_ucm'] = 'kneeling'
+                elif ret == 'Other':
+                    d2['rtype_ucm'] = 'other'
             elif key == 'nose type':
-                if ret == 'Low':
-                    d1['ttype_ucn'] = 'low'
-                elif ret == 'High':
-                    d1['ttype_ucn'] = 'high'
-            elif key == 'surface controls type':
-                if ret == 'Manually controlled':
-                    d1['ttype_sc'] = 'transport'
-                elif ret == 'Powered controlled':
-                    d1['ttype_sc'] = 'transportplus'
-            elif key == 'air induction type':
-                if ret == 'Single flat side':
-                    d1['ttype_airi'] = 'single'
-                elif ret == 'Multi flat side':
-                    d1['ttype_airi'] = 'multi'
-            elif key == 'hydr./elec. type':
-                if ret == 'Utility aircraft':
-                    d1['ttype_heu'] = 'utility'
-                elif ret == 'Jet trainer':
-                    d1['ttype_heu'] = 'jet'
-                elif ret == 'Propeller transport':
-                    d1['ttype_heu'] = 'propeller'
-            elif key == 'oxygen type':
-                if ret == 'Below 25,000 ft':
-                    d1['ttype_ox'] = 'below'
-                elif ret == 'Short flight above':
-                    d1['ttype_ox'] = 'above'
-                elif ret == 'Extended overwater':
-                    d1['ttype_ox'] = 'overwater'
+                if ret == 'Kneeling gear':
+                    d2['rtype_ucn'] = 'kneeling'
+                elif ret == 'Other':
+                    d2['rtype_ucn'] = 'other'
+            elif key == 'engine type':
+                if ret == 'Reciprocating':
+                    d2['rtype_instr1'] = 'reciprocating'
+                elif ret == 'Other':
+                    d2['rtype_instr1'] = 'other'
+            elif key == 'aircraft type':
+                if ret == 'Turboprop':
+                    d2['rtype_instr2'] = 'turboprop'
+                elif ret == 'Other':
+                    d2['rtype_instr2'] = 'other'
 
-        torenbeek = methods.Torenbeek()
-        tor = {}
+        raymer = methods.Raymer()
+        ray = {}
 
-        weights = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_ucm', 'w_ucn', 'w_sc', 'w_eni', 'w_acc', 'w_airi', 'w_ext', 'w_oc', 'w_fsi', 'w_wis', 'w_pi', 'w_tr', 'w_apu', 'w_navp', 'w_heu', 'w_api', 'w_ox', 'w_fur']
+        weights = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_ucm', 'w_ucn', 'w_enc', 'w_s', 'w_fs', 'w_fc', 'w_apui', 'w_instr', 'w_hydr', 'w_el', 'w_av', 'w_furn', 'w_ac', 'w_ai', 'w_hand']
 
         # dictionary of weights and components
         reference = {}
         for i, weight in enumerate(weights):
             reference[self.components[i]] = weight
 
-        tor['w_w'] = torenbeek.w_w(d1['w_g'], d1['b_ref'], d1['Lambda'], d1['b'], d1['n_ult'], d1['s_w'], d1['t_r'], d1['tunit_w'])
-        tor['w_tail'] = torenbeek.w_htail(d1['s_h'], d1['v_d'], d1['Lambda_h'], d1['ttype_htail']) + torenbeek.w_vtail(d1['s_v'], d1['v_d'], d1['Lambda_v'], d1['ttype_vtail'])
-        tor['w_f'] = torenbeek.w_f(d1['v_d'], d1['l_t'], d1['b_f'], d1['h_f'], d1['s_g'], d1['tunit_f'], d1['ttype_f'])
-        tor['w_n'] = torenbeek.w_n(d1['p_to'], d1['tunit_n'])
-        tor['w_ucm'] = torenbeek.w_uc(d1['a_m'], d1['b_m'], d1['c_m'], d1['d_m'], d1['w_to'], d1['tunit_ucm'], d1['ttype_ucm'])
-        tor['w_ucn'] = torenbeek.w_uc(d1['a_n'], d1['b_n'], d1['c_n'], d1['d_n'], d1['w_to'], d1['tunit_ucn'], d1['ttype_ucn'])
-        tor['w_sc'] = torenbeek.w_sc(d1['w_to'], d1['tunit_sc'], d1['ttype_sc'])
-        tor['w_eni'] = torenbeek.w_eni(d1['n_e'], d1['w_e'])
-        tor['w_acc'] = torenbeek.w_acc(d1['n_e'], d1['w_fto'], d1['tunit_acc'])
-        tor['w_airi'] = torenbeek.w_airi(d1['l_d'], d1['n_i'], d1['a_i'], d1['tunit_airi'], d1['ttype_airi'])
-        tor['w_ext'] = torenbeek.w_ext(d1['ax'], d1['tunit_ext'])
-        tor['w_oc'] = torenbeek.w_oc(d1['n_e'], d1['w_e'])
-        tor['w_fsi'] = torenbeek.w_fsi(d1['n_e'], d1['n_ft'], d1['v_ft'], d1['tunit_fsi'])
-        tor['w_wis'] = torenbeek.w_wis(d1['v_wt'], d1['tunit_wis'])
-        tor['w_pi'] = torenbeek.w_pi(d1['n_p'], d1['b_p'], d1['d_p'], d1['p_to'], d1['tunit_pi'])
-        tor['w_tr'] = torenbeek.w_tr(d1['n_e'], d1['w_e'])
-        tor['w_apu'] = torenbeek.w_apu(d1['w_ba'], d1['tunit_apu'])
-        tor['w_navp'] = torenbeek.w_navp(d1['w_to'], d1['tunit_navp'])
-        tor['w_heu'] = torenbeek.w_heu(d1['w_e'], d1['tunit_heu'], d1['ttype_heu'])
-        tor['w_api'] = torenbeek.w_api(d1['l_pax'], d1['tunit_api'])
-        tor['w_ox'] = torenbeek.w_ox(d1['n_pax'], d1['ttype_ox'])
-        tor['w_fur'] = torenbeek.w_fur(d1['w_zf'], d1['tunit_fur'])
+        ray['w_w'] = raymer.w_w(d2['w_dg'], d2['n_z'], d2['s_w'], d2['a'], d2['t_c'], d2['lambda'], d2['Lambda'], d2['s_csw'])
+        ray['w_tail'] = raymer.w_htail(d2['f_w'], d2['b_h'], d2['w_dg'], d2['n_z'], d2['s_ht'], d2['l_t'], d2['Lambda_ht'], d2['a_h'], d2['s_e'], d2['rtype_htail']) + raymer.w_vtail(d2['w_dg'], d2['n_z'], d2['l_t'], d2['s_vt'], d2['Lambda_vt'], d2['a_v'], d2['t_c'], None, None, d2['rtype_vtail'])
+        ray['w_f'] = raymer.w_f(d2['w_dg'], d2['n_z'], d2['l'], d2['s_f'], d2['d'], d2['lambda'], d2['Lambda'], d2['b_w'], d2['rtype_f1'], d2['rtype_f2'])
+        ray['w_ucm'] = raymer.w_ucm(d2['w_l'], d2['n_l'], d2['l_m'], d2['n_mw'], d2['n_mss'], d2['v_stall'], d2['rtype_ucm'])
+        ray['w_ucn'] = raymer.w_ucn(d2['w_l'], d2['n_l'], d2['l_n'], d2['n_nw'], d2['rtype_ucn'])
+        ray['w_n'] = raymer.w_n(d2['n_lt'], d2['n_w'], d2['n_z'], d2['w_ec'], d2['n_en'], d2['s_n'], d2['rtype_n'])
+        ray['w_enc'] = raymer.w_enc(d2['n_en'], d2['l_ec'])
+        ray['w_s'] = raymer.w_s(d2['n_en'], d2['w_en'])
+        ray['w_fs'] = raymer.w_fs(d2['v_t'], d2['v_i'], d2['v_p'], d2['n_t'])
+        ray['w_fc'] = raymer.w_fc(d2['n_f'], d2['n_m'], d2['s_cs'], d2['i_y'])
+        ray['w_apui'] = raymer.w_apui(d2['w_apuu'])
+        ray['w_instr'] = raymer.w_instr(d2['n_c'], d2['n_en'], d2['l_f'], d2['b_w'], d2['rtype_instr1'], d2['rtype_instr2'])
+        ray['w_hydr'] = raymer.w_hydr(d2['n_f'], d2['l_f'], d2['b_w'])
+        ray['w_el'] = raymer.w_el(d2['r_kva'], d2['l_a'], d2['n_gen'])
+        ray['w_av'] = raymer.w_av(d2['w_uav'])
+        ray['w_furn'] = raymer.w_furn(d2['n_c'], d2['w_c'], d2['s_f'])
+        ray['w_ac'] = raymer.w_ac(d2['n_p'], d2['v_pr'], d2['w_uav'])
+        ray['w_ai'] = raymer.w_ai(d2['w_dg'])
+        ray['w_hand'] = raymer.w_hand(d2['w_dg'])
 
         ret = ""
-        ret += "TORENBEEK" + "\n" + "------------------------------" + "\n"
+        ret += "RAYMER" + "\n" + "------------------------------" + "\n"
         for component in self.components:
             if self.cb_dict[component].GetValue() == True:
-                ret += component + ":      " + str(round(tor[reference[component]], 2)) + "\n"
+                ret += component + ":      " + str(round(ray[reference[component]], 2)) + "\n"
 
-        ret += "total:      " + str(round(sum(tor.values()), 2))
+        ret += "total:      " + str(round(sum(ray.values()), 2))
         return ret
 
-    def load_xml(self, d1):
-        utype = ['fixed', 'variable', 'fuselage', 'fin', 'pressurized', 'main', 'rear', 'cargo', 'low', 'high', 'transport', 'transportplus', 'single', 'multi', 'utility', 'jet', 'propeller', 'below', 'above', 'overwater']
+    def load_xml(self, d2):
+        utype = ['allmoving', 'other', 'conv', 'ttail', 'fuselage', 'nocargo', 'onecargo', 'twocargo', 'clam', 'cargoclam', 'pylon', 'kneeling', 'reciprocating', 'turboprop']
 
-        ltype = ['Fixed stabilizer', 'Variable-incidence', 'Fuselage-mounted', 'Fin-mounted', 'Pressurized fuselage', 'Main landing gear', 'Rear fuselage', 'Cargo', 'Low', 'High', 'Manually controlled', 'Powered controlled', 'Single flat side', 'Multi flat side', 'Utility aircraft', 'Jet trainer', 'Propeller transport', 'Below 25,000 ft', 'Short flight above', 'Extended overwater']
+        ltype = ['All-moving', 'Other', 'Conventional', 'T-tail', 'Fuselage-mounted main landing gear', 'No cargo door', 'Single side cargo', 'Double side cargo', 'Aft clamshell', 'Double side + aft clamshell', 'Pylon-mounted', 'Kneeling gear', 'Reciprocating', 'Turboprop']
 
         type_too = dict(zip(utype, ltype))
 
-        ktype = ['ttype_htail', 'ttype_vtail', 'ttype_f', 'ttype_ucm', 'ttype_ucn', 'ttype_sc', 'ttype_airi', 'ttype_heu', 'ttype_ox']
+        ktype = ['rtype_htail', 'rtype_vtail', 'rtype_f1', 'rtype_f2', 'rtype_n', 'rtype_ucm', 'rtype_ucn', 'rtype_instr1', 'rtype_instr2']
 
-        mtype = ['htail type', 'vtail type', 'fuselage type', 'main type', 'nose type', 'surface controls type', 'air induction type', 'hydr./elec. type', 'oxygen type']
+        mtype = ['htail type', 'vtail type', 'fuselage door type', 'fuselage type', 'nacelle type', 'main type', 'nose type', 'engine type', 'aircraft type']
 
         type_moo = dict(zip(ktype, mtype))
 
-        for key, value in d1.iteritems():
+        for key, value in d2.iteritems():
             if 'rtype' in key:
                 self.rtype[type_moo[key]].SetValue((type_too[value]))
             else:
@@ -648,12 +654,11 @@ class DemoFrame(wx.Frame):
         label = evt.GetEventObject().GetLabel()
 
         if label == 'Calculate':
+            newline = "\n\n"
             if self.cb_tor.GetValue() == True:
-                self.txt1.SetValue(self.tabOne.calculate_weight())
+                self.txt1.AppendText(newline + self.tabOne.calculate_weight())
             if self.cb_ray.GetValue() == True:
-                a = '\n\n\nTEST'
-                self.txt1.AppendText(a)
-                #self.txt1.SetValue(self.tabTwo.calculate_weight())
+                self.txt1.AppendText(newline + self.tabTwo.calculate_weight())
 
     def load_button(self, evt):
         label = evt.GetEventObject().GetLabel()
@@ -661,6 +666,7 @@ class DemoFrame(wx.Frame):
         if label == 'Load XML':
             d1, d2, d3 = p.parse_xml()
             self.tabOne.load_xml(d1)
+            self.tabTwo.load_xml(d2)
 
 
 
