@@ -588,6 +588,292 @@ class TabRaymer(wx.ScrolledWindow):
 ####################################################################
 ####################################################################
 
+class TabGeneralDynamics(wx.ScrolledWindow):
+    def __init__(self, parent):
+        """"""
+        wx.ScrolledWindow.__init__(self, parent)
+        self.SetScrollRate(5,15)
+
+        self.init_tab()
+
+
+    def init_tab(self):
+        self.parameters = ['marker', 'line', 'w_to', 'n_ult', 'marker', 'line', 'a', 'lambda', 'Lambda_12', 'm_h', 's', 't_cm', 'marker', 'line', 'a_v', 'b_h', 'b_v', 'c', 'lambda_v', 'Lambda_14v', 'l_h', 'l_v', 's_h', 's_r', 's_v', 't_rh', 'z_h', 'marker', 'line', 'h_f', 'l_f', 'q_d', 'marker', 'line', 'a_in', 'l_n', 'n_inl', 'p_2', 'marker', 'line', 'n_e', 'w_eng', 'marker', 'line', 'a_inl', 'l_d', 'marker', 'line', 'd_p', 'n_bl', 'n_p', 'p_to', 'marker', 'line', 'w_f', 'w_supp', 'marker', 'line', 'b', 'marker', 'line', 'k_hydr', 'marker', 'line', 'w_fs', 'w_iae',  'marker', 'line', 'n_pil', 'marker', 'line', 'n_cr', 'n_pax', 'v_pax', 'marker', 'line', 'k_apu', 'marker', 'line', 'n_cc', 'n_fdc', 'p_c', 'marker', 'line', 'k_pt']
+
+
+        self.components = ['wing', 'tail', 'fuselage', 'nacelle', 'landing main', 'landing nose', 'engine controls', 'pneumatic', 'fuel system', 'flight controls', 'APU', 'instruments', 'hydraulics', 'electrical', 'avionics', 'furnishing', 'air conditioning', 'anti-icing', 'handling gear']
+
+        hbox = wx.BoxSizer(wx.VERTICAL)
+
+        stxt0 = wx.StaticText(self, label='Components')
+        font = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD)
+        stxt0.SetFont(font)
+        line0 = wx.StaticLine(self)
+        hbox.Add(stxt0, 0, wx.ALL, 5)
+        hbox.Add(line0, 1, wx.ALL|wx.EXPAND, 5)
+
+        vbox0 = wx.BoxSizer(wx.HORIZONTAL)
+        self.cball = wx.CheckBox(self, label='(de)select all')
+        hbox.Add(self.cball, 0)
+        self.Bind(wx.EVT_CHECKBOX, self.select_all, self.cball)
+
+        self.cb_dict = {}
+        # component checkboxes
+        for item in self.components:
+            cb = wx.CheckBox(self, label=item)
+            vbox0.Add(cb, 0)
+            self.cb_dict[item] = cb
+
+        hbox.Add(vbox0, 0)
+
+        # component list
+        comp_title = ['General', 'Wing', 'Tail', 'Fuselage', 'Nacelle', 'Engine,...', 'Air induction', 'Propeller', 'Fuel system', 'Propulsion', 'Hydraulics', 'Electrical','Instruments', 'Air-donditioning', 'Auxiliary power', 'Furnishing', 'Paint']
+
+        units_im = ['lb', '', '', '', '', 'deg', 'ft^2', 'ft^2', '', '', 'ft', 'ft', 'ft', 'ft', 'deg', 'deg', 'ft', 'ft^2', 'ft^2', 'ft^2', 'ft', 'ft', 'ft', 'ft^2', '', 'ft', 'ft', 'ft^2', 'lb', 'in.', 'in.', '', '', '', '', '', 'lb', 'ft', 'lb',  '', 'gal', 'gal', 'gal', 'lb-ft^2', '', '', 'ft^2', 'lb', 'ft', '', 'ft', '', 'kvA', 'lb', 'lb', '', 'ft^3']
+
+        units_si = ['kg', '', '', '', '', 'rad', 'm^2', 'm^2', '', '', 'm', 'm', 'm', 'm', 'rad', 'rad', 'm', 'm^2', 'm^2', 'm^2', 'm', 'm', 'm', 'm^2', '', 'm', 'm', 'm^2', 'kg', 'cm', 'cm', '', '', '', '', '', 'kg', 'm', 'kg',  '', 'L', 'L', 'L', 'kg-m^2', '', '', 'm^2', 'kg', 'm', '', 'm', '', '', 'lg', 'kg', '', 'm^3']
+
+
+        htail_type = ['All-moving', 'Other']
+        vtail_type = ['Conventional', 'T-tail']
+        fuselage1_type = ['Fuselage-mounted main landing gear', 'Other']
+        fuselage2_type = ['No cargo door', 'Single side cargo', 'Double side cargo', 'Aft clamshell', 'Double side + aft clamshell']
+        nacelle_type = ['Pylon-mounted', 'Other']
+        ucm_type = ['Kneeling gear', 'Other']
+        ucn_type = ['Kneeling gear', 'Other']
+        instr1_type = ['Reciprocating', 'Other']
+        instr2_type = ['Turboprop', 'Other']
+
+        combo_type = [htail_type, vtail_type, fuselage1_type, fuselage2_type, nacelle_type, ucm_type, ucn_type, instr1_type, instr2_type]
+
+        sizer = wx.GridBagSizer(0, 0)
+        j = 0 # 'comp' list index
+        k = 0 # 'combo_type' list index
+        m = 0 # 'units_im' list index
+        n = 0 # 'units_si' list index
+        self.par_extra = [] # list for units parameters
+        self.tc_dict = {} # dict of TextCtrl
+        self.rtype = {} # dict of comboboxes
+        self.rb_im = {} # dict of radiobuttons 'im'
+        self.rb_si = {} # dict of radiobuttons 'si'
+
+        for i, item in enumerate(self.parameters):
+            if item == 'marker':
+                comp_name = wx.StaticText(self, label=comp_title[j])
+                font = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD)
+                comp_name.SetFont(font)
+                j += 1
+                sizer.Add(comp_name, pos=(i,0), flag=wx.TOP, border=10)
+            elif item == 'line':
+                line = wx.StaticLine(self)
+                sizer.Add(line, pos=(i,0), span=(1,2), flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=5)
+            elif 'type' in item:
+                combo = wx.ComboBox(self, choices=combo_type[k], style=wx.CB_READONLY)
+                combo_title = wx.StaticText(self, label=item)
+                self.rtype[item] = combo
+                sizer.Add(combo, pos=(i,1))
+                sizer.Add(combo_title, pos=(i, 0))
+                k += 1
+            else:
+                par = wx.StaticText(self, label=item)
+                tc = wx.TextCtrl(self, wx.ID_ANY, "")
+                self.tc_dict[item] = tc
+
+                sizer.Add(par, pos=(i,0))
+                sizer.Add(tc, pos=(i,1))
+                if units_im[m] == '':
+                    m += 1
+                    n += 1
+                    continue
+                else:
+                    rb1 = wx.RadioButton(self, label=units_im[m], style=wx.RB_GROUP)
+                    sizer.Add(rb1, pos=(i,2))
+                    self.rb_im[item] = rb1
+                    self.par_extra.append(item)
+                    m += 1
+                    if units_si[n] == '':
+                        filler = wx.StaticText(self, label='')
+                        sizer.Add(filler, pos=(i,3))
+                        n += 1
+                    else:
+                        rb2 = wx.RadioButton(self, label=units_si[n])
+                        sizer.Add(rb2, pos=(i,3))
+                        self.rb_si[item] = rb2
+                        n += 1
+
+        hbox.Add(sizer, 0, wx.ALL, 5)
+        self.SetSizer(hbox)
+
+    def calculate_weight(self):
+
+        d2 = {}
+
+        for key, value in self.tc_dict.iteritems():
+            if value.GetValue() is not u'':
+                if key in self.par_extra:
+                    if self.rb_im[key].GetValue() == True:
+                        k = 1
+                    else:
+                        if self.rb_im[key].GetLabel() == 'lb':
+                            k = 2.20462
+                        elif self.rb_im[key].GetLabel() == 'ft':
+                            k = 3.28084
+                        elif self.rb_im[key].GetLabel() == 'ft^2':
+                            k = 10.7639
+                        elif self.rb_im[key].GetLabel() == 'deg':
+                            k = 57.2957795
+                        elif self.rb_im[key].GetLabel() == 'gal':
+                            k = 4.54609
+                        elif self.rb_im[key].GetLabel() == 'in.':
+                            k = 0.393701
+                        elif self.rb_im[key].GetLabel() == 'lb-ft^2':
+                            k = 23.73036
+                        elif self.rb_im[key].GetLabel() == 'ft^3':
+                            k = 35.3147
+                        else:
+                            k = 1
+                            print "[INFO]: key %r not specified." % key
+                else:
+                    k = 1
+            d2[key] = k*float(value.GetValue())
+
+
+        for key, value in self.rtype.iteritems():
+            ret = value.GetValue()
+            if key == 'htail type':
+                if ret == 'All-moving':
+                    d2['rtype_htail'] = 'allmoving'
+                elif ret == 'Other':
+                    d2['rtype_htail'] = 'other'
+            elif key == 'vtail type':
+                if ret == 'Conventional':
+                    d2['rtype_vtail'] = 'conv'
+                elif ret == 'T-tail':
+                    d2['rtype_vtail'] = 'ttail'
+            elif key == 'fuselage door type':
+                if ret == 'No cargo door':
+                    d2['rtype_f1'] = 'nocargo'
+                elif ret == 'Single side cargo':
+                    d2['rtype_f1'] = 'onecargo'
+                elif ret == 'Double side cargo':
+                    d2['rtype_f1'] = 'twocargo'
+                elif ret == 'Aft clamshell':
+                    d2['rtype_f1'] = 'clam'
+                elif ret == 'Double side + aft clamshell':
+                    d2['rtype_f1'] = 'cargoclam'
+            elif key == 'fuselage type':
+                if ret == 'Fuselage-mounted main landing gear':
+                    d2['rtype_f2'] = 'fuselage'
+                elif ret == 'Other':
+                    d2['rtype_f2'] = 'other'
+            elif key == 'fuselage door type':
+                if ret == 'No cargo door':
+                    d2['rtype_f2'] = 'nocargo'
+                elif ret == 'Single side cargo':
+                    d2['rtype_f2'] = 'onecargo'
+                elif ret == 'Double side cargo':
+                    d2['rtype_f2'] = 'twocargo'
+                elif ret == 'Aft clamshell':
+                    d2['rtype_f2'] = 'clam'
+                elif ret == 'Double side + aft clamshell':
+                    d2['rtype_f2'] = 'cargoclam'
+            elif key == 'nacelle type':
+                if ret == 'Pylon-mounted':
+                    d2['rtype_n'] = 'pylon'
+                elif ret == 'Other':
+                    d2['rtype_n'] = 'other'
+            elif key == 'main type':
+                if ret == 'Kneeling gear':
+                    d2['rtype_ucm'] = 'kneeling'
+                elif ret == 'Other':
+                    d2['rtype_ucm'] = 'other'
+            elif key == 'nose type':
+                if ret == 'Kneeling gear':
+                    d2['rtype_ucn'] = 'kneeling'
+                elif ret == 'Other':
+                    d2['rtype_ucn'] = 'other'
+            elif key == 'engine type':
+                if ret == 'Reciprocating':
+                    d2['rtype_instr1'] = 'reciprocating'
+                elif ret == 'Other':
+                    d2['rtype_instr1'] = 'other'
+            elif key == 'aircraft type':
+                if ret == 'Turboprop':
+                    d2['rtype_instr2'] = 'turboprop'
+                elif ret == 'Other':
+                    d2['rtype_instr2'] = 'other'
+
+        raymer = methods.Raymer()
+        ray = {}
+
+        weights = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_ucm', 'w_ucn', 'w_enc', 'w_s', 'w_fs', 'w_fc', 'w_apui', 'w_instr', 'w_hydr', 'w_el', 'w_av', 'w_furn', 'w_ac', 'w_ai', 'w_hand']
+
+        # dictionary of weights and components
+        reference = {}
+        for i, weight in enumerate(weights):
+            reference[self.components[i]] = weight
+
+        ray['w_w'] = raymer.w_w(d2['w_dg'], d2['n_z'], d2['s_w'], d2['a'], d2['t_c'], d2['lambda'], d2['Lambda'], d2['s_csw'])
+        ray['w_tail'] = raymer.w_htail(d2['f_w'], d2['b_h'], d2['w_dg'], d2['n_z'], d2['s_ht'], d2['l_t'], d2['Lambda_ht'], d2['a_h'], d2['s_e'], d2['rtype_htail']) + raymer.w_vtail(d2['w_dg'], d2['n_z'], d2['l_t'], d2['s_vt'], d2['Lambda_vt'], d2['a_v'], d2['t_c'], None, None, d2['rtype_vtail'])
+        ray['w_f'] = raymer.w_f(d2['w_dg'], d2['n_z'], d2['l'], d2['s_f'], d2['d'], d2['lambda'], d2['Lambda'], d2['b_w'], d2['rtype_f1'], d2['rtype_f2'])
+        ray['w_ucm'] = raymer.w_ucm(d2['w_l'], d2['n_l'], d2['l_m'], d2['n_mw'], d2['n_mss'], d2['v_stall'], d2['rtype_ucm'])
+        ray['w_ucn'] = raymer.w_ucn(d2['w_l'], d2['n_l'], d2['l_n'], d2['n_nw'], d2['rtype_ucn'])
+        ray['w_n'] = raymer.w_n(d2['n_lt'], d2['n_w'], d2['n_z'], d2['w_ec'], d2['n_en'], d2['s_n'], d2['rtype_n'])
+        ray['w_enc'] = raymer.w_enc(d2['n_en'], d2['l_ec'])
+        ray['w_s'] = raymer.w_s(d2['n_en'], d2['w_en'])
+        ray['w_fs'] = raymer.w_fs(d2['v_t'], d2['v_i'], d2['v_p'], d2['n_t'])
+        ray['w_fc'] = raymer.w_fc(d2['n_f'], d2['n_m'], d2['s_cs'], d2['i_y'])
+        ray['w_apui'] = raymer.w_apui(d2['w_apuu'])
+        ray['w_instr'] = raymer.w_instr(d2['n_c'], d2['n_en'], d2['l_f'], d2['b_w'], d2['rtype_instr1'], d2['rtype_instr2'])
+        ray['w_hydr'] = raymer.w_hydr(d2['n_f'], d2['l_f'], d2['b_w'])
+        ray['w_el'] = raymer.w_el(d2['r_kva'], d2['l_a'], d2['n_gen'])
+        ray['w_av'] = raymer.w_av(d2['w_uav'])
+        ray['w_furn'] = raymer.w_furn(d2['n_c'], d2['w_c'], d2['s_f'])
+        ray['w_ac'] = raymer.w_ac(d2['n_p'], d2['v_pr'], d2['w_uav'])
+        ray['w_ai'] = raymer.w_ai(d2['w_dg'])
+        ray['w_hand'] = raymer.w_hand(d2['w_dg'])
+
+        ret = ""
+        ret += "RAYMER" + "\n" + "------------------------------" + "\n"
+        for component in self.components:
+            if self.cb_dict[component].GetValue() == True:
+                ret += component + ":      " + str(round(ray[reference[component]], 2)) + "\n"
+
+        ret += "total:      " + str(round(sum(ray.values()), 2))
+        return ret
+
+    def load_xml(self, d2):
+        utype = ['allmoving', 'other', 'conv', 'ttail', 'fuselage', 'nocargo', 'onecargo', 'twocargo', 'clam', 'cargoclam', 'pylon', 'kneeling', 'reciprocating', 'turboprop']
+
+        ltype = ['All-moving', 'Other', 'Conventional', 'T-tail', 'Fuselage-mounted main landing gear', 'No cargo door', 'Single side cargo', 'Double side cargo', 'Aft clamshell', 'Double side + aft clamshell', 'Pylon-mounted', 'Kneeling gear', 'Reciprocating', 'Turboprop']
+
+        type_too = dict(zip(utype, ltype))
+
+        ktype = ['rtype_htail', 'rtype_vtail', 'rtype_f1', 'rtype_f2', 'rtype_n', 'rtype_ucm', 'rtype_ucn', 'rtype_instr1', 'rtype_instr2']
+
+        mtype = ['htail type', 'vtail type', 'fuselage door type', 'fuselage type', 'nacelle type', 'main type', 'nose type', 'engine type', 'aircraft type']
+
+        type_moo = dict(zip(ktype, mtype))
+
+        for key, value in d2.iteritems():
+            if 'rtype' in key:
+                self.rtype[type_moo[key]].SetValue((type_too[value]))
+            else:
+                self.tc_dict[key].SetValue(str(value))
+
+    def select_all(self, evt):
+        label = evt.GetEventObject().GetValue()
+
+        if label:
+            for key, value in self.cb_dict.iteritems():
+                value.SetValue(True)
+        else:
+            for key, value in self.cb_dict.iteritems():
+                value.SetValue(False)
+
+####################################################################
+####################################################################
+
 class DemoFrame(wx.Frame):
     def __init__(self):
         """Constructor"""
@@ -607,7 +893,7 @@ class DemoFrame(wx.Frame):
         self.tabTwo = TabRaymer(notebook)
         notebook.AddPage(self.tabTwo, "Raymer")
 
-        self.tabThree = TabTorenbeek(notebook)
+        self.tabThree = TabGeneralDynamics(notebook)
         notebook.AddPage(self.tabThree, "General Dynamics")
 
         # calculate button
