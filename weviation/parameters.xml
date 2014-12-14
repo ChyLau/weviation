@@ -37,7 +37,7 @@
             <ttype_f>main</ttype_f>
             <ttype_ucm>low</ttype_ucm>
             <ttype_ucn>low</ttype_ucn>
-            <ttype_sc>light</ttype_sc>
+            <ttype_sc>transport</ttype_sc>
             <ttype_airi>single</ttype_airi>
             <ttype_heu>utility</ttype_heu>
             <ttype_ox>below</ttype_ox>

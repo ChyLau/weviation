@@ -2,7 +2,7 @@ import wx
 import methods
 import parse as p
 
-class TabPanel(wx.ScrolledWindow):
+class TabTorenbeek(wx.ScrolledWindow):
     def __init__(self, parent):
         """"""
         wx.ScrolledWindow.__init__(self, parent)
@@ -41,8 +41,6 @@ class TabPanel(wx.ScrolledWindow):
 
         # component list
         comp_title = ['General', 'Wing', 'Tail', 'Fuselage', 'Nacelle,..', 'Landing gear,..', 'Engine,..', 'Accessory', 'Air induction', 'Exhaust', 'Fuel system', 'Water injection', 'Propeller installation', 'APU', 'Instruments, ...', 'Electrical', 'Air conditioning', 'Oxygen system', 'Furnishing']
-
-        units_im = ['marker', 'line', 'lb', 'lb', 'marker', 'line', 'ft', 'deg', 'ft', '', 'ft^2', 'ft', 'marker', 'line',  '', '', 'ft^2', 'ft^2', 'deg', 'deg', 'marker', 'line', '', 'kts', 'ft', 'ft', 'ft', 'ft^2', 'marker', 'line', 'hp', 'marker', 'line', '', '', '', '', '', '', '', '', '', '', 'marker', 'line', '', '', 'lb', 'marker', 'line', '', 'marker', 'line', '', 'ft', '', 'ft^2', 'marker', 'line', 'ft^2', 'N', 'marker', 'line', '', 'gal', 'marker', 'line', 'gal', 'marker', 'line', '', 'ft', '', 'marker', 'line',  '', 'marker', 'line', 'lb', 'ft', 'marker', 'line', '', 'W', 'marker', 'line', 'ft', 'marker', 'line', '', '', 'marker', 'line', 'ft']
 
         units_im = ['lb', 'lb', 'ft', 'deg', 'ft', '', 'ft^2', 'ft', 'ft^2', 'ft^2', 'deg', 'deg', 'kts', 'ft', 'ft', 'ft', 'ft^2', 'hp', '', '', '', '', '', '', '', '', '', 'lb', '', 'ft', '', 'ft^2', 'ft^2', 'N', '', 'gal', 'gal', '', 'ft', '',  '', 'lb', 'ft', 'W', 'ft', '', 'ft']
 
@@ -272,9 +270,23 @@ class TabPanel(wx.ScrolledWindow):
         return ret
 
     def load_xml(self, d1):
+        utype = ['fixed', 'variable', 'fuselage', 'fin', 'pressurized', 'main', 'rear', 'cargo', 'low', 'high', 'transport', 'transportplus', 'single', 'multi', 'utility', 'jet', 'propeller', 'below', 'above', 'overwater']
+
+        ltype = ['Fixed stabilizer', 'Variable-incidence', 'Fuselage-mounted', 'Fin-mounted', 'Pressurized fuselage', 'Main landing gear', 'Rear fuselage', 'Cargo', 'Low', 'High', 'Manually controlled', 'Powered controlled', 'Single flat side', 'Multi flat side', 'Utility aircraft', 'Jet trainer', 'Propeller transport', 'Below 25,000 ft', 'Short flight above', 'Extended overwater']
+
+        type_too = dict(zip(utype, ltype))
+
+        ktype = ['ttype_htail', 'ttype_vtail', 'ttype_f', 'ttype_ucm', 'ttype_ucn', 'ttype_sc', 'ttype_airi', 'ttype_heu', 'ttype_ox']
+
+        mtype = ['htail type', 'vtail type', 'fuselage type', 'main type', 'nose type', 'surface controls type', 'air induction type', 'hydr./elec. type', 'oxygen type']
+
+        type_moo = dict(zip(ktype, mtype))
+
         for key, value in d1.iteritems():
             if 'tunit' not in key:
-                if 'ttype' not in key:
+                if 'ttype' in key:
+                    self.ttype[type_moo[key]].SetValue((type_too[value]))
+                else:
                     self.tc_dict[key].SetValue(str(value))
 
     def select_all(self, evt):
@@ -287,7 +299,288 @@ class TabPanel(wx.ScrolledWindow):
             for key, value in self.cb_dict.iteritems():
                 value.SetValue(False)
 
+############################################################################
+############################################################################
 
+class TabRaymer(wx.ScrolledWindow):
+    def __init__(self, parent):
+        """"""
+        wx.ScrolledWindow.__init__(self, parent)
+        self.SetScrollRate(5,15)
+
+        self.init_tab()
+
+
+    def init_tab(self):
+        self.parameters = ['marker', 'line', 'w_dg', 'n_z', 'marker', 'line', 'a', 't_c', 'lambda', 'Lambda', 's_w', 's_csw', 'marker', 'line', 'htail type', 'vtail type', 'a_h', 'a_v', 'b_h', 'f_w', 'h_t', 'h_v', 'Lambda_ht', 'Lambda_vt', 'l_t', 's_e', 's_ht', 's_vt', 'marker', 'line', 'fuselage type', 'fuselage door type', 'b_w', 'd', 'l', 's_f', 'marker', 'line', 'nacelle type', 'n_en', 'n_lt', 'n_w', 's_n', 'w_ec', 'marker', 'line', 'main type', 'nose type', 'l_m', 'l_n', 'n_l', 'n_mss', 'n_mw', 'n_nw', 'v_stall', 'w_l', 'marker', 'line', 'l_ec', 'marker', 'line', 'w_en', 'marker', 'line', 'n_t', 'v_i', 'v_p', 'v_t', 'marker', 'line', 'i_y', 'n_f', 'n_m', 's_cs', 'marker', 'line', 'w_puu', 'marker', 'line', 'engine type', 'aircraft type', 'l_f', 'n_c', 'marker', 'line', 'l_a', 'n_gen', 'r_kva', 'marker', 'line', 'w_uav', 'marker', 'line', 'w_c', 'marker', 'line', 'n_p', 'v_pr']
+
+
+        self.components = ['wing', 'tail', 'fuselage', 'nacelle', 'landing main', 'landing nose', 'engine controls', 'pneumatic', 'fuel system', 'flight controls', 'APU', 'instruments', 'hydraulics', 'electrical', 'avionics', 'furnishing', 'air conditioning', 'anti-icing', 'handling gear']
+
+        hbox = wx.BoxSizer(wx.VERTICAL)
+
+        stxt0 = wx.StaticText(self, label='Components')
+        font = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD)
+        stxt0.SetFont(font)
+        line0 = wx.StaticLine(self)
+        hbox.Add(stxt0, 0, wx.ALL, 5)
+        hbox.Add(line0, 1, wx.ALL|wx.EXPAND, 5)
+
+        vbox0 = wx.BoxSizer(wx.HORIZONTAL)
+        self.cball = wx.CheckBox(self, label='(de)select all')
+        hbox.Add(self.cball, 0)
+        self.Bind(wx.EVT_CHECKBOX, self.select_all, self.cball)
+
+        self.cb_dict = {}
+        # component checkboxes
+        for item in self.components:
+            cb = wx.CheckBox(self, label=item)
+            vbox0.Add(cb, 0)
+            self.cb_dict[item] = cb
+
+        hbox.Add(vbox0, 0)
+
+        # component list
+        comp_title = ['General', 'Wing', 'Tail', 'Fuselage', 'Nacelle,..', 'Landing gear,..', 'Engine', 'Pneumatic', 'Fuel system', 'Flight controls,...', 'APU', 'Instruments,...', 'Electrical', 'Avionics', 'Furnishing', 'Air-conditioning']
+
+        units_im = ['lb', '', '', '', '', 'deg', 'ft^2', 'ft^2', '', '', 'ft', 'ft', 'ft', 'ft', 'deg', 'deg', 'ft', 'ft^2', 'ft^2', 'ft^2', 'ft', 'ft', 'ft', 'ft^2', '', 'ft', 'ft', 'ft^2', 'lb', 'in.', 'in.', '', '', '', '', '', 'lb', 'ft', 'lb',  '', 'gal', 'gal', 'gal', 'lb-ft^2', '', '', 'ft^2', 'lb', 'ft', '', 'ft', '', 'kvA', 'lb', 'lb', '', 'ft^3']
+
+        units_si = ['kg', '', '', '', '', 'rad', 'm^2', 'm^2', '', '', 'm', 'm', 'm', 'm', 'rad', 'rad', 'm', 'm^2', 'm^2', 'm^2', 'm', 'm', 'm', 'm^2', '', 'm', 'm', 'm^2', 'kg', 'cm', 'cm', '', '', '', '', '', 'kg', 'm', 'kg',  '', 'L', 'L', 'L', 'kg-m^2', '', '', 'm^2', 'kg', 'm', '', 'm', '', '', 'lg', 'kg', '', 'm^3']
+
+
+        htail_type = ['All-moving', 'Other']
+        vtail_type = ['Conventional', 'T-tail']
+        fuselage1_type = ['Fuselage-mounted main landing gear', 'Other']
+        fuselage2_type = ['No cargo door', 'Single side cargo', 'Double side cargo', 'Aft clamshell', 'Double side + aft clamshell']
+        nacelle_type = ['Pylon-mounted', 'Other']
+        ucm_type = ['Kneeling gear', 'Other']
+        ucn_type = ['Kneeling gear', 'Other']
+        instr1_type = ['Reciprocating engine', 'Other']
+        instr2_type = ['Turboprop', 'Other']
+
+        combo_type = [htail_type, vtail_type, fuselage1_type, fuselage2_type, nacelle_type, ucm_type, ucn_type, instr1_type, instr2_type]
+
+        sizer = wx.GridBagSizer(0, 0)
+        j = 0 # 'comp' list index
+        k = 0 # 'combo_type' list index
+        m = 0 # 'units_im' list index
+        n = 0 # 'units_si' list index
+        self.par_extra = [] # list for units parameters
+        self.tc_dict = {} # dict of TextCtrl
+        self.rtype = {} # dict of comboboxes
+        self.rb_im = {} # dict of radiobuttons 'im'
+        self.rb_si = {} # dict of radiobuttons 'si'
+
+        for i, item in enumerate(self.parameters):
+            if item == 'marker':
+                comp_name = wx.StaticText(self, label=comp_title[j])
+                font = wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD)
+                comp_name.SetFont(font)
+                j += 1
+                sizer.Add(comp_name, pos=(i,0), flag=wx.TOP, border=10)
+            elif item == 'line':
+                line = wx.StaticLine(self)
+                sizer.Add(line, pos=(i,0), span=(1,2), flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=5)
+            elif 'type' in item:
+                combo = wx.ComboBox(self, choices=combo_type[k], style=wx.CB_READONLY)
+                combo_title = wx.StaticText(self, label=item)
+                self.rtype[item] = combo
+                sizer.Add(combo, pos=(i,1))
+                sizer.Add(combo_title, pos=(i, 0))
+                k += 1
+            else:
+                par = wx.StaticText(self, label=item)
+                tc = wx.TextCtrl(self, wx.ID_ANY, "")
+                self.tc_dict[item] = tc
+
+                sizer.Add(par, pos=(i,0))
+                sizer.Add(tc, pos=(i,1))
+                if units_im[m] == '':
+                    m += 1
+                    n += 1
+                    continue
+                else:
+                    rb1 = wx.RadioButton(self, label=units_im[m], style=wx.RB_GROUP)
+                    sizer.Add(rb1, pos=(i,2))
+                    self.rb_im[item] = rb1
+                    self.par_extra.append(item)
+                    m += 1
+                    if units_si[n] == '':
+                        filler = wx.StaticText(self, label='')
+                        sizer.Add(filler, pos=(i,3))
+                        n += 1
+                    else:
+                        rb2 = wx.RadioButton(self, label=units_si[n])
+                        sizer.Add(rb2, pos=(i,3))
+                        self.rb_si[item] = rb2
+                        n += 1
+
+        hbox.Add(sizer, 0, wx.ALL, 5)
+        self.SetSizer(hbox)
+
+    def calculate_weight(self):
+
+        d1 = {}
+
+        for key, value in self.tc_dict.iteritems():
+            if value.GetValue() is not u'':
+                if key in self.par_extra:
+                    if self.rb_im[key].GetValue() == True:
+                        k = 1
+                    else:
+                        if self.rb_im[key].GetLabel() == 'lb':
+                            k = 2.20462
+                        elif self.rb_im[key].GetLabel() == 'ft':
+                            k = 3.28084
+                        elif self.rb_im[key].GetLabel() == 'ft^2':
+                            k = 10.7639
+                        elif self.rb_im[key].GetLabel() == 'deg':
+                            k = 57.2957795
+                        elif self.rb_im[key].GetLabel() == 'gal':
+                            k = 4.54609
+                        elif self.rb_im[key].GetLabel() == 'in.':
+                            k = 0.393701
+                        elif self.rb_im[key].GetLabel() == 'lb-ft^2':
+                            k = 23.73036
+                        elif self.rb_im[key].GetLabel() == 'ft^3':
+                            k = 35.3147
+                        else:
+                            k = 1
+                            print "[INFO]: key %r not specified." % key
+                else:
+                    k = 1
+            d1[key] = k*float(value.GetValue())
+
+
+        for key, value in self.rtype.iteritems():
+            ret = value.GetValue()
+            if key == 'htail type':
+                if ret == 'Fixed stabilizer':
+                    d1['ttype_htail'] = 'fixed'
+                elif ret == 'Variable-incidence':
+                    d1['ttype_htail'] = 'variable'
+            elif key == 'vtail type':
+                if ret == 'Fuselage-mounted':
+                    d1['ttype_vtail'] = 'fuselage'
+                elif ret == 'Fin-mounted':
+                    d1['ttype_vtail'] = 'fin'
+            elif key == 'fuselage type':
+                if ret == 'Pressurized fuselage':
+                    d1['ttype_f'] = 'pressurized'
+                elif ret == 'Main landing gear':
+                    d1['ttype_f'] = 'main'
+                elif ret == 'Rear fuselage':
+                    d1['ttype_f'] = 'rear'
+                elif ret == 'Cargo':
+                    d1['ttype_f'] = 'cargo'
+            elif key == 'main type':
+                if ret == 'Low':
+                    d1['ttype_ucm'] = 'low'
+                elif ret == 'High':
+                    d1['ttype_ucm'] = 'high'
+            elif key == 'nose type':
+                if ret == 'Low':
+                    d1['ttype_ucn'] = 'low'
+                elif ret == 'High':
+                    d1['ttype_ucn'] = 'high'
+            elif key == 'surface controls type':
+                if ret == 'Manually controlled':
+                    d1['ttype_sc'] = 'transport'
+                elif ret == 'Powered controlled':
+                    d1['ttype_sc'] = 'transportplus'
+            elif key == 'air induction type':
+                if ret == 'Single flat side':
+                    d1['ttype_airi'] = 'single'
+                elif ret == 'Multi flat side':
+                    d1['ttype_airi'] = 'multi'
+            elif key == 'hydr./elec. type':
+                if ret == 'Utility aircraft':
+                    d1['ttype_heu'] = 'utility'
+                elif ret == 'Jet trainer':
+                    d1['ttype_heu'] = 'jet'
+                elif ret == 'Propeller transport':
+                    d1['ttype_heu'] = 'propeller'
+            elif key == 'oxygen type':
+                if ret == 'Below 25,000 ft':
+                    d1['ttype_ox'] = 'below'
+                elif ret == 'Short flight above':
+                    d1['ttype_ox'] = 'above'
+                elif ret == 'Extended overwater':
+                    d1['ttype_ox'] = 'overwater'
+
+        torenbeek = methods.Torenbeek()
+        tor = {}
+
+        weights = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_ucm', 'w_ucn', 'w_sc', 'w_eni', 'w_acc', 'w_airi', 'w_ext', 'w_oc', 'w_fsi', 'w_wis', 'w_pi', 'w_tr', 'w_apu', 'w_navp', 'w_heu', 'w_api', 'w_ox', 'w_fur']
+
+        # dictionary of weights and components
+        reference = {}
+        for i, weight in enumerate(weights):
+            reference[self.components[i]] = weight
+
+        tor['w_w'] = torenbeek.w_w(d1['w_g'], d1['b_ref'], d1['Lambda'], d1['b'], d1['n_ult'], d1['s_w'], d1['t_r'], d1['tunit_w'])
+        tor['w_tail'] = torenbeek.w_htail(d1['s_h'], d1['v_d'], d1['Lambda_h'], d1['ttype_htail']) + torenbeek.w_vtail(d1['s_v'], d1['v_d'], d1['Lambda_v'], d1['ttype_vtail'])
+        tor['w_f'] = torenbeek.w_f(d1['v_d'], d1['l_t'], d1['b_f'], d1['h_f'], d1['s_g'], d1['tunit_f'], d1['ttype_f'])
+        tor['w_n'] = torenbeek.w_n(d1['p_to'], d1['tunit_n'])
+        tor['w_ucm'] = torenbeek.w_uc(d1['a_m'], d1['b_m'], d1['c_m'], d1['d_m'], d1['w_to'], d1['tunit_ucm'], d1['ttype_ucm'])
+        tor['w_ucn'] = torenbeek.w_uc(d1['a_n'], d1['b_n'], d1['c_n'], d1['d_n'], d1['w_to'], d1['tunit_ucn'], d1['ttype_ucn'])
+        tor['w_sc'] = torenbeek.w_sc(d1['w_to'], d1['tunit_sc'], d1['ttype_sc'])
+        tor['w_eni'] = torenbeek.w_eni(d1['n_e'], d1['w_e'])
+        tor['w_acc'] = torenbeek.w_acc(d1['n_e'], d1['w_fto'], d1['tunit_acc'])
+        tor['w_airi'] = torenbeek.w_airi(d1['l_d'], d1['n_i'], d1['a_i'], d1['tunit_airi'], d1['ttype_airi'])
+        tor['w_ext'] = torenbeek.w_ext(d1['ax'], d1['tunit_ext'])
+        tor['w_oc'] = torenbeek.w_oc(d1['n_e'], d1['w_e'])
+        tor['w_fsi'] = torenbeek.w_fsi(d1['n_e'], d1['n_ft'], d1['v_ft'], d1['tunit_fsi'])
+        tor['w_wis'] = torenbeek.w_wis(d1['v_wt'], d1['tunit_wis'])
+        tor['w_pi'] = torenbeek.w_pi(d1['n_p'], d1['b_p'], d1['d_p'], d1['p_to'], d1['tunit_pi'])
+        tor['w_tr'] = torenbeek.w_tr(d1['n_e'], d1['w_e'])
+        tor['w_apu'] = torenbeek.w_apu(d1['w_ba'], d1['tunit_apu'])
+        tor['w_navp'] = torenbeek.w_navp(d1['w_to'], d1['tunit_navp'])
+        tor['w_heu'] = torenbeek.w_heu(d1['w_e'], d1['tunit_heu'], d1['ttype_heu'])
+        tor['w_api'] = torenbeek.w_api(d1['l_pax'], d1['tunit_api'])
+        tor['w_ox'] = torenbeek.w_ox(d1['n_pax'], d1['ttype_ox'])
+        tor['w_fur'] = torenbeek.w_fur(d1['w_zf'], d1['tunit_fur'])
+
+        ret = ""
+        ret += "TORENBEEK" + "\n" + "------------------------------" + "\n"
+        for component in self.components:
+            if self.cb_dict[component].GetValue() == True:
+                ret += component + ":      " + str(round(tor[reference[component]], 2)) + "\n"
+
+        ret += "total:      " + str(round(sum(tor.values()), 2))
+        return ret
+
+    def load_xml(self, d1):
+        utype = ['fixed', 'variable', 'fuselage', 'fin', 'pressurized', 'main', 'rear', 'cargo', 'low', 'high', 'transport', 'transportplus', 'single', 'multi', 'utility', 'jet', 'propeller', 'below', 'above', 'overwater']
+
+        ltype = ['Fixed stabilizer', 'Variable-incidence', 'Fuselage-mounted', 'Fin-mounted', 'Pressurized fuselage', 'Main landing gear', 'Rear fuselage', 'Cargo', 'Low', 'High', 'Manually controlled', 'Powered controlled', 'Single flat side', 'Multi flat side', 'Utility aircraft', 'Jet trainer', 'Propeller transport', 'Below 25,000 ft', 'Short flight above', 'Extended overwater']
+
+        type_too = dict(zip(utype, ltype))
+
+        ktype = ['ttype_htail', 'ttype_vtail', 'ttype_f', 'ttype_ucm', 'ttype_ucn', 'ttype_sc', 'ttype_airi', 'ttype_heu', 'ttype_ox']
+
+        mtype = ['htail type', 'vtail type', 'fuselage type', 'main type', 'nose type', 'surface controls type', 'air induction type', 'hydr./elec. type', 'oxygen type']
+
+        type_moo = dict(zip(ktype, mtype))
+
+        for key, value in d1.iteritems():
+            if 'rtype' in key:
+                self.rtype[type_moo[key]].SetValue((type_too[value]))
+            else:
+                self.tc_dict[key].SetValue(str(value))
+
+    def select_all(self, evt):
+        label = evt.GetEventObject().GetValue()
+
+        if label:
+            for key, value in self.cb_dict.iteritems():
+                value.SetValue(True)
+        else:
+            for key, value in self.cb_dict.iteritems():
+                value.SetValue(False)
+
+####################################################################
+####################################################################
 
 class DemoFrame(wx.Frame):
     def __init__(self):
@@ -302,13 +595,13 @@ class DemoFrame(wx.Frame):
         # tabs
         notebook = wx.Notebook(panel)
 
-        self.tabOne = TabPanel(notebook)
+        self.tabOne = TabTorenbeek(notebook)
         notebook.AddPage(self.tabOne, "Torenbeek")
 
-        self.tabTwo = TabPanel(notebook)
+        self.tabTwo = TabRaymer(notebook)
         notebook.AddPage(self.tabTwo, "Raymer")
 
-        self.tabThree = TabPanel(notebook)
+        self.tabThree = TabTorenbeek(notebook)
         notebook.AddPage(self.tabThree, "General Dynamics")
 
         # calculate button
@@ -357,6 +650,10 @@ class DemoFrame(wx.Frame):
         if label == 'Calculate':
             if self.cb_tor.GetValue() == True:
                 self.txt1.SetValue(self.tabOne.calculate_weight())
+            if self.cb_ray.GetValue() == True:
+                a = '\n\n\nTEST'
+                self.txt1.AppendText(a)
+                #self.txt1.SetValue(self.tabTwo.calculate_weight())
 
     def load_button(self, evt):
         label = evt.GetEventObject().GetLabel()
