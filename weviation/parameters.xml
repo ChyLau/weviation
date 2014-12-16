@@ -239,12 +239,11 @@
             <gtype_f>in</gtype_f>
             <gtype_n>turbojet</gtype_n>
             <gtype_ai1>flat</gtype_ai1>
-            <gtype_ai2>above</gtype_ai2>
-            <gtype_prop>above</gtype_prop>
+            <gtype_ai2>abovemd</gtype_ai2>
+            <gtype_prop>below</gtype_prop>
             <gtype_fs1>self</gtype_fs1>
             <gtype_fs2>aviation</gtype_fs2>
-            <gtype_ec>no</gtype_ec>
-            <gtype_ecw>jet</gtype_ecw>
+            <gtype_ec>jet</gtype_ec>
             <gtype_ess>jetcp</gtype_ess>
             <gtype_pc>turboprop</gtype_pc>
             <gtype_fur>business</gtype_fur>
@@ -309,7 +308,7 @@
             <w_supp>1</w_supp>
 
             <!-- PROPULSION -->
-            <b>1</b>
+            <b>10</b>
 
             <!-- HYDRAULICS -->
             <k_hydr>1</k_hydr>

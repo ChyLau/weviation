@@ -598,10 +598,10 @@ class TabGeneralDynamics(wx.ScrolledWindow):
 
 
     def init_tab(self):
-        self.parameters = ['marker', 'line', 'w_to', 'n_ult', 'marker', 'line', 'a', 'lambda', 'Lambda_12', 'm_h', 's', 't_cm', 'marker', 'line', 'a_v', 'b_h', 'b_v', 'c', 'lambda_v', 'Lambda_14v', 'l_h', 'l_v', 's_h', 's_r', 's_v', 't_rh', 'z_h', 'marker', 'line', 'h_f', 'l_f', 'q_d', 'marker', 'line', 'a_in', 'l_n', 'n_inl', 'p_2', 'marker', 'line', 'n_e', 'w_eng', 'marker', 'line', 'a_inl', 'l_d', 'marker', 'line', 'd_p', 'n_bl', 'n_p', 'p_to', 'marker', 'line', 'w_f', 'w_supp', 'marker', 'line', 'b', 'marker', 'line', 'k_hydr', 'marker', 'line', 'w_fs', 'w_iae',  'marker', 'line', 'n_pil', 'marker', 'line', 'n_cr', 'n_pax', 'v_pax', 'marker', 'line', 'k_apu', 'marker', 'line', 'n_cc', 'n_fdc', 'p_c', 'marker', 'line', 'k_pt']
+        self.parameters = ['marker', 'line', 'w_to', 'n_ult', 'marker', 'line', 'a', 'lambda', 'Lambda_12', 'm_h', 's', 't_cm', 'marker', 'line', 'a_v', 'b_h', 'b_v', 'c', 'lambda_v', 'Lambda_14v', 'l_h', 'l_v', 's_h', 's_r', 's_v', 't_rh', 'z_h', 'marker', 'line', 'fuselage type','h_f', 'l_f', 'q_d', 'marker', 'line', 'nacelle type','a_in', 'l_n', 'n_inl', 'p_2', 'marker', 'line', 'engine controls type', 'engine s.s. type','n_e', 'w_eng', 'marker', 'line', 'duct type', 'air induction type', 'a_inl', 'l_d', 'marker', 'line', 'propeller type', 'propeller controls type', 'd_p', 'n_bl', 'n_p', 'p_to', 'marker', 'line', 'fuel system type', 'fuel type', 'w_f', 'w_supp', 'marker', 'line', 'b', 'marker', 'line', 'k_hydr', 'marker', 'line', 'w_fs', 'w_iae',  'marker', 'line', 'n_pil', 'marker', 'line', 'baggage type', 'n_cr', 'n_pax', 'v_pax', 'marker', 'line', 'k_apu', 'marker', 'line', 'furnishing type', 'n_cc', 'n_fdc', 'p_c', 'marker', 'line', 'k_pt']
 
 
-        self.components = ['wing', 'tail', 'fuselage', 'nacelle', 'landing main', 'landing nose', 'engine controls', 'pneumatic', 'fuel system', 'flight controls', 'APU', 'instruments', 'hydraulics', 'electrical', 'avionics', 'furnishing', 'air conditioning', 'anti-icing', 'handling gear']
+        self.components = ['wing', 'tail', 'fuselage', 'nacelle', 'landing gear', 'engine', 'air induction', 'propeller', 'fuel system', 'engine controls', 'engine starting system', 'propeller controls', 'flight controls', 'hydraulic/pneumatic', 'electrical', 'instr./avio./elec.', 'API', 'oxygen system', 'APU', 'furnishing', 'baggage', 'auxiliary gear', 'paint']
 
         hbox = wx.BoxSizer(wx.VERTICAL)
 
@@ -627,24 +627,27 @@ class TabGeneralDynamics(wx.ScrolledWindow):
         hbox.Add(vbox0, 0)
 
         # component list
-        comp_title = ['General', 'Wing', 'Tail', 'Fuselage', 'Nacelle', 'Engine,...', 'Air induction', 'Propeller', 'Fuel system', 'Propulsion', 'Hydraulics', 'Electrical','Instruments', 'Air-donditioning', 'Auxiliary power', 'Furnishing', 'Paint']
+        comp_title = ['General', 'Wing', 'Tail', 'Fuselage', 'Nacelle', 'Engine,...', 'Air induction,...', 'Propeller', 'Fuel system', 'Propulsion', 'Hydraulics', 'Electrical','Instruments', 'Air-donditioning', 'Auxiliary power', 'Furnishing', 'Paint']
 
-        units_im = ['lb', '', '', '', '', 'deg', 'ft^2', 'ft^2', '', '', 'ft', 'ft', 'ft', 'ft', 'deg', 'deg', 'ft', 'ft^2', 'ft^2', 'ft^2', 'ft', 'ft', 'ft', 'ft^2', '', 'ft', 'ft', 'ft^2', 'lb', 'in.', 'in.', '', '', '', '', '', 'lb', 'ft', 'lb',  '', 'gal', 'gal', 'gal', 'lb-ft^2', '', '', 'ft^2', 'lb', 'ft', '', 'ft', '', 'kvA', 'lb', 'lb', '', 'ft^3']
+        units_im = ['lb', '', '', '', 'deg', '', 'ft^2', '', 'ft', 'ft', 'ft', 'ft', '', 'deg', 'ft', 'ft', 'ft^2', 'ft^2', 'ft^2', 'ft', 'ft', 'ft', 'ft', 'psf', 'ft^2', 'ft', '', 'psi', '', 'lb', 'ft^2', 'ft', 'ft', '', '', 'hp', 'lb', 'lb',  'ft', '', 'lb', 'lb', '', '', '', '', '', '', '', 'psi', '', '']
 
-        units_si = ['kg', '', '', '', '', 'rad', 'm^2', 'm^2', '', '', 'm', 'm', 'm', 'm', 'rad', 'rad', 'm', 'm^2', 'm^2', 'm^2', 'm', 'm', 'm', 'm^2', '', 'm', 'm', 'm^2', 'kg', 'cm', 'cm', '', '', '', '', '', 'kg', 'm', 'kg',  '', 'L', 'L', 'L', 'kg-m^2', '', '', 'm^2', 'kg', 'm', '', 'm', '', '', 'lg', 'kg', '', 'm^3']
+        units_si = ['kg', '', '', '', 'rad', '', 'm^2', '', 'm', 'm', 'm', 'm', '', 'rad', 'm', 'm', 'm^2', 'm^2', 'm^2', 'm', 'm', 'm', 'm', '', 'm^2', 'm', '', '', '', 'kg', 'm^2', 'm', 'm', '', '', '', 'kg', 'kg',  'm', '', 'kg', 'kg', '', '', '', '', '', '', '', '', '']
 
 
-        htail_type = ['All-moving', 'Other']
-        vtail_type = ['Conventional', 'T-tail']
-        fuselage1_type = ['Fuselage-mounted main landing gear', 'Other']
-        fuselage2_type = ['No cargo door', 'Single side cargo', 'Double side cargo', 'Aft clamshell', 'Double side + aft clamshell']
-        nacelle_type = ['Pylon-mounted', 'Other']
-        ucm_type = ['Kneeling gear', 'Other']
-        ucn_type = ['Kneeling gear', 'Other']
-        instr1_type = ['Reciprocating', 'Other']
-        instr2_type = ['Turboprop', 'Other']
+        fuselage_type = ['Inlets in', 'Inlets elsewhere']
+        nacelle_type = ['Turbojet', 'Turbofan']
+        ai1_type = ['Flat cross sections', 'Curved cross sections']
+        ai2_type = ['M_D below 1.4', 'M_D above 1.4']
+        prop_type = ['Above 1,500 shp', 'Below 1,500 shp']
+        fs1_type = ['Self-sealing bladder cells', 'Non-self sealing bladder cells']
+        fs2_type = ['Aviation gasoline', 'JP-4']
+        ec_type = ['Non-afterburning', 'Afterburnig', 'Jet', 'Turboprops', 'Piston']
+        ess_type = ['Single/double jet engine', 'Four or more jet engine', 'Electric', 'Turboprop, pneumatic', 'Piston']
+        pc_type = ['Turboprop', 'Piston']
+        fur_type = ['Business', 'Short', 'Long']
+        bc_type = ['Without preload provisions', 'With preload provisions']
 
-        combo_type = [htail_type, vtail_type, fuselage1_type, fuselage2_type, nacelle_type, ucm_type, ucn_type, instr1_type, instr2_type]
+        combo_type = [fuselage_type, nacelle_type, ai1_type, ai2_type, prop_type, fs1_type, fs2_type, ec_type, ess_type, pc_type, fur_type, bc_type]
 
         sizer = wx.GridBagSizer(0, 0)
         j = 0 # 'comp' list index
@@ -653,7 +656,7 @@ class TabGeneralDynamics(wx.ScrolledWindow):
         n = 0 # 'units_si' list index
         self.par_extra = [] # list for units parameters
         self.tc_dict = {} # dict of TextCtrl
-        self.rtype = {} # dict of comboboxes
+        self.gtype = {} # dict of comboboxes
         self.rb_im = {} # dict of radiobuttons 'im'
         self.rb_si = {} # dict of radiobuttons 'si'
 
@@ -666,11 +669,12 @@ class TabGeneralDynamics(wx.ScrolledWindow):
                 sizer.Add(comp_name, pos=(i,0), flag=wx.TOP, border=10)
             elif item == 'line':
                 line = wx.StaticLine(self)
+
                 sizer.Add(line, pos=(i,0), span=(1,2), flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=5)
             elif 'type' in item:
                 combo = wx.ComboBox(self, choices=combo_type[k], style=wx.CB_READONLY)
                 combo_title = wx.StaticText(self, label=item)
-                self.rtype[item] = combo
+                self.gtype[item] = combo
                 sizer.Add(combo, pos=(i,1))
                 sizer.Add(combo_title, pos=(i, 0))
                 k += 1
@@ -706,7 +710,7 @@ class TabGeneralDynamics(wx.ScrolledWindow):
 
     def calculate_weight(self):
 
-        d2 = {}
+        d3 = {}
 
         for key, value in self.tc_dict.iteritems():
             if value.GetValue() is not u'':
@@ -722,142 +726,151 @@ class TabGeneralDynamics(wx.ScrolledWindow):
                             k = 10.7639
                         elif self.rb_im[key].GetLabel() == 'deg':
                             k = 57.2957795
-                        elif self.rb_im[key].GetLabel() == 'gal':
-                            k = 4.54609
-                        elif self.rb_im[key].GetLabel() == 'in.':
-                            k = 0.393701
-                        elif self.rb_im[key].GetLabel() == 'lb-ft^2':
-                            k = 23.73036
-                        elif self.rb_im[key].GetLabel() == 'ft^3':
-                            k = 35.3147
                         else:
                             k = 1
                             print "[INFO]: key %r not specified." % key
                 else:
                     k = 1
-            d2[key] = k*float(value.GetValue())
+            d3[key] = k*float(value.GetValue())
 
 
-        for key, value in self.rtype.iteritems():
+        for key, value in self.gtype.iteritems():
             ret = value.GetValue()
-            if key == 'htail type':
-                if ret == 'All-moving':
-                    d2['rtype_htail'] = 'allmoving'
-                elif ret == 'Other':
-                    d2['rtype_htail'] = 'other'
-            elif key == 'vtail type':
-                if ret == 'Conventional':
-                    d2['rtype_vtail'] = 'conv'
-                elif ret == 'T-tail':
-                    d2['rtype_vtail'] = 'ttail'
-            elif key == 'fuselage door type':
-                if ret == 'No cargo door':
-                    d2['rtype_f1'] = 'nocargo'
-                elif ret == 'Single side cargo':
-                    d2['rtype_f1'] = 'onecargo'
-                elif ret == 'Double side cargo':
-                    d2['rtype_f1'] = 'twocargo'
-                elif ret == 'Aft clamshell':
-                    d2['rtype_f1'] = 'clam'
-                elif ret == 'Double side + aft clamshell':
-                    d2['rtype_f1'] = 'cargoclam'
-            elif key == 'fuselage type':
-                if ret == 'Fuselage-mounted main landing gear':
-                    d2['rtype_f2'] = 'fuselage'
-                elif ret == 'Other':
-                    d2['rtype_f2'] = 'other'
-            elif key == 'fuselage door type':
-                if ret == 'No cargo door':
-                    d2['rtype_f2'] = 'nocargo'
-                elif ret == 'Single side cargo':
-                    d2['rtype_f2'] = 'onecargo'
-                elif ret == 'Double side cargo':
-                    d2['rtype_f2'] = 'twocargo'
-                elif ret == 'Aft clamshell':
-                    d2['rtype_f2'] = 'clam'
-                elif ret == 'Double side + aft clamshell':
-                    d2['rtype_f2'] = 'cargoclam'
+            if key == 'fuselage type':
+                if ret == 'Inlets in':
+                    d3['gtype_f'] = 'in'
+                elif ret == 'Inlets elsewhere':
+                    d3['gtype_f'] = 'out'
             elif key == 'nacelle type':
-                if ret == 'Pylon-mounted':
-                    d2['rtype_n'] = 'pylon'
-                elif ret == 'Other':
-                    d2['rtype_n'] = 'other'
-            elif key == 'main type':
-                if ret == 'Kneeling gear':
-                    d2['rtype_ucm'] = 'kneeling'
-                elif ret == 'Other':
-                    d2['rtype_ucm'] = 'other'
-            elif key == 'nose type':
-                if ret == 'Kneeling gear':
-                    d2['rtype_ucn'] = 'kneeling'
-                elif ret == 'Other':
-                    d2['rtype_ucn'] = 'other'
-            elif key == 'engine type':
-                if ret == 'Reciprocating':
-                    d2['rtype_instr1'] = 'reciprocating'
-                elif ret == 'Other':
-                    d2['rtype_instr1'] = 'other'
-            elif key == 'aircraft type':
+                if ret == 'Turbojet':
+                    d3['gtype_n'] = 'turbojet'
+                elif ret == 'Turbofan':
+                    d3['gtype_n'] = 'turbofan'
+            elif key == 'engine controls type':
+                if ret == 'Non-afterburning':
+                    d3['gtype_ec'] = 'rootnoafter'
+                elif ret == 'Afterburning':
+                    d3['gtype_ec'] = 'rootafter'
+                elif ret == 'Jet':
+                    d3['gtype_ec'] = 'jet'
+                elif ret == 'Turboprops':
+                    d3['gtype_ec'] = 'turboprops'
+                elif ret == 'Piston':
+                    d3['gtype_ec'] = 'piston'
+            elif key == 'engine s.s. type':
+                if ret == 'Single/double jet engine':
+                    d3['gtype_ess'] = 'jetcp'
+                elif ret == 'Four or more jet engine':
+                    d3['gtype_ess'] = 'jetp'
+                elif ret == 'Electric':
+                    d3['gtype_ess'] = 'jete'
+                elif ret == 'Turboprop, pneumatic':
+                    d3['gtype_ess'] = 'turboprop'
+                elif ret == 'Piston':
+                    d3['gtype_ess'] = 'piston'
+            elif key == 'duct type':
+                if ret == 'Flat cross sections':
+                    d3['gtype_ai1'] = 'flat'
+                elif ret == 'Curved cross sections':
+                    d3['gtype_ai1'] = 'curved'
+            elif key == 'air induction type':
+                if ret == 'M_D below 1.4':
+                    d3['gtype_ai2'] = 'belowmd'
+                elif ret == 'M_D above 1.4':
+                    d3['gtype_ai2'] = 'abovemd'
+            elif key == 'propeller type':
+                if ret == 'Above 1,500 shp':
+                    d3['gtype_prop'] = 'above'
+                elif ret == 'Below 1,500 shp':
+                    d3['gtype_prop'] = 'below'
+            elif key == 'propeller controls type':
                 if ret == 'Turboprop':
-                    d2['rtype_instr2'] = 'turboprop'
-                elif ret == 'Other':
-                    d2['rtype_instr2'] = 'other'
+                    d3['gtype_pc'] = 'turboprop'
+                elif ret == 'Piston':
+                    d3['gtype_pc'] = 'piston'
+            elif key == 'fuel system type':
+                if ret == 'Self-sealing bladder cells':
+                    d3['gtype_fs1'] = 'self'
+                elif ret == 'Non-self sealing bladder cells':
+                    d3['gtype_fs1'] = 'nonself'
+            elif key == 'fuel type':
+                if ret == 'Aviation gasoline':
+                    d3['gtype_fs2'] = 'aviation'
+                elif ret == 'JP-4':
+                    d3['gtype_fs2'] = 'jp4'
+            elif key == 'baggage type':
+                if ret == 'Without preload provisions':
+                    d3['gtype_bc'] = 'no'
+                elif ret == 'With preload provisions':
+                    d3['gtype_bc'] = 'yes'
+            elif key == 'furnishing type':
+                if ret == 'Business':
+                    d3['gtype_fur'] = 'business'
+                elif ret == 'Short':
+                    d3['gtype_fur'] = 'short'
+                elif ret == 'Long':
+                    d3['gtype_fur'] = 'long'
 
-        raymer = methods.Raymer()
-        ray = {}
+        gendyn = methods.Gd()
+        gd = {}
 
-        weights = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_ucm', 'w_ucn', 'w_enc', 'w_s', 'w_fs', 'w_fc', 'w_apui', 'w_instr', 'w_hydr', 'w_el', 'w_av', 'w_furn', 'w_ac', 'w_ai', 'w_hand']
+        weights = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_g', 'w_e', 'w_ai', 'w_prop', 'w_fs', 'w_ec', 'w_ess', 'w_pc', 'w_fc', 'w_hydr', 'w_els', 'w_i', 'w_api', 'w_ox', 'w_apu', 'w_fur', 'w_bc', 'w_aux', 'w_pt']
 
         # dictionary of weights and components
         reference = {}
         for i, weight in enumerate(weights):
             reference[self.components[i]] = weight
 
-        ray['w_w'] = raymer.w_w(d2['w_dg'], d2['n_z'], d2['s_w'], d2['a'], d2['t_c'], d2['lambda'], d2['Lambda'], d2['s_csw'])
-        ray['w_tail'] = raymer.w_htail(d2['f_w'], d2['b_h'], d2['w_dg'], d2['n_z'], d2['s_ht'], d2['l_t'], d2['Lambda_ht'], d2['a_h'], d2['s_e'], d2['rtype_htail']) + raymer.w_vtail(d2['w_dg'], d2['n_z'], d2['l_t'], d2['s_vt'], d2['Lambda_vt'], d2['a_v'], d2['t_c'], None, None, d2['rtype_vtail'])
-        ray['w_f'] = raymer.w_f(d2['w_dg'], d2['n_z'], d2['l'], d2['s_f'], d2['d'], d2['lambda'], d2['Lambda'], d2['b_w'], d2['rtype_f1'], d2['rtype_f2'])
-        ray['w_ucm'] = raymer.w_ucm(d2['w_l'], d2['n_l'], d2['l_m'], d2['n_mw'], d2['n_mss'], d2['v_stall'], d2['rtype_ucm'])
-        ray['w_ucn'] = raymer.w_ucn(d2['w_l'], d2['n_l'], d2['l_n'], d2['n_nw'], d2['rtype_ucn'])
-        ray['w_n'] = raymer.w_n(d2['n_lt'], d2['n_w'], d2['n_z'], d2['w_ec'], d2['n_en'], d2['s_n'], d2['rtype_n'])
-        ray['w_enc'] = raymer.w_enc(d2['n_en'], d2['l_ec'])
-        ray['w_s'] = raymer.w_s(d2['n_en'], d2['w_en'])
-        ray['w_fs'] = raymer.w_fs(d2['v_t'], d2['v_i'], d2['v_p'], d2['n_t'])
-        ray['w_fc'] = raymer.w_fc(d2['n_f'], d2['n_m'], d2['s_cs'], d2['i_y'])
-        ray['w_apui'] = raymer.w_apui(d2['w_apuu'])
-        ray['w_instr'] = raymer.w_instr(d2['n_c'], d2['n_en'], d2['l_f'], d2['b_w'], d2['rtype_instr1'], d2['rtype_instr2'])
-        ray['w_hydr'] = raymer.w_hydr(d2['n_f'], d2['l_f'], d2['b_w'])
-        ray['w_el'] = raymer.w_el(d2['r_kva'], d2['l_a'], d2['n_gen'])
-        ray['w_av'] = raymer.w_av(d2['w_uav'])
-        ray['w_furn'] = raymer.w_furn(d2['n_c'], d2['w_c'], d2['s_f'])
-        ray['w_ac'] = raymer.w_ac(d2['n_p'], d2['v_pr'], d2['w_uav'])
-        ray['w_ai'] = raymer.w_ai(d2['w_dg'])
-        ray['w_hand'] = raymer.w_hand(d2['w_dg'])
+        gd['w_w'] = gendyn.w_w(d3['s'], d3['a'], d3['m_h'], d3['w_to'], d3['n_ult'], d3['lambda'], d3['t_cm'], d3['Lambda_12'])
+        gd['tail'] = gendyn.w_h(d3['w_to'], d3['n_ult'], d3['s_h'], d3['b_h'], d3['t_rh'], d3['c'], d3['l_h']) + gendyn.w_v(d3['z_h'], d3['b_v'], d3['w_to'], d3['n_ult'], d3['s_v'], d3['m_h'], d3['l_v'], d3['s_r'], d3['a_v'], d3['lambda_v'], d3['Lambda_14v'])
+        gd['w_f'] = gendyn.w_f(d3['q_d'], d3['w_to'], d3['l_f'], d3['h_f'], d3['gtype_f'])
+        gd['w_n'] = gendyn.w_n(d3['n_inl'], d3['a_in'], d3['l_n'], d3['p_2'], d3['gtype_n'])
+        gd['w_g'] = gendyn.w_g(d3['w_to'])
+        gd['w_e'] = gendyn.w_e(d3['n_e'], d3['w_eng'])
+        gd['w_ai'] = gendyn.w_ai(d3['n_inl'], d3['l_d'], d3['a_inl'], d3['p_2'], d3['gtype_ai1'], d3['gtype_ai2'])
+        gd['w_prop'] = gendyn.w_prop(d3['n_p'], d3['n_bl'], d3['d_p'], d3['p_to'], d3['n_e'], d3['gtype_prop'])
+        gd['w_fs'] = gendyn.w_fs(d3['w_f'], d3['w_supp'], d3['gtype_fs1'], d3['gtype_fs2'])
+        gd['w_ec'] = gendyn.w_ec(d3['l_f'], d3['n_e'], d3['gtype_ec'], d3['b'])
+        gd['w_ess'] = gendyn.w_ess(gd['w_e'], d3['gtype_ess'])
+        gd['w_pc'] = gendyn.w_pc(d3['n_bl'], d3['n_p'], d3['d_p'], d3['p_to'], d3['n_e'], d3['gtype_pc'])
+        gd['w_fc'] = gendyn.w_fc(d3['w_to'], d3['q_d'])
+        gd['w_hydr'] = gendyn.w_hydr(d3['k_hydr'], d3['w_to'])
+        gd['w_els'] = gendyn.w_els(d3['w_fs'], d3['w_iae'])
+        gd['w_i'] = gendyn.w_i(d3['n_pil'], d3['w_to'], d3['n_e'])
+        gd['w_api'] = gendyn.w_api(d3['v_pax'], d3['n_cr'], d3['n_pax'])
+        gd['w_ox'] =  gendyn.w_ox(d3['n_cr'], d3['n_pax'])
+        gd['w_apu'] = gendyn.w_apu(d3['k_apu'], d3['w_to'])
+        gd['w_fur'] = gendyn.w_fur(d3['n_fdc'], d3['n_pax'], d3['n_cc'], d3['p_c'], d3['w_to'], d3['gtype_fur'])
+        gd['w_bc'] = gendyn.w_bc(d3['n_pax'], d3['gtype_bc'])
+        gd['w_aux'] = gendyn.w_aux(gd['w_e'])
+        gd['w_pt'] = gendyn.w_pt(d3['k_pt'], d3['w_to'])
 
         ret = ""
-        ret += "RAYMER" + "\n" + "------------------------------" + "\n"
+        ret += "GENERAL DYNAMICS" + "\n" + "------------------------------" + "\n"
         for component in self.components:
             if self.cb_dict[component].GetValue() == True:
-                ret += component + ":      " + str(round(ray[reference[component]], 2)) + "\n"
+                ret += component + ":      " + str(round(gd[reference[component]], 2)) + "\n"
 
-        ret += "total:      " + str(round(sum(ray.values()), 2))
+        ret += "total:      " + str(round(sum(gd.values()), 2))
         return ret
 
-    def load_xml(self, d2):
-        utype = ['allmoving', 'other', 'conv', 'ttail', 'fuselage', 'nocargo', 'onecargo', 'twocargo', 'clam', 'cargoclam', 'pylon', 'kneeling', 'reciprocating', 'turboprop']
+    def load_xml(self, d3):
+        utype = ['in', 'out', 'turbojet', 'turbofan', 'rootnoafter', 'rootafter', 'jet', 'turboprops', 'piston', 'jetcp', 'jetp', 'jete', 'turboprop', 'flat', 'curved', 'belowmd', 'abovemd' 'below', 'above', 'self', 'nonself', 'aviation', 'jp4', 'no', 'yes', 'business', 'short', 'long']
 
-        ltype = ['All-moving', 'Other', 'Conventional', 'T-tail', 'Fuselage-mounted main landing gear', 'No cargo door', 'Single side cargo', 'Double side cargo', 'Aft clamshell', 'Double side + aft clamshell', 'Pylon-mounted', 'Kneeling gear', 'Reciprocating', 'Turboprop']
+        ltype = ['Inlets in', 'Inlets elsewhere', 'Turbojet', 'Turbofan', 'Non-afterburning', 'Afterburning', 'Jet', 'Turboprops', 'Piston', 'Single/double jet engine', 'Four or more jet engine', 'Electric', 'Turboprop, pneumatic', 'Flat cross sections', 'Curved cross sections', 'M_D below 1.4', 'M_D above 1.4', 'Below 1,500 shp', 'Above 1,500 shp', 'Self-sealing bladder cells', 'Non-self sealing bladder cells', 'Aviation gasoline', 'JP-4', 'Without preload provision', 'With preload provisions', 'Business', 'Short', 'Long']
 
         type_too = dict(zip(utype, ltype))
 
-        ktype = ['rtype_htail', 'rtype_vtail', 'rtype_f1', 'rtype_f2', 'rtype_n', 'rtype_ucm', 'rtype_ucn', 'rtype_instr1', 'rtype_instr2']
+        ktype = ['fuselage_type', 'nacelle_type', 'ai1_type', 'ai2_type', 'prop_type', 'fs1_type', 'fs2_type', 'ec_type', 'ess_type', 'pc_type', 'fur_type', 'bc_type']
 
-        mtype = ['htail type', 'vtail type', 'fuselage door type', 'fuselage type', 'nacelle type', 'main type', 'nose type', 'engine type', 'aircraft type']
+        mtype = ['fuselage type', 'nacelle type', 'duct type', 'air induction type', 'propeller type', 'fuel system type', 'fuel type', 'engine controls type', 'engine s.s. type', 'propeller controls type', 'furnishing type', 'baggage type']
 
         type_moo = dict(zip(ktype, mtype))
 
-        for key, value in d2.iteritems():
-            if 'rtype' in key:
-                self.rtype[type_moo[key]].SetValue((type_too[value]))
+        for key, value in d3.iteritems():
+            if 'gtype' in key:
+                print key
+                self.gtype[type_moo[key]].SetValue((type_too[value]))
             else:
                 self.tc_dict[key].SetValue(str(value))
 
@@ -945,6 +958,8 @@ class DemoFrame(wx.Frame):
                 self.txt1.AppendText(newline + self.tabOne.calculate_weight())
             if self.cb_ray.GetValue() == True:
                 self.txt1.AppendText(newline + self.tabTwo.calculate_weight())
+            if self.cb_gd.GetValue() == True:
+                self.txt1.AppendText(newline + self.tabThree.calculate_weight())
 
     def load_button(self, evt):
         label = evt.GetEventObject().GetLabel()
@@ -953,6 +968,7 @@ class DemoFrame(wx.Frame):
             d1, d2, d3 = p.parse_xml()
             self.tabOne.load_xml(d1)
             self.tabTwo.load_xml(d2)
+            self.tabThree.load_xml(d3)
 
 
 

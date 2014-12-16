@@ -62,7 +62,6 @@ def weight():
     ray['w_ac'] = raymer.w_ac(d2['n_p'], d2['v_pr'], d2['w_uav'])
     ray['w_ai'] = raymer.w_ai(d2['w_dg'])
     ray['w_hand'] = raymer.w_hand(d2['w_dg'])
-    ray['w_mil'] = raymer.w_mil(d2['s_cf'])
 
 
     gendyn = methods.Gd()
@@ -78,8 +77,7 @@ def weight():
     gd['w_ai'] = gendyn.w_ai(d3['n_inl'], d3['l_d'], d3['a_inl'], d3['p_2'], d3['gtype_ai1'], d3['gtype_ai2'])
     gd['w_prop'] = gendyn.w_prop(d3['n_p'], d3['n_bl'], d3['d_p'], d3['p_to'], d3['n_e'], d3['gtype_prop'])
     gd['w_fs'] = gendyn.w_fs(d3['w_f'], d3['w_supp'], d3['gtype_fs1'], d3['gtype_fs2'])
-    gd['w_ec'] = gendyn.w_ec(d3['l_f'], d3['n_e'], d3['gtype_ec'])
-    gd['w_ecw'] = gendyn.w_ecw(d3['l_f'], d3['b'], d3['n_e'], d3['gtype_ecw'])
+    gd['w_ec'] = gendyn.w_ec(d3['l_f'], d3['n_e'], d3['gtype_ec'], d3['b'])
     gd['w_ess'] = gendyn.w_ess(gd['w_e'], d3['gtype_ess'])
     gd['w_pc'] = gendyn.w_pc(d3['n_bl'], d3['n_p'], d3['d_p'], d3['p_to'], d3['n_e'], d3['gtype_pc'])
     gd['w_fc'] = gendyn.w_fc(d3['w_to'], d3['q_d'])
@@ -157,7 +155,6 @@ def main():
     print "air-cond.", ray['w_ac']
     print "anti-ice", ray['w_ai']
     print "handling gear", ray['w_hand']
-    print "military cargo", ray['w_mil']
     print "raymer total", sum(ray.values())
 
     print "------------- GD -------------"
@@ -172,7 +169,6 @@ def main():
     print "propeller", gd['w_prop']
     print "fuel", gd['w_fs']
     print "engine controls 1", gd['w_ec']
-    print "engine controls 2", gd['w_ecw']
     print "engine ss", gd['w_ess']
     print "propeller controls", gd['w_pc']
     print "flight control", gd['w_fc']

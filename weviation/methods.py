@@ -837,9 +837,9 @@ class Gd:
         else:
             print "USAGE: 'cross' is 'flat' or 'curved'."
 
-        if m_d == 'below':
+        if m_d == 'belowmd':
             k_m = 1.0
-        elif m_d == 'above':
+        elif m_d == 'abovemd':
             k_m = 1.5
         else:
             print "USAGE: 'm_d' is 'below' or 'above'."
@@ -879,31 +879,33 @@ class Gd:
 
 ## 11) GD propulsion system
 # engine controls: fuselage/wing-root mounted jet engines
-    def w_ec(self, l_f, n_e, afterburning):
-        if afterburning == 'no':
+    def w_ec(self, l_f, n_e, dtype, b=None):
+        if dtype == 'rootafter':
             k_ec = 0.686
-        elif afterburning == 'yes':
+            k_frac = 1
+            e_ec = 0.792
+            b = 0
+        elif dtype == 'rootnoafter':
             k_ec = 1.080
+            k_frac = 1
+            e_ec = 0.792
+            b = 0
+        elif dtype == 'jet':
+            k_ec = 88.46
+            k_frac = 100
+            e_ec = 0.294
+        elif dtype == 'turboprops':
+            k_ec = 56.84
+            k_frac = 100
+            e_ec = 0.514
+        elif dtype == 'piston':
+            k_ec = 60.27
+            k_frac = 100
+            e_ec = 0.724
         else:
             print "USAGE: 'afterburning' is 'no' or 'yes'."
 
-        return k_ec*(l_f*n_e)**0.792
-
-# engine controls: wing mounted jet engines
-    def w_ecw(self, l_f, b, n_e, mounted):
-        if mounted == 'jet':
-            k_ecw = 88.46
-            e_ecw = 0.294
-        elif mounted == 'turboprops':
-            k_ecw = 56.84
-            e_ecw = 0.514
-        elif mounted == 'piston':
-            k_ecw = 60.27
-            e_ecw = 0.724
-        else:
-            print "USAGE: 'mounted' is 'jet' or 'turboprops' or 'piston'."
-
-        return k_ecw*((l_f + b)*n_e/100)**e_ecw
+        return k_ec*((l_f + b)*n_e/k_frac)**e_ec
 
 # engine starting systems:
     def w_ess(self, w_e, system):
