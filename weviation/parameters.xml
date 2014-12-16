@@ -245,7 +245,7 @@
             <gtype_fs2>aviation</gtype_fs2>
             <gtype_ec>jet</gtype_ec>
             <gtype_ess>jetcp</gtype_ess>
-            <gtype_pc>turboprop</gtype_pc>
+            <gtype_pc>turboprops</gtype_pc>
             <gtype_fur>business</gtype_fur>
             <gtype_bc>no</gtype_bc>
         </type>

@@ -1,6 +1,11 @@
 import wx
 import methods
 import parse as p
+import numpy as np
+import matplotlib
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
+from matplotlib import cm
 
 class TabTorenbeek(wx.ScrolledWindow):
     def __init__(self, parent):
@@ -266,8 +271,10 @@ class TabTorenbeek(wx.ScrolledWindow):
             if self.cb_dict[component].GetValue() == True:
                 ret += component + ":      " + str(round(tor[reference[component]], 2)) + "\n"
 
-        ret += "total:      " + str(round(sum(tor.values()), 2))
-        return ret
+        if self.cb_dict[component].GetValue() == True:
+            ret += "total:      " + str(round(sum(tor.values()), 2))
+
+        return ret, tor
 
     def load_xml(self, d1):
         utype = ['fixed', 'variable', 'fuselage', 'fin', 'pressurized', 'main', 'rear', 'cargo', 'low', 'high', 'transport', 'transportplus', 'single', 'multi', 'utility', 'jet', 'propeller', 'below', 'above', 'overwater']
@@ -553,8 +560,10 @@ class TabRaymer(wx.ScrolledWindow):
             if self.cb_dict[component].GetValue() == True:
                 ret += component + ":      " + str(round(ray[reference[component]], 2)) + "\n"
 
-        ret += "total:      " + str(round(sum(ray.values()), 2))
-        return ret
+        if self.cb_dict[component].GetValue() == True:
+            ret += "total:      " + str(round(sum(ray.values()), 2))
+
+        return ret, ray
 
     def load_xml(self, d2):
         utype = ['allmoving', 'other', 'conv', 'ttail', 'fuselage', 'nocargo', 'onecargo', 'twocargo', 'clam', 'cargoclam', 'pylon', 'kneeling', 'reciprocating', 'turboprop']
@@ -647,7 +656,7 @@ class TabGeneralDynamics(wx.ScrolledWindow):
         fur_type = ['Business', 'Short', 'Long']
         bc_type = ['Without preload provisions', 'With preload provisions']
 
-        combo_type = [fuselage_type, nacelle_type, ai1_type, ai2_type, prop_type, fs1_type, fs2_type, ec_type, ess_type, pc_type, fur_type, bc_type]
+        combo_type = [fuselage_type, nacelle_type, ec_type, ess_type, ai1_type, ai2_type, prop_type, pc_type, fs1_type, fs2_type, bc_type, fur_type]
 
         sizer = wx.GridBagSizer(0, 0)
         j = 0 # 'comp' list index
@@ -785,7 +794,7 @@ class TabGeneralDynamics(wx.ScrolledWindow):
                     d3['gtype_prop'] = 'below'
             elif key == 'propeller controls type':
                 if ret == 'Turboprop':
-                    d3['gtype_pc'] = 'turboprop'
+                    d3['gtype_pc'] = 'turboprops'
                 elif ret == 'Piston':
                     d3['gtype_pc'] = 'piston'
             elif key == 'fuel system type':
@@ -810,6 +819,8 @@ class TabGeneralDynamics(wx.ScrolledWindow):
                     d3['gtype_fur'] = 'short'
                 elif ret == 'Long':
                     d3['gtype_fur'] = 'long'
+            else:
+                print "ERROR"
 
         gendyn = methods.Gd()
         gd = {}
@@ -822,7 +833,7 @@ class TabGeneralDynamics(wx.ScrolledWindow):
             reference[self.components[i]] = weight
 
         gd['w_w'] = gendyn.w_w(d3['s'], d3['a'], d3['m_h'], d3['w_to'], d3['n_ult'], d3['lambda'], d3['t_cm'], d3['Lambda_12'])
-        gd['tail'] = gendyn.w_h(d3['w_to'], d3['n_ult'], d3['s_h'], d3['b_h'], d3['t_rh'], d3['c'], d3['l_h']) + gendyn.w_v(d3['z_h'], d3['b_v'], d3['w_to'], d3['n_ult'], d3['s_v'], d3['m_h'], d3['l_v'], d3['s_r'], d3['a_v'], d3['lambda_v'], d3['Lambda_14v'])
+        gd['w_tail'] = gendyn.w_h(d3['w_to'], d3['n_ult'], d3['s_h'], d3['b_h'], d3['t_rh'], d3['c'], d3['l_h']) + gendyn.w_v(d3['z_h'], d3['b_v'], d3['w_to'], d3['n_ult'], d3['s_v'], d3['m_h'], d3['l_v'], d3['s_r'], d3['a_v'], d3['lambda_v'], d3['Lambda_14v'])
         gd['w_f'] = gendyn.w_f(d3['q_d'], d3['w_to'], d3['l_f'], d3['h_f'], d3['gtype_f'])
         gd['w_n'] = gendyn.w_n(d3['n_inl'], d3['a_in'], d3['l_n'], d3['p_2'], d3['gtype_n'])
         gd['w_g'] = gendyn.w_g(d3['w_to'])
@@ -851,17 +862,19 @@ class TabGeneralDynamics(wx.ScrolledWindow):
             if self.cb_dict[component].GetValue() == True:
                 ret += component + ":      " + str(round(gd[reference[component]], 2)) + "\n"
 
-        ret += "total:      " + str(round(sum(gd.values()), 2))
-        return ret
+        if self.cb_dict[component].GetValue() == True:
+            ret += "total:      " + str(round(sum(gd.values()), 2))
+
+        return ret, gd
 
     def load_xml(self, d3):
-        utype = ['in', 'out', 'turbojet', 'turbofan', 'rootnoafter', 'rootafter', 'jet', 'turboprops', 'piston', 'jetcp', 'jetp', 'jete', 'turboprop', 'flat', 'curved', 'belowmd', 'abovemd' 'below', 'above', 'self', 'nonself', 'aviation', 'jp4', 'no', 'yes', 'business', 'short', 'long']
+        utype = ['in', 'out', 'turbojet', 'turbofan', 'rootnoafter', 'rootafter', 'jet', 'turboprops', 'piston', 'jetcp', 'jetp', 'jete', 'turboprop', 'flat', 'curved', 'belowmd', 'abovemd', 'below', 'above', 'self', 'nonself', 'aviation', 'jp4', 'no', 'yes', 'business', 'short', 'long']
 
-        ltype = ['Inlets in', 'Inlets elsewhere', 'Turbojet', 'Turbofan', 'Non-afterburning', 'Afterburning', 'Jet', 'Turboprops', 'Piston', 'Single/double jet engine', 'Four or more jet engine', 'Electric', 'Turboprop, pneumatic', 'Flat cross sections', 'Curved cross sections', 'M_D below 1.4', 'M_D above 1.4', 'Below 1,500 shp', 'Above 1,500 shp', 'Self-sealing bladder cells', 'Non-self sealing bladder cells', 'Aviation gasoline', 'JP-4', 'Without preload provision', 'With preload provisions', 'Business', 'Short', 'Long']
+        ltype = ['Inlets in', 'Inlets elsewhere', 'Turbojet', 'Turbofan', 'Non-afterburning', 'Afterburning', 'Jet', 'Turboprop', 'Piston', 'Single/double jet engine', 'Four or more jet engine', 'Electric', 'Turboprop, pneumatic', 'Flat cross sections', 'Curved cross sections', 'M_D below 1.4', 'M_D above 1.4', 'Below 1,500 shp', 'Above 1,500 shp', 'Self-sealing bladder cells', 'Non-self sealing bladder cells', 'Aviation gasoline', 'JP-4', 'Without preload provisions', 'With preload provisions', 'Business', 'Short', 'Long']
 
         type_too = dict(zip(utype, ltype))
 
-        ktype = ['fuselage_type', 'nacelle_type', 'ai1_type', 'ai2_type', 'prop_type', 'fs1_type', 'fs2_type', 'ec_type', 'ess_type', 'pc_type', 'fur_type', 'bc_type']
+        ktype = ['gtype_f', 'gtype_n', 'gtype_ai1', 'gtype_ai2', 'gtype_prop', 'gtype_fs1', 'gtype_fs2', 'gtype_ec', 'gtype_ess', 'gtype_pc', 'gtype_fur', 'gtype_bc']
 
         mtype = ['fuselage type', 'nacelle type', 'duct type', 'air induction type', 'propeller type', 'fuel system type', 'fuel type', 'engine controls type', 'engine s.s. type', 'propeller controls type', 'furnishing type', 'baggage type']
 
@@ -869,7 +882,6 @@ class TabGeneralDynamics(wx.ScrolledWindow):
 
         for key, value in d3.iteritems():
             if 'gtype' in key:
-                print key
                 self.gtype[type_moo[key]].SetValue((type_too[value]))
             else:
                 self.tc_dict[key].SetValue(str(value))
@@ -887,6 +899,37 @@ class TabGeneralDynamics(wx.ScrolledWindow):
 ####################################################################
 ####################################################################
 
+class OutputData(wx.Panel):
+    """
+    Pie chart
+    """
+    def __init__(self, parent, tor):
+        wx.Panel.__init__(self, parent, -1, size=(50,50))
+
+        self.tor = tor
+
+        if self.tor != None:
+            self.init_pie()
+        else:
+            print "FAIL!"
+
+
+    def init_pie(self):
+        self.figure = Figure()
+        self.axes = self.figure.add_subplot(111)
+        labels = self.tor.keys()
+        sizes = self.tor.values()
+        cs=cm.Set1(np.arange(len(labels))/float(len(labels)))
+        self.axes.pie(sizes, colors=cs, autopct='%.2f')
+        self.axes.axis('equal')
+        self.axes.legend(labels, loc=2)
+        self.canvas = FigureCanvas(self, -1, self.figure)
+
+
+
+####################################################################
+###################################################################
+
 class DemoFrame(wx.Frame):
     def __init__(self):
         """Constructor"""
@@ -895,10 +938,10 @@ class DemoFrame(wx.Frame):
                           size=(1200,800)
                           )
 
-        panel = wx.Panel(self)
+        self.panel = wx.Panel(self)
 
         # tabs
-        notebook = wx.Notebook(panel)
+        notebook = wx.Notebook(self.panel)
 
         self.tabOne = TabTorenbeek(notebook)
         notebook.AddPage(self.tabOne, "Torenbeek")
@@ -910,21 +953,23 @@ class DemoFrame(wx.Frame):
         notebook.AddPage(self.tabThree, "General Dynamics")
 
         # calculate button
-        btnCalc = wx.Button(panel, label='Calculate', size=(80,30))
+        btnCalc = wx.Button(self.panel, label='Calculate', size=(80,30))
         self.Bind(wx.EVT_BUTTON, self.calculate_button, btnCalc)
 
         # method checkbox
-        self.cb_tor = wx.CheckBox(panel, label='Torenbeek')
-        self.cb_ray = wx.CheckBox(panel, label='Raymer')
-        self.cb_gd = wx.CheckBox(panel, label='General Dynamics')
+        self.cb_tor = wx.CheckBox(self.panel, label='Torenbeek')
+        self.cb_ray = wx.CheckBox(self.panel, label='Raymer')
+        self.cb_gd = wx.CheckBox(self.panel, label='General Dynamics')
 
         # load xml button
-        btnLoad = wx.Button(panel, label='Load XML', size=(80,30))
+        btnLoad = wx.Button(self.panel, label='Load XML', size=(80,30))
         self.Bind(wx.EVT_BUTTON, self.load_button, btnLoad)
 
         # data output window
-        self.txt1 = wx.TextCtrl(panel, style=wx.TE_MULTILINE|wx.TE_READONLY)
+        self.txt1 = wx.TextCtrl(self.panel, style=wx.TE_MULTILINE|wx.TE_READONLY)
 
+        # pie chart
+        self.output = OutputData(self.panel, None)
 
         # adding stuff
         sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -940,10 +985,14 @@ class DemoFrame(wx.Frame):
         hbox0.Add(btnLoad)
         vbox0.Add(hbox0)
 
+        self.vbox1 = wx.BoxSizer(wx.VERTICAL)
+        self.vbox1.Add(self.output)
+
         sizer.Add(vbox0, 1, wx.ALL|wx.EXPAND, 5)
         sizer.Add(self.txt1, 1, wx.ALL|wx.EXPAND, 5)
+        sizer.Add(self.vbox1, 1, wx.ALL|wx.EXPAND, 5)
 
-        panel.SetSizer(sizer)
+        self.panel.SetSizer(sizer)
 
         self.Layout()
         self.Centre()
@@ -951,15 +1000,32 @@ class DemoFrame(wx.Frame):
 
     def calculate_button(self, evt):
         label = evt.GetEventObject().GetLabel()
+        self.tor = None
+        self.ray = None
+        self.gd = None
 
         if label == 'Calculate':
+
             newline = "\n\n"
             if self.cb_tor.GetValue() == True:
-                self.txt1.AppendText(newline + self.tabOne.calculate_weight())
+                ret_tor, self.tor = self.tabOne.calculate_weight()
+                self.txt1.AppendText(newline + ret_tor)
+                self.pie_tor = OutputData(self.panel, self.tor)
+                self.vbox1.Add(self.pie_tor)
             if self.cb_ray.GetValue() == True:
-                self.txt1.AppendText(newline + self.tabTwo.calculate_weight())
+                ret_ray, self.ray = self.tabTwo.calculate_weight()
+                self.txt1.AppendText(newline + ret_ray)
+                self.pie_ray = OutputData(self.panel, self.ray)
+                self.vbox1.Add(self.pie_ray)
             if self.cb_gd.GetValue() == True:
-                self.txt1.AppendText(newline + self.tabThree.calculate_weight())
+                ret_gd, self.gd = self.tabThree.calculate_weight()
+                self.txt1.AppendText(newline + ret_gd)
+                self.pie_gd = OutputData(self.panel, self.gd)
+                self.vbox1.Add(self.pie_gd)
+
+            self.Layout()
+            self.Fit()
+            self.Update()
 
     def load_button(self, evt):
         label = evt.GetEventObject().GetLabel()

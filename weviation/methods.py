@@ -931,7 +931,7 @@ class Gd:
 
 # propeller controls:
     def w_pc(self, n_bl, n_p, d_p, p_to, n_e, propeller):
-        if propeller == 'turboprop':
+        if propeller == 'turboprops':
             k_pc = 0.322
             e_pc1 = 0.589
             e_pc2 = 1.178
