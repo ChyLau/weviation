@@ -51,9 +51,6 @@ class TabTorenbeek(wx.ScrolledWindow):
 
         units_si = ['kg', 'kg', 'm', 'rad', 'm', '', 'm^2', 'm', 'm^2', 'm^2', 'rad', 'rad', 'm/s', 'm', 'm', 'm', 'm^2', '', '', '', '', '', '', '', '', '', '', 'kg', '', 'm', '', 'm^2', 'm^2', '', '', 'L', 'L', '', 'm', '',  '', 'kg', 'm', '', 'm', '', 'm']
 
-
-
-
         htail_type = ['Fixed stabilizer', 'Variable-incidence']
         vtail_type = ['Fuselage-mounted', 'Fin-mounted']
         fuselage_type = ['Pressurized fuselage', 'Main landing gear', 'Rear fuselage', 'Cargo']
@@ -269,10 +266,10 @@ class TabTorenbeek(wx.ScrolledWindow):
         ret += "TORENBEEK" + "\n" + "------------------------------" + "\n"
         for component in self.components:
             if self.cb_dict[component].GetValue() == True:
-                ret += component + ":      " + str(round(tor[reference[component]], 2)) + "\n"
+                ret += component + ":      " + str(round(tor[reference[component]], 2)) + " lb"+ "\n"
 
         if self.cb_dict[component].GetValue() == True:
-            ret += "total:      " + str(round(sum(tor.values()), 2))
+            ret += "total:      " + str(round(sum(tor.values()), 2)) + " lb"
 
         return ret, tor
 
@@ -899,22 +896,25 @@ class TabGeneralDynamics(wx.ScrolledWindow):
 ####################################################################
 ####################################################################
 
-class OutputData(wx.Panel):
+class OutputData(wx.ScrolledWindow):
     """
     Pie chart
     """
     def __init__(self, parent, tor):
-        wx.Panel.__init__(self, parent, -1, size=(50,50))
+        wx.ScrolledWindow.__init__(self, parent)
+        self.SetScrollRate(5,15)
 
         self.tor = tor
 
-        if self.tor != None:
-            self.init_pie()
-        else:
-            print "FAIL!"
+        #if self.tor != None:
+        #    self.init_pie()
+        #else:
+         #   print "FAIL!"
 
 
-    def init_pie(self):
+    def draw_pie(self):
+        vbox1 = wx.BoxSizer(wx.VERTICAL)
+
         self.figure = Figure()
         self.axes = self.figure.add_subplot(111)
         labels = self.tor.keys()
@@ -924,7 +924,7 @@ class OutputData(wx.Panel):
         self.axes.axis('equal')
         self.axes.legend(labels, loc=2)
         self.canvas = FigureCanvas(self, -1, self.figure)
-
+        vbox1.Add(self.axes)
 
 
 ####################################################################
@@ -941,16 +941,16 @@ class DemoFrame(wx.Frame):
         self.panel = wx.Panel(self)
 
         # tabs
-        notebook = wx.Notebook(self.panel)
+        self.notebook = wx.Notebook(self.panel)
 
-        self.tabOne = TabTorenbeek(notebook)
-        notebook.AddPage(self.tabOne, "Torenbeek")
+        self.tabOne = TabTorenbeek(self.notebook)
+        self.notebook.AddPage(self.tabOne, "Torenbeek")
 
-        self.tabTwo = TabRaymer(notebook)
-        notebook.AddPage(self.tabTwo, "Raymer")
+        self.tabTwo = TabRaymer(self.notebook)
+        self.notebook.AddPage(self.tabTwo, "Raymer")
 
-        self.tabThree = TabGeneralDynamics(notebook)
-        notebook.AddPage(self.tabThree, "General Dynamics")
+        self.tabThree = TabGeneralDynamics(self.notebook)
+        self.notebook.AddPage(self.tabThree, "General Dynamics")
 
         # calculate button
         btnCalc = wx.Button(self.panel, label='Calculate', size=(80,30))
@@ -969,24 +969,26 @@ class DemoFrame(wx.Frame):
         self.txt1 = wx.TextCtrl(self.panel, style=wx.TE_MULTILINE|wx.TE_READONLY)
 
         # pie chart
-        self.output = OutputData(self.panel, None)
+        self.notebook2 = wx.Notebook(self.panel)
+        self.output = OutputData(self.notebook2, None)
+        self.notebook2.AddPage(self.output, "Pie chart")
 
         # adding stuff
         sizer = wx.BoxSizer(wx.HORIZONTAL)
 
         vbox0 = wx.BoxSizer(wx.VERTICAL)
-        vbox0.Add(notebook, 1, wx.ALL|wx.EXPAND, 5)
+        vbox0.Add(self.notebook, 1, wx.ALL|wx.EXPAND, 5)
         hbox0 = wx.BoxSizer(wx.HORIZONTAL)
 
         hbox0.Add(btnCalc)
+        hbox0.Add(btnLoad)
         hbox0.Add(self.cb_tor)
         hbox0.Add(self.cb_ray)
         hbox0.Add(self.cb_gd)
-        hbox0.Add(btnLoad)
         vbox0.Add(hbox0)
 
         self.vbox1 = wx.BoxSizer(wx.VERTICAL)
-        self.vbox1.Add(self.output)
+        self.vbox1.Add(self.notebook2, 1, wx.ALL|wx.EXPAND, 5)
 
         sizer.Add(vbox0, 1, wx.ALL|wx.EXPAND, 5)
         sizer.Add(self.txt1, 1, wx.ALL|wx.EXPAND, 5)
@@ -1010,22 +1012,22 @@ class DemoFrame(wx.Frame):
             if self.cb_tor.GetValue() == True:
                 ret_tor, self.tor = self.tabOne.calculate_weight()
                 self.txt1.AppendText(newline + ret_tor)
-                self.pie_tor = OutputData(self.panel, self.tor)
-                self.vbox1.Add(self.pie_tor)
+                OutputData(self.notebook2, self.tor).draw_pie()
             if self.cb_ray.GetValue() == True:
                 ret_ray, self.ray = self.tabTwo.calculate_weight()
                 self.txt1.AppendText(newline + ret_ray)
-                self.pie_ray = OutputData(self.panel, self.ray)
-                self.vbox1.Add(self.pie_ray)
+                #self.pie_ray = OutputData(self.panel, self.ray)
+                #self.vbox1.Add(self.pie_ray)
             if self.cb_gd.GetValue() == True:
                 ret_gd, self.gd = self.tabThree.calculate_weight()
                 self.txt1.AppendText(newline + ret_gd)
-                self.pie_gd = OutputData(self.panel, self.gd)
-                self.vbox1.Add(self.pie_gd)
+                #self.pie_gd = OutputData(self.panel, self.gd)
+                #self.vbox1.Add(self.pie_gd)
 
             self.Layout()
             self.Fit()
             self.Update()
+            self.Refresh()
 
     def load_button(self, evt):
         label = evt.GetEventObject().GetLabel()
