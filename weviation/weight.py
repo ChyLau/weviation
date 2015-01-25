@@ -14,7 +14,6 @@ def weight():
 
     tor = {}
     tor['w_w'] = torenbeek.w_w(d1['w_g'], d1['b_ref'], d1['Lambda'], d1['b'], d1['n_ult'], d1['s_w'], d1['t_r'], d1['tunit_w'])
-    tor['w_tail'] = torenbeek.w_tail(d1['n_ult'], d1['s_v'], d1['s_h'], d1['tunit_tail'])
     tor['w_htail'] = torenbeek.w_htail(d1['s_h'], d1['v_d'], d1['Lambda_h'], d1['ttype_htail'])
     tor['w_vtail'] = torenbeek.w_vtail(d1['s_v'], d1['v_d'], d1['Lambda_v'], d1['ttype_vtail'])
     tor['w_f'] = torenbeek.w_f(d1['v_d'], d1['l_t'], d1['b_f'], d1['h_f'], d1['s_g'], d1['tunit_f'], d1['ttype_f'])
@@ -108,10 +107,11 @@ def pie_chart(data1, data2, data3):
 def main():
     tor, ray, gd = weight()
     print "--------- TORENBEEK ----------"
+    """
     print "wing", tor['w_w']
-    print "tail", tor['w_tail']
-    print "htail", tor['w_htail']
-    print "vtail", tor['w_vtail']
+    """
+    print "tail", tor['w_htail'] + tor['w_vtail']
+    """
     print "fuselage", tor['w_f']
     print "nacelle", tor['w_n']
     print "landing main", tor['w_ucm']
@@ -134,10 +134,13 @@ def main():
     print "furnishing", tor['w_fur']
     print "torenbeek total", sum(tor.values())
 
+    """
     print "----------- RAYMER -----------"
+    """
     print "wing", ray['w_w']
-    print "htail", ray['w_htail']
-    print "vtail", ray['w_vtail']
+    """
+    print "tail", ray['w_htail'] + ray['w_vtail']
+    """
     print "fuselage", ray['w_f']
     print "landing main", ray['w_ucm']
     print "landing nose", ray['w_ucn']
@@ -156,11 +159,13 @@ def main():
     print "anti-ice", ray['w_ai']
     print "handling gear", ray['w_hand']
     print "raymer total", sum(ray.values())
-
+    """
     print "------------- GD -------------"
+    """
     print "wing", gd['w_w']
-    print "htail", gd['w_h']
-    print "vtail", gd['w_v']
+    """
+    print "tail", gd['w_h'] + gd['w_v']
+    """
     print "fuselage", gd['w_f']
     print "nacelle", gd['w_n']
     print "landing gear", gd['w_g']
@@ -185,6 +190,6 @@ def main():
     print "gd total", sum(gd.values())
 
     pie_chart(tor, ray, gd)
-
+    """
 if __name__ == "__main__":
     main()

@@ -51,7 +51,7 @@
             <b>35.58</b>
             <n_ult>4.5</n_ult>
             <s_w>231.77</s_w>
-            <t_r>0.509</t_r>
+            <t_r>10</t_r>
 
             <!-- TAIL -->
             <s_v>37.37</s_v>
@@ -144,28 +144,28 @@
 
         <component>
             <!-- WING, HTAIL, VTAIL, FUSELAGE -->
-            <w_dg>1</w_dg>
-            <n_z>1</n_z>
-            <s_w>1</s_w>
-            <a>1</a>
-            <t_c>1</t_c>
-            <lambda>1</lambda>
-            <Lambda>1</Lambda>
-            <s_csw>1</s_csw>
+            <w_dg>15000</w_dg>
+            <n_z>4.5</n_z>
+            <s_w>231.77</s_w>
+            <a>5.01</a>
+            <t_c>10</t_c>
+            <lambda>0.509</lambda>
+            <Lambda>13</Lambda>
+            <s_csw>25</s_csw>
 
             <!-- HTAIL -->
-            <f_w>1</f_w>
-            <b_h>1</b_h>
-            <s_ht>1</s_ht>
-            <l_t>1</l_t>
-            <Lambda_ht>1</Lambda_ht>
-            <a_h>1</a_h>
-            <s_e>1</s_e>
+            <f_w>4</f_w>
+            <b_h>14.67</b_h>
+            <s_ht>54</s_ht>
+            <l_t>20.553</l_t>
+            <Lambda_ht>25</Lambda_ht>
+            <a_h>4</a_h>
+            <s_e>11</s_e>
 
             <!-- VTAIL -->
-            <s_vt>1</s_vt>
-            <Lambda_vt>1</Lambda_vt>
-            <a_v>1</a_v>
+            <s_vt>37.37</s_vt>
+            <Lambda_vt>48</Lambda_vt>
+            <a_v>2</a_v>
             <h_t>1</h_t>
             <h_v>1</h_v>
 
@@ -252,14 +252,14 @@
 
         <component>
             <!-- WING -->
-            <s>1</s>
-            <a>1</a>
-            <m_h>1</m_h>
-            <w_to>1</w_to>
-            <n_ult>1</n_ult>
-            <lambda>1</lambda>
-            <t_cm>1</t_cm>
-            <Lambda_12>1</Lambda_12>
+            <s>231.77</s>
+            <a>5.01</a>
+            <m_h>0.6</m_h>
+            <w_to>15000</w_to>
+            <n_ult>4.5</n_ult>
+            <lambda>0.509</lambda>
+            <t_cm>0.11</t_cm>
+            <Lambda_12>13</Lambda_12>
 
             <!-- HTAIL -->
             <s_h>1</s_h>

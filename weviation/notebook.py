@@ -900,35 +900,65 @@ class OutputData(wx.ScrolledWindow):
     """
     Pie chart
     """
-    def __init__(self, parent, tor):
+    def __init__(self, parent, rc):
         wx.ScrolledWindow.__init__(self, parent)
         self.SetScrollRate(5,15)
 
-        self.tor = tor
-
-        #if self.tor != None:
-        #    self.init_pie()
-        #else:
-         #   print "FAIL!"
-
+        self.rc = rc
 
     def draw_pie(self):
-        vbox1 = wx.BoxSizer(wx.VERTICAL)
+        hbox = wx.BoxSizer(wx.HORIZONTAL)
 
         self.figure = Figure()
         self.axes = self.figure.add_subplot(111)
-        labels = self.tor.keys()
-        sizes = self.tor.values()
+        labels = self.rc.keys()
+        sizes = self.rc.values()
         cs=cm.Set1(np.arange(len(labels))/float(len(labels)))
         self.axes.pie(sizes, colors=cs, autopct='%.2f')
         self.axes.axis('equal')
         self.axes.legend(labels, loc=2)
         self.canvas = FigureCanvas(self, -1, self.figure)
-        vbox1.Add(self.axes)
+
+        hbox.Add(self.axes, 1, wx.ALL|wx.EXPAND, 5)
+
+        self.SetSizer(hbox)
 
 
 ####################################################################
 ###################################################################
+
+class OutputData2(wx.Panel):
+    """
+    Pie chart
+    """
+    def __init__(self, parent, rc):
+        wx.Panel.__init__(self, parent)
+
+        self.rc = rc
+
+    def draw_pie(self):
+        self.figure = Figure()
+        self.axes = self.figure.add_subplot(111)
+        labels = self.rc.keys()
+        sizes = self.rc.values()
+        cs=cm.Set1(np.arange(len(labels))/float(len(labels)))
+        self.axes.pie(sizes, colors=cs, autopct='%.2f')
+        self.axes.axis('equal')
+        self.axes.legend(labels, loc=2)
+        self.canvas = FigureCanvas(self, -1, self.figure)
+
+        vbox = wx.BoxSizer(wx.VERTICAL)
+        vbox.Add(self.canvas, 1, wx.ALL|wx.EXPAND)
+        self.SetSizer(vbox)
+        #self.Update()
+        #self.Layout()
+        #self.Fit()
+        self.Refresh()
+
+
+####################################################################
+###################################################################
+
 
 class DemoFrame(wx.Frame):
     def __init__(self):
@@ -968,10 +998,17 @@ class DemoFrame(wx.Frame):
         # data output window
         self.txt1 = wx.TextCtrl(self.panel, style=wx.TE_MULTILINE|wx.TE_READONLY)
 
-        # pie chart
+        # pie chart tabs
         self.notebook2 = wx.Notebook(self.panel)
-        self.output = OutputData(self.notebook2, None)
-        self.notebook2.AddPage(self.output, "Pie chart")
+
+        self.tabTor = OutputData(self.notebook2, None)
+        self.notebook2.AddPage(self.tabTor, "Torenbeek")
+
+        self.tabRay = OutputData(self.notebook2, None)
+        self.notebook2.AddPage(self.tabRay, "Raymer")
+
+        self.tabGd = OutputData(self.notebook2, None)
+        self.notebook2.AddPage(self.tabGd, "General Dynamics")
 
         # adding stuff
         sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -1012,22 +1049,18 @@ class DemoFrame(wx.Frame):
             if self.cb_tor.GetValue() == True:
                 ret_tor, self.tor = self.tabOne.calculate_weight()
                 self.txt1.AppendText(newline + ret_tor)
-                OutputData(self.notebook2, self.tor).draw_pie()
+                OutputData2(self.notebook2, self.tor).draw_pie()
             if self.cb_ray.GetValue() == True:
                 ret_ray, self.ray = self.tabTwo.calculate_weight()
                 self.txt1.AppendText(newline + ret_ray)
-                #self.pie_ray = OutputData(self.panel, self.ray)
-                #self.vbox1.Add(self.pie_ray)
             if self.cb_gd.GetValue() == True:
                 ret_gd, self.gd = self.tabThree.calculate_weight()
                 self.txt1.AppendText(newline + ret_gd)
-                #self.pie_gd = OutputData(self.panel, self.gd)
-                #self.vbox1.Add(self.pie_gd)
 
-            self.Layout()
-            self.Fit()
-            self.Update()
-            self.Refresh()
+            #self.Layout()
+            #self.Fit()
+            #self.Update()
+            #self.Refresh()
 
     def load_button(self, evt):
         label = evt.GetEventObject().GetLabel()
