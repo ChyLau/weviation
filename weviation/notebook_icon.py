@@ -336,6 +336,8 @@ class TabRaymer(wx.ScrolledWindow):
 
         self.components = ['wing', 'tail', 'fuselage', 'nacelle', 'landing main', 'landing nose', 'engine controls', 'pneumatic', 'fuel system', 'flight controls', 'APU', 'instruments', 'hydraulics', 'electrical', 'avionics', 'furnishing', 'air conditioning', 'anti-icing', 'handling gear']
 
+        tooltip = ['Design gross weight', 'Ultimate load factor', 'Aspect ratio', 'TODO', 'Taper ratio', 'Wing sweep at 25% MAC', 'Trapezoidal wing area', 'Control surface area', 'Aspect ratio', 'Aspect ratio', 'Horizontal tail span', 'Fuselage width at horizontal tail intersection', 'Horizontal tail height above fuselage', 'Vertical tail height above fuselage', 'Horizontal tail sweep at 25% MAC', 'Vertical tail sweep at 25% MAC', 'Tail length; wing quarter-MAC to tail quarter-MAC', 'Elevator area', 'Horizontal tail area', 'Vertical tail area', 'Wing span', 'Fuselage structural depth', 'Fuselage structural length', 'Fuselage wetted area', 'Number of engines', 'Nacelle length', 'Nacelle width', 'Nacelle wetted area', 'Weight of engine and contents', 'Length of main landing gear', 'Nose gear length', 'Ultimate landing load factor; = N_gear * 1.5', 'Number of main gear shock struts', 'Number of main wheels', 'Number of nose wheels', 'TODO', 'Landing design gross weight', 'Length from engine front to cockpit -- total if multiengine', 'Engine weight, each', 'Number of fuel tanks', 'Integral tanks volume', 'Self-sealing protected tanks volume', 'Total fuel volume', 'Yawing moment of inertia', 'Number of functions performed by controls (typically 4-7)', 'Number of mechanical functions (typically 0-2)', 'Total area of control surfaces', 'Uninstalled APU weight', 'Total fuselage length', 'Number of crew', 'Electrical routing distance, generators to avionics to cockpit', 'Number of generators (typically = number of engines)', 'System electrical rating (typically 40-60)', 'Uninstalled avionics weight (typically = 800-1400 lb)', 'Maximum cargo weight', 'Number of personnel onboard (crew and passengers)', 'Volume of pressurized section']
+
         hbox = wx.BoxSizer(wx.VERTICAL)
 
         stxt0 = wx.StaticText(self, label='Components')
@@ -384,6 +386,7 @@ class TabRaymer(wx.ScrolledWindow):
         k = 0 # 'combo_type' list index
         m = 0 # 'units_im' list index
         n = 0 # 'units_si' list index
+        z = 0 # tooltip list index
         self.par_extra = [] # list for units parameters
         self.tc_dict = {} # dict of TextCtrl
         self.rtype = {} # dict of comboboxes
@@ -416,8 +419,8 @@ class TabRaymer(wx.ScrolledWindow):
                 start_icon.Rescale(20, 20)
                 almost_icon = wx.BitmapFromImage(start_icon)
                 icon = wx.StaticBitmap(self, -1, almost_icon, wx.DefaultPosition, style=wx.BITMAP_TYPE_PNG)
-                icon.SetToolTip(wx.ToolTip('OK'))
-                #z += 1
+                icon.SetToolTip(wx.ToolTip(tooltip[z]))
+                z += 1
 
                 sizer.Add(par, pos=(i,0))
                 sizer.Add(tc, pos=(i,2))
