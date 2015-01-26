@@ -635,6 +635,8 @@ class TabGeneralDynamics(wx.ScrolledWindow):
 
         self.components = ['wing', 'tail', 'fuselage', 'nacelle', 'landing gear', 'engine', 'air induction', 'propeller', 'fuel system', 'engine controls', 'engine starting system', 'propeller controls', 'flight controls', 'hydraulic/pneumatic', 'electrical', 'instr./avio./elec.', 'API', 'oxygen system', 'APU', 'furnishing', 'baggage', 'auxiliary gear', 'paint']
 
+        tooltip = ['Takeoff weight', 'Ultimate load factor', 'Aspect ratio (typically 4-12)', 'Taper ratio', 'Sweepback angle at 50% chord', 'Maximum Mach number at sealevel (typically 0.4-0.8)', 'Wing area', 'TODO (typically 0.08-0.15)', 'Vertical tail aspect ratio', 'Horizontal tail span', 'Vertical tail span', 'Chord length (?)', 'Vertical tail taper ratio', 'Vertical tail sweep at 25% MAC', 'Distance from wing c/4 to horizontal tail c_h/4', 'Distance from wing c/4 to vertical tail c_v/4', 'Horizontal tail area', 'Rudder area', 'Vertical tail area', 'Horizontal tail thickness root', 'Distance from the vertical tail root to where the horizontal tail is mounted on the vertical tail; = 0 for fuselage mounted horizontal tails', 'Fuselage height', 'Fuselage length', 'Design dive dynamic pressure', 'Capture area per inlet', 'Nacelle length from inlet lip to compressor face', 'Number of inlets', 'Maximum static pressure at engine compressor face (typically 15-50)', 'Number of engines', 'Weight per engine', 'Capture area per inlet', 'Duct length', 'Propeller diameter', 'Number of blades per propeller', 'Number of propellers', 'Required take-off power', 'Mission fuel weight (includes reserves)', 'Bladder support structure weight', 'Wing span', 'Typically 0.0060-0.0120', 'Fuel system weight', 'Instrumentation, avionics and electronics weight', 'Number of pilots', 'Number of crew', 'Number of passengers', 'Passenger cabin volume', 'Typically 0.004-0.013', 'TODO', 'TODO', 'Design ultimate cabin pressure', 'Typically 0.003-0.006']
+
         hbox = wx.BoxSizer(wx.VERTICAL)
 
         stxt0 = wx.StaticText(self, label='Components')
@@ -686,6 +688,7 @@ class TabGeneralDynamics(wx.ScrolledWindow):
         k = 0 # 'combo_type' list index
         m = 0 # 'units_im' list index
         n = 0 # 'units_si' list index
+        z = 0 # tooltip list index
         self.par_extra = [] # list for units parameters
         self.tc_dict = {} # dict of TextCtrl
         self.gtype = {} # dict of comboboxes
@@ -719,8 +722,8 @@ class TabGeneralDynamics(wx.ScrolledWindow):
                 start_icon.Rescale(20, 20)
                 almost_icon = wx.BitmapFromImage(start_icon)
                 icon = wx.StaticBitmap(self, -1, almost_icon, wx.DefaultPosition, style=wx.BITMAP_TYPE_PNG)
-                icon.SetToolTip(wx.ToolTip('OK'))
-                #z += 1
+                icon.SetToolTip(wx.ToolTip(tooltip[z]))
+                z += 1
 
                 sizer.Add(par, pos=(i,0))
                 sizer.Add(tc, pos=(i,2))
