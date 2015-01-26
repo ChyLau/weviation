@@ -942,9 +942,10 @@ class OutputData(wx.ScrolledWindow):
         self.SetScrollRate(5,15)
 
         self.rc = rc
+        self.draw_pie()
 
     def draw_pie(self):
-        hbox = wx.BoxSizer(wx.HORIZONTAL)
+        #hbox = wx.BoxSizer(wx.HORIZONTAL)
 
         self.figure = Figure()
         self.axes = self.figure.add_subplot(111)
@@ -956,9 +957,9 @@ class OutputData(wx.ScrolledWindow):
         self.axes.legend(labels, loc=2)
         self.canvas = FigureCanvas(self, -1, self.figure)
 
-        hbox.Add(self.axes, 1, wx.ALL|wx.EXPAND, 5)
+        #hbox.Add(self.axes, 1, wx.ALL|wx.EXPAND, 5)
 
-        self.SetSizer(hbox)
+        #self.SetSizer(hbox)
 
 
 ####################################################################
@@ -969,12 +970,15 @@ class OutputData2(wx.Panel):
     Pie chart
     """
     def __init__(self, parent, rc):
-        wx.Panel.__init__(self, parent)
+        wx.Panel.__init__(self, parent, -1, size=(50,50))
 
         self.rc = rc
+        if self.rc != None:
+            self.draw_pie()
+        else:
+            print 'Input is "None"'
 
     def draw_pie(self):
-        """
         self.figure = Figure()
         self.axes = self.figure.add_subplot(111)
         labels = self.rc.keys()
@@ -985,11 +989,11 @@ class OutputData2(wx.Panel):
         self.axes.legend(labels, loc=2)
         self.canvas = FigureCanvas(self, -1, self.figure)
 
-        vbox = wx.BoxSizer(wx.VERTICAL)
-        vbox.Add(self.canvas, 1, wx.ALL|wx.EXPAND)
-        self.SetSizer(vbox)
+        #vbox = wx.BoxSizer(wx.VERTICAL)
+        #vbox.Add(self.canvas, 1, wx.ALL|wx.EXPAND)
+        #self.SetSizer(vbox)
         #self.Update()
-        self.Layout()
+        #self.Layout()
         #self.Fit()
         #self.Refresh()
         """
@@ -1001,6 +1005,7 @@ class OutputData2(wx.Panel):
         self.axes.pie(sizes, labels=labels, colors=colors)
         self.axes.axis('equal')
         self.canvas = FigureCanvas(self, -1, self.figure)
+        """
         print "inside"
 
 
@@ -1050,14 +1055,13 @@ class DemoFrame(wx.Frame):
         # pie chart tabs
         self.notebook2 = wx.Notebook(self.panel)
 
-        testo = {'w_a': 100, 'w_b': 200}
-        self.tabTor = OutputData2(self.notebook2, testo)
+        self.tabTor = OutputData2(self.notebook2, None)
         self.notebook2.AddPage(self.tabTor, "Torenbeek")
 
-        self.tabRay = OutputData(self.notebook2, None)
+        self.tabRay = OutputData2(self.notebook2, None)
         self.notebook2.AddPage(self.tabRay, "Raymer")
 
-        self.tabGd = OutputData(self.notebook2, None)
+        self.tabGd = OutputData2(self.notebook2, None)
         self.notebook2.AddPage(self.tabGd, "General Dynamics")
 
         # adding stuff
@@ -1099,7 +1103,7 @@ class DemoFrame(wx.Frame):
             if self.cb_tor.GetValue() == True:
                 ret_tor, self.tor = self.tabOne.calculate_weight()
                 self.txt1.AppendText(newline + ret_tor)
-                OutputData2(self.notebook2, self.tor).draw_pie()
+                OutputData2(self.notebook2, self.tor)
             if self.cb_ray.GetValue() == True:
                 ret_ray, self.ray = self.tabTwo.calculate_weight()
                 self.txt1.AppendText(newline + ret_ray)
@@ -1110,7 +1114,7 @@ class DemoFrame(wx.Frame):
             self.Layout()
             self.Fit()
             self.Update()
-            self.Refresh()
+            #self.Refresh()
 
     def load_button(self, evt):
         label = evt.GetEventObject().GetLabel()
