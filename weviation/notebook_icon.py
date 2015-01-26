@@ -21,6 +21,9 @@ class TabTorenbeek(wx.ScrolledWindow):
 
         self.components = ['wing', 'tail', 'fuselage', 'nacelle', 'landing main', 'landing nose', 'surface controls', 'engine', 'accessory', 'air induction', 'exhaust', 'oil/cooler', 'fuel system', 'water injection', 'propeller installation', 'thrust reversers', 'APU', 'instruments', 'hydraulic/lectrical', 'AC/pressure/anti-ice', 'oxygen system', 'furnishing']
 
+        ################ TOOLTIP LIST
+        tooltip = ['Gross weight', 'Takeoff weight', 'Reference wing span', 'Sweepback angle at 50% chord', 'Wing span', 'Ultimate load factor', 'Wing area', 'Maximum thickness of root chord', 'Vertical tail area', 'Horizontal tail area', 'Maximum thickness of root chord', 'Maximum thickness of root chord', 'Design dive speed', 'Distance between 1/4-chord points of wing and horizontal tailplane root', 'Fuselage width', 'Fuselage height', 'Gross shell area of the fuselage', 'Takeoff horsepower per engine', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Number of engines', 'Engine weight', 'Fuel flow per engine', 'Duct length', 'Number of inlets', 'Capture area per inlet', 'TODO', 'Takeoff thrust per engine', 'Number of fuel tanks', 'Total water tank capacity', 'Total fuel tank volume', 'Number of propellers', 'Number of blades/propeller', 'Propeller diameter', 'Rated bleed airflow of APU', 'Delivery empty weight', 'Maximum range with maximum fuel', 'Total electrical generator power', 'Length of passenger cabin', 'Number of passengers', 'Maximum zero fuel weight']
+
         hbox = wx.BoxSizer(wx.VERTICAL)
 
         stxt0 = wx.StaticText(self, label='Components')
@@ -29,6 +32,7 @@ class TabTorenbeek(wx.ScrolledWindow):
         line0 = wx.StaticLine(self)
         hbox.Add(stxt0, 0, wx.ALL, 5)
         hbox.Add(line0, 1, wx.ALL|wx.EXPAND, 5)
+
 
         vbox0 = wx.BoxSizer(wx.HORIZONTAL)
         self.cball = wx.CheckBox(self, label='(de)select all')
@@ -47,9 +51,9 @@ class TabTorenbeek(wx.ScrolledWindow):
         # component list
         comp_title = ['General', 'Wing', 'Tail', 'Fuselage', 'Nacelle,..', 'Landing gear,..', 'Engine,..', 'Accessory', 'Air induction', 'Exhaust', 'Fuel system', 'Water injection', 'Propeller installation', 'APU', 'Instruments, ...', 'Electrical', 'Air conditioning', 'Oxygen system', 'Furnishing']
 
-        units_im = ['lb', 'lb', 'ft', 'deg', 'ft', '', 'ft^2', 'ft', 'ft^2', 'ft^2', 'deg', 'deg', 'kts', 'ft', 'ft', 'ft', 'ft^2', 'hp', '', '', '', '', '', '', '', '', '', 'lb', '', 'ft', '', 'ft^2', 'ft^2', 'N', '', 'gal', 'gal', '', 'ft', '',  '', 'lb', 'ft', 'W', 'ft', '', 'ft']
+        units_im = ['lb', 'lb', 'ft', 'deg', 'ft', '', 'ft^2', 'ft', 'ft^2', 'ft^2', 'deg', 'deg', 'kts', 'ft', 'ft', 'ft', 'ft^2', 'hp', '', '', '', '', '', '', '', '', '', 'lb', '', 'ft', '', 'ft^2', 'ft^2', 'N', '', 'gal', 'gal', '', '', 'ft',  '', 'lb', 'ft', 'kVA', 'ft', '', 'ft']
 
-        units_si = ['kg', 'kg', 'm', 'rad', 'm', '', 'm^2', 'm', 'm^2', 'm^2', 'rad', 'rad', 'm/s', 'm', 'm', 'm', 'm^2', '', '', '', '', '', '', '', '', '', '', 'kg', '', 'm', '', 'm^2', 'm^2', '', '', 'L', 'L', '', 'm', '',  '', 'kg', 'm', '', 'm', '', 'm']
+        units_si = ['kg', 'kg', 'm', 'rad', 'm', '', 'm^2', 'm', 'm^2', 'm^2', 'rad', 'rad', 'm/s', 'm', 'm', 'm', 'm^2', '', '', '', '', '', '', '', '', '', '', 'kg', '', 'm', '', 'm^2', 'm^2', '', '', 'L', 'L', '', '', 'm',  '', 'kg', 'm', '', 'm', '', 'm']
 
         htail_type = ['Fixed stabilizer', 'Variable-incidence']
         vtail_type = ['Fuselage-mounted', 'Fin-mounted']
@@ -67,11 +71,13 @@ class TabTorenbeek(wx.ScrolledWindow):
         k = 0 # 'combo_type' list index
         m = 0 # 'units_im' list index
         n = 0 # 'units_si' list index
+        z = 0 # tooltip list index
         self.par_extra = [] # list for units parameters
         self.tc_dict = {} # dict of TextCtrl
         self.ttype = {} # dict of comboboxes
         self.rb_im = {} # dict of radiobuttons 'im'
         self.rb_si = {} # dict of radiobuttons 'si'
+        self.icon_dict = {}
 
         for i, item in enumerate(self.parameters):
             if item == 'marker':
@@ -82,39 +88,47 @@ class TabTorenbeek(wx.ScrolledWindow):
                 sizer.Add(comp_name, pos=(i,0), flag=wx.TOP, border=10)
             elif item == 'line':
                 line = wx.StaticLine(self)
-                sizer.Add(line, pos=(i,0), span=(1,2), flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=5)
+                sizer.Add(line, pos=(i,0), span=(1,5), flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=5)
             elif 'type' in item:
                 combo = wx.ComboBox(self, choices=combo_type[k], style=wx.CB_READONLY)
                 combo_title = wx.StaticText(self, label=item)
                 self.ttype[item] = combo
-                sizer.Add(combo, pos=(i,1))
+                sizer.Add(combo, pos=(i,2))
                 sizer.Add(combo_title, pos=(i, 0))
                 k += 1
             else:
                 par = wx.StaticText(self, label=item)
                 tc = wx.TextCtrl(self, wx.ID_ANY, "")
                 self.tc_dict[item] = tc
-                tc.SetToolTip(wx.ToolTip('Test'))
 
+                start_icon = wx.Image('icon.png')
+                start_icon.Rescale(20, 20)
+                almost_icon = wx.BitmapFromImage(start_icon)
+                icon = wx.StaticBitmap(self, -1, almost_icon, wx.DefaultPosition, style=wx.BITMAP_TYPE_PNG)
+                self.icon_dict[item] = icon
+                icon.SetToolTip(wx.ToolTip(tooltip[z]))
+                z += 1
                 sizer.Add(par, pos=(i,0))
-                sizer.Add(tc, pos=(i,1))
+                sizer.Add(tc, pos=(i,2))
+                sizer.Add(icon, pos=(i,1), flag=wx.RIGHT, border=10)
+
                 if units_im[m] == '':
                     m += 1
                     n += 1
                     continue
                 else:
                     rb1 = wx.RadioButton(self, label=units_im[m], style=wx.RB_GROUP)
-                    sizer.Add(rb1, pos=(i,2))
+                    sizer.Add(rb1, pos=(i,3))
                     self.rb_im[item] = rb1
                     self.par_extra.append(item)
                     m += 1
                     if units_si[n] == '':
                         filler = wx.StaticText(self, label='')
-                        sizer.Add(filler, pos=(i,3))
+                        sizer.Add(filler, pos=(i,4))
                         n += 1
                     else:
                         rb2 = wx.RadioButton(self, label=units_si[n])
-                        sizer.Add(rb2, pos=(i,3))
+                        sizer.Add(rb2, pos=(i,4))
                         self.rb_si[item] = rb2
                         n += 1
 
@@ -385,12 +399,12 @@ class TabRaymer(wx.ScrolledWindow):
                 sizer.Add(comp_name, pos=(i,0), flag=wx.TOP, border=10)
             elif item == 'line':
                 line = wx.StaticLine(self)
-                sizer.Add(line, pos=(i,0), span=(1,2), flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=5)
+                sizer.Add(line, pos=(i,0), span=(1,5), flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=5)
             elif 'type' in item:
                 combo = wx.ComboBox(self, choices=combo_type[k], style=wx.CB_READONLY)
                 combo_title = wx.StaticText(self, label=item)
                 self.rtype[item] = combo
-                sizer.Add(combo, pos=(i,1))
+                sizer.Add(combo, pos=(i,2))
                 sizer.Add(combo_title, pos=(i, 0))
                 k += 1
             else:
@@ -398,25 +412,33 @@ class TabRaymer(wx.ScrolledWindow):
                 tc = wx.TextCtrl(self, wx.ID_ANY, "")
                 self.tc_dict[item] = tc
 
+                start_icon = wx.Image('icon.png')
+                start_icon.Rescale(20, 20)
+                almost_icon = wx.BitmapFromImage(start_icon)
+                icon = wx.StaticBitmap(self, -1, almost_icon, wx.DefaultPosition, style=wx.BITMAP_TYPE_PNG)
+                icon.SetToolTip(wx.ToolTip('OK'))
+                #z += 1
+
                 sizer.Add(par, pos=(i,0))
-                sizer.Add(tc, pos=(i,1))
+                sizer.Add(tc, pos=(i,2))
+                sizer.Add(icon, pos=(i,1), flag=wx.RIGHT, border=10)
                 if units_im[m] == '':
                     m += 1
                     n += 1
                     continue
                 else:
                     rb1 = wx.RadioButton(self, label=units_im[m], style=wx.RB_GROUP)
-                    sizer.Add(rb1, pos=(i,2))
+                    sizer.Add(rb1, pos=(i,3))
                     self.rb_im[item] = rb1
                     self.par_extra.append(item)
                     m += 1
                     if units_si[n] == '':
                         filler = wx.StaticText(self, label='')
-                        sizer.Add(filler, pos=(i,3))
+                        sizer.Add(filler, pos=(i,4))
                         n += 1
                     else:
                         rb2 = wx.RadioButton(self, label=units_si[n])
-                        sizer.Add(rb2, pos=(i,3))
+                        sizer.Add(rb2, pos=(i,4))
                         self.rb_si[item] = rb2
                         n += 1
 
@@ -677,12 +699,12 @@ class TabGeneralDynamics(wx.ScrolledWindow):
             elif item == 'line':
                 line = wx.StaticLine(self)
 
-                sizer.Add(line, pos=(i,0), span=(1,2), flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=5)
+                sizer.Add(line, pos=(i,0), span=(1,5), flag=wx.EXPAND|wx.TOP|wx.BOTTOM, border=5)
             elif 'type' in item:
                 combo = wx.ComboBox(self, choices=combo_type[k], style=wx.CB_READONLY)
                 combo_title = wx.StaticText(self, label=item)
                 self.gtype[item] = combo
-                sizer.Add(combo, pos=(i,1))
+                sizer.Add(combo, pos=(i,2))
                 sizer.Add(combo_title, pos=(i, 0))
                 k += 1
             else:
@@ -690,25 +712,33 @@ class TabGeneralDynamics(wx.ScrolledWindow):
                 tc = wx.TextCtrl(self, wx.ID_ANY, "")
                 self.tc_dict[item] = tc
 
+                start_icon = wx.Image('icon.png')
+                start_icon.Rescale(20, 20)
+                almost_icon = wx.BitmapFromImage(start_icon)
+                icon = wx.StaticBitmap(self, -1, almost_icon, wx.DefaultPosition, style=wx.BITMAP_TYPE_PNG)
+                icon.SetToolTip(wx.ToolTip('OK'))
+                #z += 1
+
                 sizer.Add(par, pos=(i,0))
-                sizer.Add(tc, pos=(i,1))
+                sizer.Add(tc, pos=(i,2))
+                sizer.Add(icon, pos=(i,1), flag=wx.RIGHT, border=10)
                 if units_im[m] == '':
                     m += 1
                     n += 1
                     continue
                 else:
                     rb1 = wx.RadioButton(self, label=units_im[m], style=wx.RB_GROUP)
-                    sizer.Add(rb1, pos=(i,2))
+                    sizer.Add(rb1, pos=(i,3))
                     self.rb_im[item] = rb1
                     self.par_extra.append(item)
                     m += 1
                     if units_si[n] == '':
                         filler = wx.StaticText(self, label='')
-                        sizer.Add(filler, pos=(i,3))
+                        sizer.Add(filler, pos=(i,4))
                         n += 1
                     else:
                         rb2 = wx.RadioButton(self, label=units_si[n])
-                        sizer.Add(rb2, pos=(i,3))
+                        sizer.Add(rb2, pos=(i,4))
                         self.rb_si[item] = rb2
                         n += 1
 
@@ -938,6 +968,7 @@ class OutputData2(wx.Panel):
         self.rc = rc
 
     def draw_pie(self):
+        """
         self.figure = Figure()
         self.axes = self.figure.add_subplot(111)
         labels = self.rc.keys()
@@ -952,9 +983,20 @@ class OutputData2(wx.Panel):
         vbox.Add(self.canvas, 1, wx.ALL|wx.EXPAND)
         self.SetSizer(vbox)
         #self.Update()
-        #self.Layout()
+        self.Layout()
         #self.Fit()
-        self.Refresh()
+        #self.Refresh()
+        """
+        self.figure = Figure()
+        self.axes = self.figure.add_subplot(111)
+        labels = 'Frogs', 'Hogs', 'Dogs', 'Logs'
+        sizes = [15, 30, 45, 10]
+        colors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral']
+        self.axes.pie(sizes, labels=labels, colors=colors)
+        self.axes.axis('equal')
+        self.canvas = FigureCanvas(self, -1, self.figure)
+        print "inside"
+
 
 
 ####################################################################
@@ -965,9 +1007,9 @@ class DemoFrame(wx.Frame):
     def __init__(self):
         """Constructor"""
         wx.Frame.__init__(self, None, wx.ID_ANY,
-                          "Weviation",
-                          size=(1200,800)
-                          )
+                          "Weviation")
+
+        self.Maximize(True)
 
         self.panel = wx.Panel(self)
 
@@ -1002,7 +1044,8 @@ class DemoFrame(wx.Frame):
         # pie chart tabs
         self.notebook2 = wx.Notebook(self.panel)
 
-        self.tabTor = OutputData(self.notebook2, None)
+        testo = {'w_a': 100, 'w_b': 200}
+        self.tabTor = OutputData2(self.notebook2, testo)
         self.notebook2.AddPage(self.tabTor, "Torenbeek")
 
         self.tabRay = OutputData(self.notebook2, None)
@@ -1058,10 +1101,10 @@ class DemoFrame(wx.Frame):
                 ret_gd, self.gd = self.tabThree.calculate_weight()
                 self.txt1.AppendText(newline + ret_gd)
 
-            #self.Layout()
-            #self.Fit()
-            #self.Update()
-            #self.Refresh()
+            self.Layout()
+            self.Fit()
+            self.Update()
+            self.Refresh()
 
     def load_button(self, evt):
         label = evt.GetEventObject().GetLabel()
