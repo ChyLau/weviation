@@ -6,6 +6,7 @@ import matplotlib
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 from matplotlib import cm
+from matplotlib.font_manager import FontProperties
 
 class TabTorenbeek(wx.ScrolledWindow):
     def __init__(self, parent):
@@ -278,7 +279,7 @@ class TabTorenbeek(wx.ScrolledWindow):
         tor['w_fur'] = torenbeek.w_fur(d1['w_zf'], d1['tunit_fur'])
 
         ret = ""
-        ret += "TORENBEEK" + "\n" + "------------------------------" + "\n"
+        ret += " TORENBEEK" + "\n" + " ------------------------------" + "\n"
 
         var = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_ucm', 'w_ucn', 'w_sc', 'w_eni', 'w_acc', 'w_airi', 'w_ext', 'w_oc', 'w_fsi', 'w_wis', 'w_pi', 'w_tr', 'w_apu', 'w_navp', 'w_heu', 'w_api', 'w_ox', 'w_fur']
 
@@ -286,12 +287,12 @@ class TabTorenbeek(wx.ScrolledWindow):
 
         for component in self.components:
             if self.cb_dict[component].GetValue() == True:
-                ret += component + ":      " + str(round(tor[reference[component]], 2)) + " lb"+ "\n"
+                ret += " " + component + " (" + compvar[component] + ")" + ":      " + str(round(tor[reference[component]], 2)) + " lb"+ "\n"
             else:
                 del tor[compvar[component]]
 
         if self.cb_dict[component].GetValue() == True:
-            ret += "total:      " + str(round(sum(tor.values()), 2)) + " lb"
+            ret += " total:      " + str(round(sum(tor.values()), 2)) + " lb"
 
         return ret, tor
 
@@ -585,7 +586,7 @@ class TabRaymer(wx.ScrolledWindow):
         ray['w_hand'] = raymer.w_hand(d2['w_dg'])
 
         ret = ""
-        ret += "RAYMER" + "\n" + "------------------------------" + "\n"
+        ret += " RAYMER" + "\n" + " ------------------------------" + "\n"
 
         var = ['w_w', 'w_tail', 'w_f', 'w_ucm', 'w_ucn', 'w_n', 'w_enc', 'w_s', 'w_fs', 'w_fc', 'w_apui', 'w_instr', 'w_hydr', 'w_el', 'w_av', 'w_furn', 'w_ac', 'w_ai', 'w_hand']
 
@@ -593,12 +594,12 @@ class TabRaymer(wx.ScrolledWindow):
 
         for component in self.components:
             if self.cb_dict[component].GetValue() == True:
-                ret += component + ":      " + str(round(ray[reference[component]], 2)) + "\n"
+                ret += " " + component + " (" + compvar[component] + ")" + ":      " + str(round(ray[reference[component]], 2)) + " lb" + "\n"
             else:
                 del ray[compvar[component]]
 
         if self.cb_dict[component].GetValue() == True:
-            ret += "total:      " + str(round(sum(ray.values()), 2))
+            ret += " total:      " + str(round(sum(ray.values()), 2)) + " lb"
 
         return ret, ray
 
@@ -905,7 +906,7 @@ class TabGeneralDynamics(wx.ScrolledWindow):
         gd['w_pt'] = gendyn.w_pt(d3['k_pt'], d3['w_to'])
 
         ret = ""
-        ret += "GENERAL DYNAMICS" + "\n" + "------------------------------" + "\n"
+        ret += " GENERAL DYNAMICS" + "\n" + " ------------------------------" + "\n"
 
         var = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_g', 'w_e', 'w_ai', 'w_prop', 'w_fs', 'w_ec', 'w_ess', 'w_pc', 'w_fc', 'w_hydr', 'w_els', 'w_i', 'w_api', 'w_ox', 'w_apu', 'w_fur', 'w_bc', 'w_aux', 'w_pt']
 
@@ -913,12 +914,12 @@ class TabGeneralDynamics(wx.ScrolledWindow):
 
         for component in self.components:
             if self.cb_dict[component].GetValue() == True:
-                ret += component + ":      " + str(round(gd[reference[component]], 2)) + "\n"
+                ret += " " + component + " (" + compvar[component] + ")" + ":      " + str(round(gd[reference[component]], 2)) + " lb" +  "\n"
             else:
                 del gd[compvar[component]]
 
         if self.cb_dict[component].GetValue() == True:
-            ret += "total:      " + str(round(sum(gd.values()), 2))
+            ret += " total:      " + str(round(sum(gd.values()), 2)) + " lb"
 
         return ret, gd
 
@@ -1007,7 +1008,8 @@ class OutputData2(wx.Panel):
         cs=cm.Set1(np.arange(len(labels))/float(len(labels)))
         self.axes.pie(sizes, colors=cs, autopct='%.2f')
         self.axes.axis('equal')
-        self.axes.legend(labels, loc=2)
+        #self.axes.legend(labels, loc=2)
+        self.axes.legend(labels, loc=2, bbox_to_anchor=(0.5, -0.1))
         self.canvas = FigureCanvas(self, -1, self.figure)
 
         #vbox = wx.BoxSizer(wx.VERTICAL)
@@ -1171,7 +1173,11 @@ class DemoFrame(wx.Frame):
         cs=cm.Set1(np.arange(len(labels))/float(len(labels)))
         self.axes.pie(sizes, colors=cs, autopct='%.2f')
         self.axes.axis('equal')
-        self.axes.legend(labels, loc=2)
+        fontP = FontProperties()
+        fontP.set_size('small')
+        #self.axes.legend(labels, loc=2)
+        #self.axes.legend(labels, loc=9, bbox_to_anchor=(0.5, -0.1))
+        self.axes.legend(labels, prop=fontP , bbox_to_anchor=(0.05, 1))
         #sizer = panel.GetSizer()
         #sizer = self.tabTor
         #sizer.Add(self.canvas)
