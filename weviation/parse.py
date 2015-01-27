@@ -1,5 +1,7 @@
 """
-Parses a given XML file, containing parameters for the weight estimation of a commercial transport aircraft.
+Author: Chy Lau
+Created: 2014-2015
+Description: Parses a given XML file, containing parameters for the weight estimation of a commercial transport aircraft.
 """
 
 from xml.etree.ElementTree import parse

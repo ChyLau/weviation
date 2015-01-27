@@ -1,7 +1,10 @@
 """
-The three methods: Torenbeek, Raymer and General dynamics.
+Author: Chy Lau
+Created: 2014-2015
+Description:
+The three methods -- Torenbeek, Raymer and General dynamics.
 
-references:
+References:
 "Synthesis of Subsonic Airplane Design", Egbert Torenbeek
 "Weight estimation techniques for composite airplanes in general aviation industry", T. Paramasivam, Walter J. Horn, and James Ritter
 """
