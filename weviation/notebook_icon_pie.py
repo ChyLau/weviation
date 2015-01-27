@@ -279,9 +279,16 @@ class TabTorenbeek(wx.ScrolledWindow):
 
         ret = ""
         ret += "TORENBEEK" + "\n" + "------------------------------" + "\n"
+
+        var = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_ucm', 'w_ucn', 'w_sc', 'w_eni', 'w_acc', 'w_airi', 'w_ext', 'w_oc', 'w_fsi', 'w_wis', 'w_pi', 'w_tr', 'w_apu', 'w_navp', 'w_heu', 'w_api', 'w_ox', 'w_fur']
+
+        compvar = dict(zip(self.components, var))
+
         for component in self.components:
             if self.cb_dict[component].GetValue() == True:
                 ret += component + ":      " + str(round(tor[reference[component]], 2)) + " lb"+ "\n"
+            else:
+                del tor[compvar[component]]
 
         if self.cb_dict[component].GetValue() == True:
             ret += "total:      " + str(round(sum(tor.values()), 2)) + " lb"
@@ -579,9 +586,16 @@ class TabRaymer(wx.ScrolledWindow):
 
         ret = ""
         ret += "RAYMER" + "\n" + "------------------------------" + "\n"
+
+        var = ['w_w', 'w_tail', 'w_f', 'w_ucm', 'w_ucn', 'w_n', 'w_enc', 'w_s', 'w_fs', 'w_fc', 'w_apui', 'w_instr', 'w_hydr', 'w_el', 'w_av', 'w_furn', 'w_ac', 'w_ai', 'w_hand']
+
+        compvar = dict(zip(self.components, var))
+
         for component in self.components:
             if self.cb_dict[component].GetValue() == True:
                 ret += component + ":      " + str(round(ray[reference[component]], 2)) + "\n"
+            else:
+                del ray[compvar[component]]
 
         if self.cb_dict[component].GetValue() == True:
             ret += "total:      " + str(round(sum(ray.values()), 2))
@@ -892,9 +906,16 @@ class TabGeneralDynamics(wx.ScrolledWindow):
 
         ret = ""
         ret += "GENERAL DYNAMICS" + "\n" + "------------------------------" + "\n"
+
+        var = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_g', 'w_e', 'w_ai', 'w_prop', 'w_fs', 'w_ec', 'w_ess', 'w_pc', 'w_fc', 'w_hydr', 'w_els', 'w_i', 'w_api', 'w_ox', 'w_apu', 'w_fur', 'w_bc', 'w_aux', 'w_pt']
+
+        compvar = dict(zip(self.components, var))
+
         for component in self.components:
             if self.cb_dict[component].GetValue() == True:
                 ret += component + ":      " + str(round(gd[reference[component]], 2)) + "\n"
+            else:
+                del gd[compvar[component]]
 
         if self.cb_dict[component].GetValue() == True:
             ret += "total:      " + str(round(sum(gd.values()), 2))
@@ -1053,20 +1074,38 @@ class DemoFrame(wx.Frame):
         self.txt1 = wx.TextCtrl(self.panel, style=wx.TE_MULTILINE|wx.TE_READONLY)
 
         # pie chart tabs
+        self.vbox1 = wx.BoxSizer(wx.VERTICAL)
+
         self.notebook2 = wx.Notebook(self.panel)
 
         self.tabTor = wx.Panel(self.notebook2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
-        #bsizer0 = wx.BoxSizer(wx.VERTICAL)
-        #self.tabTor.SetSizer(bsizer0)
-        #self.tabTor.Layout()
-        #bsizer0.Fit(self.tabTor)
+        bsizer0 = wx.BoxSizer(wx.VERTICAL)
+        self.tabTor.SetSizer(bsizer0)
+        self.tabTor.Layout()
+        bsizer0.Fit(self.tabTor)
         self.notebook2.AddPage(self.tabTor, "Torenbeek")
 
+        self.tabRay = wx.Panel(self.notebook2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
+        bsizer1 = wx.BoxSizer(wx.VERTICAL)
+        self.tabRay.SetSizer(bsizer1)
+        self.tabRay.Layout()
+        bsizer1.Fit(self.tabRay)
+        self.notebook2.AddPage(self.tabRay, "Raymer")
+
+        self.tabGd = wx.Panel(self.notebook2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
+        bsizer2 = wx.BoxSizer(wx.VERTICAL)
+        self.tabGd.SetSizer(bsizer2)
+        self.tabGd.Layout()
+        bsizer2.Fit(self.tabGd)
+        self.notebook2.AddPage(self.tabGd, "General Dynamics")
+
+        """
         self.tabRay = OutputData2(self.notebook2, None)
         self.notebook2.AddPage(self.tabRay, "Raymer")
 
         self.tabGd = OutputData2(self.notebook2, None)
         self.notebook2.AddPage(self.tabGd, "General Dynamics")
+        """
 
         # adding stuff
         sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -1082,7 +1121,6 @@ class DemoFrame(wx.Frame):
         hbox0.Add(self.cb_gd)
         vbox0.Add(hbox0)
 
-        self.vbox1 = wx.BoxSizer(wx.VERTICAL)
         self.vbox1.Add(self.notebook2, 1, wx.ALL|wx.EXPAND, 5)
 
         sizer.Add(vbox0, 1, wx.ALL|wx.EXPAND, 5)
@@ -1111,9 +1149,11 @@ class DemoFrame(wx.Frame):
             if self.cb_ray.GetValue() == True:
                 ret_ray, self.ray = self.tabTwo.calculate_weight()
                 self.txt1.AppendText(newline + ret_ray)
+                self.piechart(self.tabRay, self.ray)
             if self.cb_gd.GetValue() == True:
                 ret_gd, self.gd = self.tabThree.calculate_weight()
                 self.txt1.AppendText(newline + ret_gd)
+                self.piechart(self.tabGd, self.gd)
 
             self.Layout()
             self.Fit()
@@ -1125,18 +1165,18 @@ class DemoFrame(wx.Frame):
 
         self.figure = Figure()
         self.axes = self.figure.add_subplot(111)
+        self.canvas = FigureCanvas(panel, -1, self.figure)
         labels = self.rc.keys()
         sizes = self.rc.values()
         cs=cm.Set1(np.arange(len(labels))/float(len(labels)))
         self.axes.pie(sizes, colors=cs, autopct='%.2f')
         self.axes.axis('equal')
         self.axes.legend(labels, loc=2)
-        self.canvas = FigureCanvas(self, -1, self.figure)
         #sizer = panel.GetSizer()
-        sizer = self.tabTor
-        sizer.Add(self.canvas)
+        #sizer = self.tabTor
+        #sizer.Add(self.canvas)
 
-        self.Layout()
+        #self.Layout()
 
     def load_button(self, evt):
         label = evt.GetEventObject().GetLabel()
