@@ -107,11 +107,8 @@ def pie_chart(data1, data2, data3):
 def main():
     tor, ray, gd = weight()
     print "--------- TORENBEEK ----------"
-    """
     print "wing", tor['w_w']
-    """
     print "tail", tor['w_htail'] + tor['w_vtail']
-    """
     print "fuselage", tor['w_f']
     print "nacelle", tor['w_n']
     print "landing main", tor['w_ucm']
@@ -134,13 +131,9 @@ def main():
     print "furnishing", tor['w_fur']
     print "torenbeek total", sum(tor.values())
 
-    """
     print "----------- RAYMER -----------"
-    """
     print "wing", ray['w_w']
-    """
     print "tail", ray['w_htail'] + ray['w_vtail']
-    """
     print "fuselage", ray['w_f']
     print "landing main", ray['w_ucm']
     print "landing nose", ray['w_ucn']
@@ -159,13 +152,10 @@ def main():
     print "anti-ice", ray['w_ai']
     print "handling gear", ray['w_hand']
     print "raymer total", sum(ray.values())
-    """
+
     print "------------- GD -------------"
-    """
     print "wing", gd['w_w']
-    """
     print "tail", gd['w_h'] + gd['w_v']
-    """
     print "fuselage", gd['w_f']
     print "nacelle", gd['w_n']
     print "landing gear", gd['w_g']
@@ -190,6 +180,7 @@ def main():
     print "gd total", sum(gd.values())
 
     pie_chart(tor, ray, gd)
-    """
+
+
 if __name__ == "__main__":
     main()
