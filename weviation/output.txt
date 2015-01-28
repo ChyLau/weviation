@@ -1,0 +1,27 @@
+ GENERAL DYNAMICS
+ ------------------------------
+ wing (w_w):      409.8 lb
+ tail (w_tail):      31.12 lb
+ fuselage (w_f):      101.91 lb
+ nacelle (w_n):      3.0 lb
+ landing gear (w_g):      608.92 lb
+ engine (w_e):      1.0 lb
+ air induction (w_ai):      3.2 lb
+ propeller (w_prop):      0.14 lb
+ fuel system (w_fs):      1.03 lb
+ engine controls (w_ec):      46.23 lb
+ engine starting system (w_ess):      0.01 lb
+ propeller controls (w_pc):      0.0 lb
+ flight controls (w_fc):      18.78 lb
+ hydraulic/pneumatic (w_hydr):      15000.0 lb
+ electrical (w_els):      50.11 lb
+ instr./avio./elec. (w_i):      202.82 lb
+ API (w_api):      13.22 lb
+ oxygen system (w_ox):      11.39 lb
+ APU (w_apu):      15000.0 lb
+ furnishing (w_fur):      138.26 lb
+ baggage (w_bc):      0.06 lb
+ auxiliary gear (w_aux):      0.01 lb
+ paint (w_pt):      15000.0 lb
+ total:      46641.02 lb
+

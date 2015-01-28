@@ -8,6 +8,7 @@ from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 from matplotlib import cm
 from matplotlib.font_manager import FontProperties
 import lxml.etree as ET
+import os
 
 class TabTorenbeek(wx.ScrolledWindow):
     def __init__(self, parent):
@@ -137,7 +138,7 @@ class TabTorenbeek(wx.ScrolledWindow):
         hbox.Add(sizer, 0, wx.ALL, 5)
         self.SetSizer(hbox)
 
-    def calculate_weight(self):
+    def calculate_weight(self, cunit):
 
         d1 = {}
 
@@ -286,14 +287,21 @@ class TabTorenbeek(wx.ScrolledWindow):
 
         compvar = dict(zip(self.components, var))
 
+        if cunit == True:
+            k_ret = 1
+            s_ret = "lb"
+        else:
+            k_ret = 0.453592
+            s_ret = "kg"
+
         for component in self.components:
             if self.cb_dict[component].GetValue() == True:
-                ret += " " + component + " (" + compvar[component] + ")" + ":      " + str(round(tor[reference[component]], 2)) + " lb"+ "\n"
+                ret += " " + component + " (" + compvar[component] + ")" + ":      " + str(round(k_ret*tor[reference[component]], 2)) + " " + s_ret + "\n"
             else:
                 del tor[compvar[component]]
 
         if self.cb_dict[component].GetValue() == True:
-            ret += " total:      " + str(round(sum(tor.values()), 2)) + " lb"
+            ret += " total:      " + str(round(k_ret*sum(tor.values()), 2)) + " " + s_ret + "\n\n"
 
         return ret, tor
 
@@ -457,7 +465,7 @@ class TabRaymer(wx.ScrolledWindow):
         hbox.Add(sizer, 0, wx.ALL, 5)
         self.SetSizer(hbox)
 
-    def calculate_weight(self):
+    def calculate_weight(self, cunit):
 
         d2 = {}
 
@@ -593,14 +601,21 @@ class TabRaymer(wx.ScrolledWindow):
 
         compvar = dict(zip(self.components, var))
 
+        if cunit == True:
+            k_ret = 1
+            s_ret = "lb"
+        else:
+            k_ret = 0.453592
+            s_ret = "kg"
+
         for component in self.components:
             if self.cb_dict[component].GetValue() == True:
-                ret += " " + component + " (" + compvar[component] + ")" + ":      " + str(round(ray[reference[component]], 2)) + " lb" + "\n"
+                ret += " " + component + " (" + compvar[component] + ")" + ":      " + str(round(k_ret*ray[reference[component]], 2)) + " " + s_ret + "\n"
             else:
                 del ray[compvar[component]]
 
         if self.cb_dict[component].GetValue() == True:
-            ret += " total:      " + str(round(sum(ray.values()), 2)) + " lb"
+            ret += " total:      " + str(round(k_ret*sum(ray.values()), 2)) + " " + s_ret + "\n\n"
 
         return ret, ray
 
@@ -767,7 +782,7 @@ class TabGeneralDynamics(wx.ScrolledWindow):
         hbox.Add(sizer, 0, wx.ALL, 5)
         self.SetSizer(hbox)
 
-    def calculate_weight(self):
+    def calculate_weight(self, cunit):
 
         d3 = {}
 
@@ -913,14 +928,21 @@ class TabGeneralDynamics(wx.ScrolledWindow):
 
         compvar = dict(zip(self.components, var))
 
+        if cunit == True:
+            k_ret = 1
+            s_ret = "lb"
+        else:
+            k_ret = 0.453592
+            s_ret = "kg"
+
         for component in self.components:
             if self.cb_dict[component].GetValue() == True:
-                ret += " " + component + " (" + compvar[component] + ")" + ":      " + str(round(gd[reference[component]], 2)) + " lb" +  "\n"
+                ret += " " + component + " (" + compvar[component] + ")" + ":      " + str(round(k_ret*gd[reference[component]], 2)) + " " + s_ret +  "\n"
             else:
                 del gd[compvar[component]]
 
         if self.cb_dict[component].GetValue() == True:
-            ret += " total:      " + str(round(sum(gd.values()), 2)) + " lb"
+            ret += " total:      " + str(round(k_ret*sum(gd.values()), 2)) + " " + s_ret + "\n\n"
 
         return ret, gd
 
@@ -987,6 +1009,7 @@ class DemoFrame(wx.Frame):
 
         self.Bind(wx.EVT_MENU, self.load_button, id=LOAD_XML)
         self.Bind(wx.EVT_MENU, self.export_button, id=EXPORT_XML)
+        self.Bind(wx.EVT_MENU, self.export_text, id=EXPORT_TXT)
 
         self.panel = wx.Panel(self)
 
@@ -1096,21 +1119,32 @@ class DemoFrame(wx.Frame):
         self.ray = None
         self.gd = None
 
+        self.ret_tor = None
+        self.ret_ray = None
+        self.ret_gd = None
+
         if label == 'Calculate':
 
-            newline = "\n\n"
             if self.cb_tor.GetValue() == True:
-                ret_tor, self.tor = self.tabOne.calculate_weight()
-                self.txt1.AppendText(newline + ret_tor)
+                self.ret_tor, self.tor = self.tabOne.calculate_weight(self.rb_lb.GetValue())
+                self.txt1.AppendText(self.ret_tor)
                 self.piechart(self.tabTor, self.tor)
+            else:
+                self.ret_tor = None
+
             if self.cb_ray.GetValue() == True:
-                ret_ray, self.ray = self.tabTwo.calculate_weight()
-                self.txt1.AppendText(newline + ret_ray)
+                self.ret_ray, self.ray = self.tabTwo.calculate_weight(self.rb_lb.GetValue())
+                self.txt1.AppendText(self.ret_ray)
                 self.piechart(self.tabRay, self.ray)
+            else:
+                self.ret_ray = None
+
             if self.cb_gd.GetValue() == True:
-                ret_gd, self.gd = self.tabThree.calculate_weight()
-                self.txt1.AppendText(newline + ret_gd)
+                self.ret_gd, self.gd = self.tabThree.calculate_weight(self.rb_lb.GetValue())
+                self.txt1.AppendText(self.ret_gd)
                 self.piechart(self.tabGd, self.gd)
+            else:
+                self.ret_ray = None
 
             self.Layout()
             self.Fit()
@@ -1175,11 +1209,37 @@ class DemoFrame(wx.Frame):
         with open("output.xml", 'r+') as f:
             content = f.read()
             f.seek(0,0)
-            line = "<!-- Output of the weight estimation method(s), in lb. -->"
+            if self.rb_lb.GetValue() == True:
+                unit = 'lb'
+            else:
+                unit = 'kg'
+
+            line = "<!-- Output of the weight estimation method(s), in " + unit + ". -->"
             f.write(line.rstrip('\r\n') + '\n\n' + content)
 
         dial = wx.MessageDialog(None, 'Export completed', 'Info', wx.OK)
         dial.ShowModal()
+
+
+    def export_text(self, evt):
+        os.remove("output.txt")
+
+        if self.ret_tor != None:
+            with open("output.txt", 'w') as f:
+                f.write(self.ret_tor)
+
+        if self.ret_ray != None:
+            with open("output.txt", 'a') as f:
+                f.write(self.ret_ray)
+
+        if self.ret_gd != None:
+            with open("output.txt", 'a') as f:
+                f.write(self.ret_gd)
+
+        dial = wx.MessageDialog(None, 'Export completed', 'Info', wx.OK)
+        dial.ShowModal()
+
+
 
 
     def piechart(self, panel, rc):
