@@ -7,6 +7,7 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 from matplotlib import cm
 from matplotlib.font_manager import FontProperties
+import lxml.etree as ET
 
 class TabTorenbeek(wx.ScrolledWindow):
     def __init__(self, parent):
@@ -965,6 +966,28 @@ class DemoFrame(wx.Frame):
 
         self.Maximize(True)
 
+        # menubar
+        EXPORT = wx.NewId()
+        EXPORT_XML = wx.NewId()
+        EXPORT_TXT = wx.NewId()
+        LOAD_XML = wx.NewId()
+
+        menubar = wx.MenuBar()
+
+        fileMenu = wx.Menu()
+
+        fileMenu.Append(LOAD_XML, '&Load XML file')
+        imp = wx.Menu()
+        imp.Append(EXPORT_XML, 'Export as &XML file')
+        imp.Append(EXPORT_TXT, 'Export as &text file')
+        fileMenu.AppendMenu(EXPORT, '&Export', imp)
+
+        menubar.Append(fileMenu, '&File')
+        self.SetMenuBar(menubar)
+
+        self.Bind(wx.EVT_MENU, self.load_button, id=LOAD_XML)
+        self.Bind(wx.EVT_MENU, self.export_button, id=EXPORT_XML)
+
         self.panel = wx.Panel(self)
 
         # tabs
@@ -987,10 +1010,19 @@ class DemoFrame(wx.Frame):
         self.cb_tor = wx.CheckBox(self.panel, label='Torenbeek')
         self.cb_ray = wx.CheckBox(self.panel, label='Raymer')
         self.cb_gd = wx.CheckBox(self.panel, label='General Dynamics')
-
+        """
         # load xml button
         btnLoad = wx.Button(self.panel, label='Load XML', size=(80,30))
         self.Bind(wx.EVT_BUTTON, self.load_button, btnLoad)
+
+        # export button
+        btnExport = wx.Button(self.panel, label='Export', size=(80,30))
+        self.Bind(wx.EVT_BUTTON, self.export_button, btnExport)
+        """
+
+        # unit button
+        self.rb_lb = wx.RadioButton(self.panel, label='lb', style=wx.RB_GROUP)
+        self.rb_kg = wx.RadioButton(self.panel, label='kg')
 
         # data output window
         self.txt1 = wx.TextCtrl(self.panel, style=wx.TE_MULTILINE|wx.TE_READONLY)
@@ -1037,7 +1069,10 @@ class DemoFrame(wx.Frame):
         hbox0 = wx.BoxSizer(wx.HORIZONTAL)
 
         hbox0.Add(btnCalc)
-        hbox0.Add(btnLoad)
+        hbox0.Add(self.rb_lb)
+        hbox0.Add(self.rb_kg)
+        #hbox0.Add(btnLoad)
+        #hbox0.Add(btnExport)
         hbox0.Add(self.cb_tor)
         hbox0.Add(self.cb_ray)
         hbox0.Add(self.cb_gd)
@@ -1082,6 +1117,71 @@ class DemoFrame(wx.Frame):
             self.Update()
             #self.Refresh()
 
+    """
+    def export_button(self, evt):
+        label = evt.GetEventObject().GetLabel()
+
+        if label == 'Export':
+            root = ET.Element("output")
+
+            torenbeek = ET.SubElement(root, "torenbeek")
+            for key, value in self.tor.iteritems():
+                item = ET.SubElement(torenbeek, key)
+                item.text = str(round(value, 2))
+
+            raymer = ET.SubElement(root, "raymer")
+            for key, value in self.ray.iteritems():
+                item = ET.SubElement(raymer, key)
+                item.text = str(round(value, 2))
+
+            gd = ET.SubElement(root, "general_dynamics")
+            for key, value in self.gd.iteritems():
+                item = ET.SubElement(gd, key)
+                item.text = str(round(value, 2))
+
+            tree = ET.ElementTree(root)
+            tree.write("output.xml", pretty_print=True)
+
+            with open("output.xml", 'r+') as f:
+                content = f.read()
+                f.seek(0,0)
+                line = "<!-- Output of the weight estimation method(s), in lb. -->"
+                f.write(line.rstrip('\r\n') + '\n\n' + content)
+
+            dial = wx.MessageDialog(None, 'Export completed', 'Info', wx.OK)
+            dial.ShowModal()
+    """
+    def export_button(self, evt):
+        root = ET.Element("output")
+
+        torenbeek = ET.SubElement(root, "torenbeek")
+        for key, value in self.tor.iteritems():
+            item = ET.SubElement(torenbeek, key)
+            item.text = str(round(value, 2))
+
+        raymer = ET.SubElement(root, "raymer")
+        for key, value in self.ray.iteritems():
+            item = ET.SubElement(raymer, key)
+            item.text = str(round(value, 2))
+
+        gd = ET.SubElement(root, "general_dynamics")
+        for key, value in self.gd.iteritems():
+            item = ET.SubElement(gd, key)
+            item.text = str(round(value, 2))
+
+        tree = ET.ElementTree(root)
+        tree.write("output.xml", pretty_print=True)
+
+        with open("output.xml", 'r+') as f:
+            content = f.read()
+            f.seek(0,0)
+            line = "<!-- Output of the weight estimation method(s), in lb. -->"
+            f.write(line.rstrip('\r\n') + '\n\n' + content)
+
+        dial = wx.MessageDialog(None, 'Export completed', 'Info', wx.OK)
+        dial.ShowModal()
+
+
     def piechart(self, panel, rc):
         self.rc = rc
 
@@ -1103,7 +1203,7 @@ class DemoFrame(wx.Frame):
         #sizer.Add(self.canvas)
 
         #self.Layout()
-
+    """
     def load_button(self, evt):
         label = evt.GetEventObject().GetLabel()
 
@@ -1112,6 +1212,14 @@ class DemoFrame(wx.Frame):
             self.tabOne.load_xml(d1)
             self.tabTwo.load_xml(d2)
             self.tabThree.load_xml(d3)
+    """
+
+    def load_button(self, evt):
+        d1, d2, d3 = p.parse_xml()
+        self.tabOne.load_xml(d1)
+        self.tabTwo.load_xml(d2)
+        self.tabThree.load_xml(d3)
+
 
 
 
