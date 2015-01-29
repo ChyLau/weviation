@@ -649,7 +649,7 @@ class Raymer:
         else:
             print "USAGE: 'landing' is 'fuselage' or 'other'."
 
-        k_ws = 0.75*((1 + 2*_lambda)/(1 + _lambda))*(b_w*tan(Lambda)/l)
+        k_ws = 0.75*((1 + 2*_lambda)/(1 + _lambda))*(b_w*tan(radians(Lambda))/l)
 
         return 0.3280*k_door*k_lg*(w_dg*n_z)**0.5*l**0.25*s_f**0.302*(1 + k_ws)**0.04*(l/d)**0.10
 

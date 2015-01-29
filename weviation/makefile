@@ -1,2 +1,2 @@
 all:
-	$(RM) *.svg *.pyc *~ *.ipynb
+	$(RM) *.svg *.pyc *~ *.ipynb *.txt output.xml

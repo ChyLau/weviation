@@ -25,7 +25,7 @@ class TabTorenbeek(wx.ScrolledWindow):
         self.components = ['wing', 'tail', 'fuselage', 'nacelle', 'landing main', 'landing nose', 'surface controls', 'engine', 'accessory', 'air induction', 'exhaust', 'oil/cooler', 'fuel system', 'water injection', 'propeller installation', 'thrust reversers', 'APU', 'instruments', 'hydraulic/lectrical', 'AC/pressure/anti-ice', 'oxygen system', 'furnishing']
 
         ################ TOOLTIP LIST
-        tooltip = ['Gross weight', 'Takeoff weight', 'Reference wing span', 'Sweepback angle at 50% chord', 'Wing span', 'Ultimate load factor', 'Wing area', 'Maximum thickness of root chord', 'Vertical tail area', 'Horizontal tail area', 'Maximum thickness of root chord', 'Maximum thickness of root chord', 'Design dive speed', 'Distance between 1/4-chord points of wing and horizontal tailplane root', 'Fuselage width', 'Fuselage height', 'Gross shell area of the fuselage', 'Takeoff horsepower per engine', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Number of engines', 'Engine weight', 'Fuel flow per engine', 'Duct length', 'Number of inlets', 'Capture area per inlet', 'TODO', 'Takeoff thrust per engine', 'Number of fuel tanks', 'Total water tank capacity', 'Total fuel tank volume', 'Number of propellers', 'Number of blades/propeller', 'Propeller diameter', 'Rated bleed airflow of APU', 'Delivery empty weight', 'Maximum range with maximum fuel', 'Total electrical generator power', 'Length of passenger cabin', 'Number of passengers', 'Maximum zero fuel weight']
+        tooltip = ['Gross weight', 'Takeoff weight', 'Reference wing span', 'Sweepback angle at 50% chord', 'Wing span', 'Ultimate load factor', 'Wing area', 'Maximum thickness of root chord', 'Vertical tail area', 'Horizontal tail area', 'Horizontal tail sweep angle', 'Vertical tail sweep angle', 'Design dive speed', 'Distance between 1/4-chord points of wing and horizontal tailplane root', 'Fuselage width', 'Fuselage height', 'Gross shell area of the fuselage', 'Takeoff horsepower per engine', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Number of engines', 'Engine weight', 'Fuel flow per engine', 'Duct length', 'Number of inlets', 'Capture area per inlet', 'TODO', 'Takeoff thrust per engine', 'Number of fuel tanks', 'Total fuel tank volume', 'Total water tank capacity', 'Number of propellers', 'Number of blades/propeller', 'Propeller diameter', 'Rated bleed airflow of APU', 'Delivery empty weight', 'Maximum range with maximum fuel', 'Total electrical generator power', 'Length of passenger cabin', 'Number of passengers', 'Maximum zero fuel weight']
 
         hbox = wx.BoxSizer(wx.VERTICAL)
 
@@ -1076,6 +1076,17 @@ class DemoFrame(wx.Frame):
         bsizer2.Fit(self.tabGd)
         self.notebook2.AddPage(self.tabGd, "General Dynamics")
 
+        # bar chart
+        self.notebook3 = wx.Notebook(self.panel)
+
+        self.tabBar = wx.Panel(self.notebook3, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
+        bsizer3 = wx.BoxSizer(wx.VERTICAL)
+        self.tabBar.SetSizer(bsizer3)
+        self.tabBar.Layout()
+        bsizer3.Fit(self.tabBar)
+        self.notebook3.AddPage(self.tabBar, "Bar chart")
+
+
         """
         self.tabRay = OutputData2(self.notebook2, None)
         self.notebook2.AddPage(self.tabRay, "Raymer")
@@ -1102,6 +1113,7 @@ class DemoFrame(wx.Frame):
         vbox0.Add(hbox0)
 
         self.vbox1.Add(self.notebook2, 1, wx.ALL|wx.EXPAND, 5)
+        self.vbox1.Add(self.notebook3, 1, wx.ALL|wx.EXPAND, 5)
 
         sizer.Add(vbox0, 1, wx.ALL|wx.EXPAND, 5)
         sizer.Add(self.txt1, 1, wx.ALL|wx.EXPAND, 5)
@@ -1145,6 +1157,8 @@ class DemoFrame(wx.Frame):
                 self.piechart(self.tabGd, self.gd)
             else:
                 self.ret_ray = None
+
+            self.barchart(self.tabBar, self.tor, self.ray, self.gd)
 
             self.Layout()
             self.Fit()
@@ -1222,7 +1236,10 @@ class DemoFrame(wx.Frame):
 
 
     def export_text(self, evt):
-        os.remove("output.txt")
+        try:
+            os.remove("output.txt")
+        except OSError:
+            pass
 
         if self.ret_tor != None:
             with open("output.txt", 'w') as f:
@@ -1274,13 +1291,48 @@ class DemoFrame(wx.Frame):
             self.tabThree.load_xml(d3)
     """
 
+    def barchart(self, panel,  tor, ray, gd):
+        a = []
+
+        if self.rb_lb.GetValue() == True:
+            unit = 'lb'
+            k_unit = 1
+        else:
+            unit = 'kg'
+            k_unit = 0.453592
+
+        if tor != None:
+            tot_tor = k_unit*sum(tor.values())
+            a.append(tot_tor)
+        if ray != None:
+            tot_ray = k_unit*sum(ray.values())
+            a.append(tot_ray)
+        if gd != None:
+            tot_gd = k_unit*sum(gd.values())
+            a.append(tot_gd)
+
+        x = range(len(a))
+
+        self.figure = Figure()
+        self.axes = self.figure.add_subplot(111)
+        self.canvas = FigureCanvas(panel, -1, self.figure)
+        barlist = self.axes.bar(x, a, align='center')
+
+        lbl = ['Torenbeek', 'Raymer', 'General Dynamics']
+        self.axes.set_ylabel('Estimated weight [' + unit + ']')
+        self.axes.set_xticks(x, lbl)
+
+        c = ['r', 'g', 'b']
+
+        for i, item in enumerate(a):
+            barlist[i].set_color(c[i])
+
+
     def load_button(self, evt):
         d1, d2, d3 = p.parse_xml()
         self.tabOne.load_xml(d1)
         self.tabTwo.load_xml(d2)
         self.tabThree.load_xml(d3)
-
-
 
 
 if __name__ == "__main__":
