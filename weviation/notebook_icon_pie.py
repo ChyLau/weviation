@@ -294,14 +294,39 @@ class TabTorenbeek(wx.ScrolledWindow):
             k_ret = 0.453592
             s_ret = "kg"
 
+        struct_group = ['wing', 'tail', 'fuselage', 'nacelle', 'landing main', 'landing nose', 'surface controls']
+
+        prop_group = ['engine', 'accessory', 'air induction', 'exhaust', 'oil/cooler', 'fuel system', 'water injection', 'propeller installation', 'thrust reversers']
+
+        equip_group = ['APU', 'instruments', 'hydraulic/lectrical', 'AC/pressure/anti-ice', 'oxygen system', 'furnishing']
+
+        flag_struct = True
+        flag_prop = True
+        flag_equip = True
+
         for component in self.components:
             if self.cb_dict[component].GetValue() == True:
-                ret += " " + component + " (" + compvar[component] + ")" + ":      " + str(round(k_ret*tor[reference[component]], 2)) + " " + s_ret + "\n"
+                if component in struct_group:
+                    if flag_struct == True:
+                        ret += " STRUCTURES GROUP\n"
+                        flag_struct = False
+
+                if component in prop_group:
+                    if flag_prop == True:
+                        ret += " PROPULSION GROUP\n"
+                        flag_prop = False
+
+                if component in equip_group:
+                    if flag_equip == True:
+                        ret += " EQUIPMENT GROUP\n"
+                        flag_equip = False
+
+                ret += "\t " + component + " (" + compvar[component] + ")" + ":      " + str(round(k_ret*tor[reference[component]], 2)) + " " + s_ret + "\n"
             else:
                 del tor[compvar[component]]
 
         if self.cb_dict[component].GetValue() == True:
-            ret += " total:      " + str(round(k_ret*sum(tor.values()), 2)) + " " + s_ret + "\n\n"
+            ret += " ..................................\n" + " TOTAL: " + str(round(k_ret*sum(tor.values()), 2)) + " " + s_ret + "\n\n"
 
         return ret, tor
 
