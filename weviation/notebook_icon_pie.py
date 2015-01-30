@@ -321,7 +321,7 @@ class TabTorenbeek(wx.ScrolledWindow):
                         ret += " EQUIPMENT GROUP\n"
                         flag_equip = False
 
-                ret += "\t " + component + " (" + compvar[component] + ")" + ":      " + str(round(k_ret*tor[reference[component]], 2)) + " " + s_ret + "\n"
+                ret += "\t " + component + " (" + compvar[component] + ")" + ": " + str(round(k_ret*tor[reference[component]], 2)) + " " + s_ret + "\n"
             else:
                 del tor[compvar[component]]
 
@@ -633,14 +633,35 @@ class TabRaymer(wx.ScrolledWindow):
             k_ret = 0.453592
             s_ret = "kg"
 
+        struct_group = ['wing', 'tail', 'fuselage', 'nacelle', 'landing main', 'landing nose']
+        prop_group = ['engine controls', 'pneumatic', 'fuel system', 'flight controls']
+        equip_group = ['APU', 'instruments', 'hydraulics', 'electrical', 'avionics', 'furnishing', 'air conditioning', 'anti-icing', 'handling gear']
+
+        flag_struct = True
+        flag_prop = True
+        flag_equip = True
+
         for component in self.components:
             if self.cb_dict[component].GetValue() == True:
-                ret += " " + component + " (" + compvar[component] + ")" + ":      " + str(round(k_ret*ray[reference[component]], 2)) + " " + s_ret + "\n"
+                if component in struct_group:
+                    if flag_struct == True:
+                        ret += " STRUCTURES GROUP\n"
+                        flag_struct = False
+                if component in prop_group:
+                    if flag_prop == True:
+                        ret += " PROPULSION GROUP\n"
+                        flag_prop = False
+                if component in equip_group:
+                    if flag_equip == True:
+                        ret += " EQUIPMENT GROUP\n"
+                        flag_equip = False
+
+                ret += "\t " + component + " (" + compvar[component] + ")" + ": " + str(round(k_ret*ray[reference[component]], 2)) + " " + s_ret + "\n"
             else:
                 del ray[compvar[component]]
 
         if self.cb_dict[component].GetValue() == True:
-            ret += " total:      " + str(round(k_ret*sum(ray.values()), 2)) + " " + s_ret + "\n\n"
+            ret += " ..................................\n" + " TOTAL: " + str(round(k_ret*sum(ray.values()), 2)) + " " + s_ret + "\n\n"
 
         return ret, ray
 
@@ -960,14 +981,35 @@ class TabGeneralDynamics(wx.ScrolledWindow):
             k_ret = 0.453592
             s_ret = "kg"
 
+        struct_group = ['wing', 'tail', 'fuselage', 'nacelle', 'landing gear', 'engine', 'air induction']
+        prop_group = ['propeller', 'fuel system', 'engine controls', 'engine starting system', 'propeller controls', 'flight controls']
+        equip_group = ['hydraulic/pneumatic', 'electrical', 'instr./avio./elec.', 'API', 'oxygen system', 'APU', 'furnishing', 'baggage', 'auxiliary gear', 'paint']
+
+        flag_struct = True
+        flag_prop = True
+        flag_equip = True
+
         for component in self.components:
             if self.cb_dict[component].GetValue() == True:
-                ret += " " + component + " (" + compvar[component] + ")" + ":      " + str(round(k_ret*gd[reference[component]], 2)) + " " + s_ret +  "\n"
+                if component in struct_group:
+                    if flag_struct == True:
+                        ret += " STRUCTURES GROUP\n"
+                        flag_struct = False
+                if component in prop_group:
+                    if flag_prop == True:
+                        ret += " PROPULSION GROUP\n"
+                        flag_prop = False
+                if component in equip_group:
+                    if flag_equip == True:
+                        ret += " EQUIPMENT GROUP\n"
+                        flag_equip = False
+
+                ret += "\t " + component + " (" + compvar[component] + ")" + ": " + str(round(k_ret*gd[reference[component]], 2)) + " " + s_ret +  "\n"
             else:
                 del gd[compvar[component]]
 
         if self.cb_dict[component].GetValue() == True:
-            ret += " total:      " + str(round(k_ret*sum(gd.values()), 2)) + " " + s_ret + "\n\n"
+            ret += " ..................................\n" + " TOTAL: " + str(round(k_ret*sum(gd.values()), 2)) + " " + s_ret + "\n\n"
 
         return ret, gd
 
@@ -1058,6 +1100,11 @@ class DemoFrame(wx.Frame):
         self.cb_tor = wx.CheckBox(self.panel, label='Torenbeek')
         self.cb_ray = wx.CheckBox(self.panel, label='Raymer')
         self.cb_gd = wx.CheckBox(self.panel, label='General Dynamics')
+
+        # clear button
+        btnClear = wx.Button(self.panel, label='Clear', size=(80,30))
+        self.Bind(wx.EVT_BUTTON, self.clear_button, btnClear)
+
         """
         # load xml button
         btnLoad = wx.Button(self.panel, label='Load XML', size=(80,30))
@@ -1140,8 +1187,14 @@ class DemoFrame(wx.Frame):
         self.vbox1.Add(self.notebook2, 1, wx.ALL|wx.EXPAND, 5)
         self.vbox1.Add(self.notebook3, 1, wx.ALL|wx.EXPAND, 5)
 
+        vbox2 = wx.BoxSizer(wx.VERTICAL)
+        vbox2.Add(self.txt1, 1, wx.TOP|wx.BOTTOM|wx.EXPAND, 5)
+        hbox1 = wx.BoxSizer(wx.HORIZONTAL)
+        hbox1.Add(btnClear)
+        vbox2.Add(hbox1)
+
         sizer.Add(vbox0, 1, wx.ALL|wx.EXPAND, 5)
-        sizer.Add(self.txt1, 1, wx.ALL|wx.EXPAND, 5)
+        sizer.Add(vbox2, 1, wx.ALL|wx.EXPAND, 5)
         sizer.Add(self.vbox1, 1, wx.ALL|wx.EXPAND, 5)
 
         self.panel.SetSizer(sizer)
@@ -1162,7 +1215,14 @@ class DemoFrame(wx.Frame):
 
         if label == 'Calculate':
 
+            flag_info = True
+            info = " INFORMATION\n" + "------------------------------\n" + " manufacturer: " + self.info['manufacturer'] + "\n" + " type: " + self.info['type'] + "\n" + " model: " + self.info['model'] + "\n" + " initial service date: " + self.info['sdate'] + "\n\n"
+
+
             if self.cb_tor.GetValue() == True:
+                if flag_info == True:
+                    self.txt1.AppendText(info)
+                    flag_info = False
                 self.ret_tor, self.tor = self.tabOne.calculate_weight(self.rb_lb.GetValue())
                 self.txt1.AppendText(self.ret_tor)
                 self.piechart(self.tabTor, self.tor)
@@ -1170,6 +1230,9 @@ class DemoFrame(wx.Frame):
                 self.ret_tor = None
 
             if self.cb_ray.GetValue() == True:
+                if flag_info == True:
+                    self.txt1.AppendText(info)
+                    flag_info = False
                 self.ret_ray, self.ray = self.tabTwo.calculate_weight(self.rb_lb.GetValue())
                 self.txt1.AppendText(self.ret_ray)
                 self.piechart(self.tabRay, self.ray)
@@ -1177,6 +1240,9 @@ class DemoFrame(wx.Frame):
                 self.ret_ray = None
 
             if self.cb_gd.GetValue() == True:
+                if flag_info == True:
+                    self.txt1.AppendText(info)
+                    flag_info = False
                 self.ret_gd, self.gd = self.tabThree.calculate_weight(self.rb_lb.GetValue())
                 self.txt1.AppendText(self.ret_gd)
                 self.piechart(self.tabGd, self.gd)
@@ -1224,6 +1290,14 @@ class DemoFrame(wx.Frame):
             dial = wx.MessageDialog(None, 'Export completed', 'Info', wx.OK)
             dial.ShowModal()
     """
+
+    def clear_button(self, evt):
+        self.txt1.SetValue("")
+        self.ret_tor = None
+        self.ret_ray = None
+        self.ret_gd = None
+
+
     def export_button(self, evt):
         root = ET.Element("output")
 
@@ -1354,7 +1428,7 @@ class DemoFrame(wx.Frame):
 
 
     def load_button(self, evt):
-        d1, d2, d3 = p.parse_xml()
+        d1, d2, d3, self.info = p.parse_xml()
         self.tabOne.load_xml(d1)
         self.tabTwo.load_xml(d2)
         self.tabThree.load_xml(d3)

@@ -15,6 +15,12 @@ def parse_xml():
     data1 = {}
     data2 = {}
     data3 = {}
+    info = {}
+
+    for item in fp.findall('info'):
+        for element in item.findall('*'):
+            info[element.tag] = element.text
+
 
     for method in fp.findall('torenbeek'):
         for element in method.findall('**'):
@@ -45,7 +51,7 @@ def parse_xml():
             else:
                 raise ValueError("In <gd> key, %r already exists." % element.tag)
 
-    return data1, data2, data3
+    return data1, data2, data3, info
 
 def main():
     print parse_xml()

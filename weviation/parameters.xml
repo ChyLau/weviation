@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 
 <parameters>
+    <info>
+        <manufacturer>AIRBUS</manufacturer>
+        <type>A3XX</type>
+        <model>100</model>
+        <sdate>2004</sdate>
+    </info>
 
     <torenbeek>
         <unit>
