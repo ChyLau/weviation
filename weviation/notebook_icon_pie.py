@@ -37,19 +37,20 @@ class TabTorenbeek(wx.ScrolledWindow):
         hbox.Add(line0, 1, wx.ALL|wx.EXPAND, 5)
 
 
-        vbox0 = wx.BoxSizer(wx.HORIZONTAL)
         self.cball = wx.CheckBox(self, label='(de)select all')
         hbox.Add(self.cball, 0)
         self.Bind(wx.EVT_CHECKBOX, self.select_all, self.cball)
 
         self.cb_dict = {}
         # component checkboxes
+
+        gs = wx.GridSizer(8, 3, 0, 0)
         for item in self.components:
             cb = wx.CheckBox(self, label=item)
-            vbox0.Add(cb, 0)
+            gs.Add(cb, 0, wx.ALIGN_LEFT)
             self.cb_dict[item] = cb
 
-        hbox.Add(vbox0, 0)
+        hbox.Add(gs, 0)
 
         # component list
         comp_title = ['General', 'Wing', 'Tail', 'Fuselage', 'Nacelle,..', 'Landing gear,..', 'Engine,..', 'Accessory', 'Air induction', 'Exhaust', 'Fuel system', 'Water injection', 'Propeller installation', 'APU', 'Instruments, ...', 'Electrical', 'Air conditioning', 'Oxygen system', 'Furnishing']
@@ -389,19 +390,20 @@ class TabRaymer(wx.ScrolledWindow):
         hbox.Add(stxt0, 0, wx.ALL, 5)
         hbox.Add(line0, 1, wx.ALL|wx.EXPAND, 5)
 
-        vbox0 = wx.BoxSizer(wx.HORIZONTAL)
         self.cball = wx.CheckBox(self, label='(de)select all')
         hbox.Add(self.cball, 0)
         self.Bind(wx.EVT_CHECKBOX, self.select_all, self.cball)
 
         self.cb_dict = {}
         # component checkboxes
+
+        gs = wx.GridSizer(5, 4, 0, 0)
         for item in self.components:
             cb = wx.CheckBox(self, label=item)
-            vbox0.Add(cb, 0)
+            gs.Add(cb, 0, wx.ALIGN_LEFT)
             self.cb_dict[item] = cb
 
-        hbox.Add(vbox0, 0)
+        hbox.Add(gs, 0)
 
         # component list
         comp_title = ['General', 'Wing', 'Tail', 'Fuselage', 'Nacelle,..', 'Landing gear,..', 'Engine', 'Pneumatic', 'Fuel system', 'Flight controls,...', 'APU', 'Instruments,...', 'Electrical', 'Avionics', 'Furnishing', 'Air-conditioning']
@@ -723,19 +725,20 @@ class TabGeneralDynamics(wx.ScrolledWindow):
         hbox.Add(stxt0, 0, wx.ALL, 5)
         hbox.Add(line0, 1, wx.ALL|wx.EXPAND, 5)
 
-        vbox0 = wx.BoxSizer(wx.HORIZONTAL)
         self.cball = wx.CheckBox(self, label='(de)select all')
         hbox.Add(self.cball, 0)
         self.Bind(wx.EVT_CHECKBOX, self.select_all, self.cball)
 
         self.cb_dict = {}
         # component checkboxes
+
+        gs = wx.GridSizer(8, 3, 0, 0)
         for item in self.components:
             cb = wx.CheckBox(self, label=item)
-            vbox0.Add(cb, 0)
+            gs.Add(cb, 0, wx.ALIGN_LEFT)
             self.cb_dict[item] = cb
 
-        hbox.Add(vbox0, 0)
+        hbox.Add(gs, 0)
 
         # component list
         comp_title = ['General', 'Wing', 'Tail', 'Fuselage', 'Nacelle', 'Engine,...', 'Air induction,...', 'Propeller', 'Fuel system', 'Propulsion', 'Hydraulics', 'Electrical','Instruments', 'Air-donditioning', 'Auxiliary power', 'Furnishing', 'Paint']
