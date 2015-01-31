@@ -4,10 +4,14 @@ The weight estimation is done by summing the necessary equations of each method.
 
 import parse as p
 import methods
-import cairoplot
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import cm
+from matplotlib.font_manager import FontProperties
+import lxml.etree as ET
 
 def weight():
-    d1, d2, d3 = p.parse_xml()
+    d1, d2, d3, info = p.parse_xml()
 
 
     torenbeek = methods.Torenbeek()
@@ -91,21 +95,55 @@ def weight():
     gd['w_aux'] = gendyn.w_aux(gd['w_e'])
     gd['w_pt'] = gendyn.w_pt(d3['k_pt'], d3['w_to'])
 
-    return tor, ray, gd
+    return tor, ray, gd, info
 
 def pie_chart(data1, data2, data3):
-    tor = data1
-    cairoplot.pie_plot("piechart1", tor, 500, 500, (0,0,0), True, False, None)
+    d = [data1, data2, data3]
+    name = ['pie_tor.png', 'pie_ray.png', 'pie_gd.png']
 
-    ray = data2
-    cairoplot.pie_plot("piechart2", ray, 500, 500, (0,0,0), True, False, None)
+    for i, rc in enumerate(d):
+        labels = rc.keys()
+        sizes = rc.values()
+        cs=cm.Set1(np.arange(len(labels))/float(len(labels)))
+        figure = plt.figure()
+        axes = figure.add_subplot(111, aspect='equal')
+        p = plt.pie(sizes, colors=cs, autopct='%.2f%%')
+        fontP = FontProperties()
+        fontP.set_size('small')
+        plt.legend(labels, prop=fontP, bbox_to_anchor=(0.05, 1))
+        plt.savefig(name[i], bbox_inches='tight')
 
-    gd = data3
-    cairoplot.pie_plot("piechart3", gd, 500, 500, (0,0,0), True, False, None)
+    plt.show()
 
+def export_xml(tor, ray, gd):
+    root = ET.Element("output")
+
+    torenbeek = ET.SubElement(root, "torenbeek")
+    for key, value in tor.iteritems():
+        item = ET.SubElement(torenbeek, key)
+        item.text = str(round(value, 2))
+
+    raymer = ET.SubElement(root, "raymer")
+    for key, value in ray.iteritems():
+        item = ET.SubElement(raymer, key)
+        item.text = str(round(value, 2))
+
+    gendyn = ET.SubElement(root, "general_dynamics")
+    for key, value in gd.iteritems():
+        item = ET.SubElement(gendyn, key)
+        item.text = str(round(value, 2))
+
+    tree = ET.ElementTree(root)
+    tree.write("output.xml", pretty_print=True)
+
+    with open("output.xml", 'r+') as f:
+        content = f.read()
+        f.seek(0,0)
+        line = "<!-- Output of the weight estimation method(s), in lb. -->"
+        f.write(line.rstrip('\r\n') + '\n\n' + content)
 
 def main():
-    tor, ray, gd = weight()
+    tor, ray, gd, info = weight()
     print "--------- TORENBEEK ----------"
     print "wing", tor['w_w']
     print "tail", tor['w_htail'] + tor['w_vtail']
@@ -180,6 +218,7 @@ def main():
     print "gd total", sum(gd.values())
 
     pie_chart(tor, ray, gd)
+    export_xml(tor, ray, gd)
 
 
 if __name__ == "__main__":

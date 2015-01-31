@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<parameters>
+    <info>
+        <!-- Aircraft information: model, type, etc. -->
+    </info>
+
+    <method>
+        <type>
+            <!-- Aircraft component type: T-tail, fixed tail, etc. -->
+        </type>
+
+        <component>
+            <!-- Aircraft parameters and values -->
+        </component>
+    </method>
+</parameters>

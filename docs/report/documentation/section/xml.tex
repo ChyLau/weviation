@@ -1,0 +1,36 @@
+\lstset{
+language=xml,
+tabsize=3,
+frame=lines,
+label=code:xml,
+%frame=framebox,
+rulesepcolor=\color{gray},
+xleftmargin=20pt,
+framexleftmargin=15pt,
+keywordstyle=\color{blue}\bf,
+commentstyle=\color{OliveGreen},
+stringstyle=\color{red},
+numbers=left,
+numberstyle=\tiny,
+numbersep=5pt,
+breaklines=true,
+showstringspaces=false,
+basicstyle=\footnotesize,
+caption=XML file structure}
+
+\section{Input}
+\label{sec:input}
+\subsection{XML}
+\label{subsection:xml}
+The input XML file \texttt{parameters.xml} contains the parameter and corresponding value for the functions.
+Additionally, it specifies the information of the aircraft that those correspond to.
+The basic syntax of an XML file is as follows, \texttt{\textless parameter \textgreater value \textless /parameter\textgreater}; for example \texttt{\textless n\_ult \textgreater 4.5 \textless/n\_ult\textgreater} specifies the ultimate load factor parameter with a value of 4.5.
+
+Since the input data for three methods are in the XML file, there needs to be a structure.
+The following structure is used for the XML file,
+\lstinputlisting{code/structure.xml}
+For multiple methods in one file, the method structure part is simply copied.
+
+Some parameters are common in different methods, for example the ultimate load factor is present in all three methods.
+These common parameters are specified for each method, so the ultimate load factor is specified three times.
+The reason for this is to have more flexibility, if the user wants to test a different value for one method and keep the others the same this will be possible.

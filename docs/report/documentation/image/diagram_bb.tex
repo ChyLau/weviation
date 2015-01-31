@@ -1,0 +1,82 @@
+\begin{tikzpicture}[scale=0.7,transform shape]
+
+  % Draw diagram elements
+\path \practica{1}{Black box}{Computation of the methods};
+
+\path (p1.north)+(-2.5,2.0) \practica{2}{Parser}{Extracts the parameters and values};
+\path (p2.north)+(0.0,1.0) \practica{3}{XML}{Containing input data};
+
+\path (p1.north)+(2.5,2) \practica{4}{Methods}{Torenbeek, Raymer, General Dynamics};
+
+\path (p1.south)+(0.0,-2.0) \practica{5}{Pie chart}{Visual result of the estimation};
+\path (p1.south)+(-5,-2.0) \practica{6}{XML}{Containing output data};
+\path (p1.south)+(5,-1.9) \practica{7}{Terminal}{Printed result};
+
+\path [line] (p1.south) -- node [above] {} (p5);
+\path [line] (p1.south) -- +(0.0,-0.9) -- +(-5.0,-0.9) -- node [above, midway] {} (p6);
+\path [line] (p1.south) -- +(0.0,-0.9) -- +(5.0,-0.9) -- node [above, midway] {} (p7);
+
+\path [line] (p3.south) -- node [above] {} (p2);
+\path [line] (p2.south) -- +(0.0, -0.9) -- +(2.5, -0.9) -- node [above, midway] {} (p1);
+\path [line] (p4.south) -- +(0.0, -0.9) -- +(-2.5, -0.9) -- node [above, midway] {} (p1);
+  % Draw arrows between elements
+  %\path [line] (p1.south) -- node [above] {} (p2);
+
+  %\path [line] (p2.south) -- +(0.0,-0.5) -- +(-2.5,-0.5)
+  %  -- node [above, midway] {} (p3);
+  %\path [line] (p3.south) -- node [above] {} (p5) ;
+
+  %\path [line] (p2.south) -- +(0.0,-0.5) -- +(+2.5,-0.5)
+  %  -- node [above, midway] {} (p4);
+  %\path [linepart] (p3.east) -- +(+0.5,-0.0) -- +(+0.5,-1.75)
+  %  -- node [left, midway] {} (p4);
+  %\path [linepart] (p3.east) -- +(+0.5,-0.0) -- +(+0.5,-1.75)
+  %  -- node [left, midway] {} (p4);
+
+  %\path [line] (p4.south) -- +(0.0,-0.5) -- +(-2.5,-0.5)
+  %  -- node [above, midway] {} (p6);
+  %\path [line] (p5.south) -- +(0.0,-0.5) -- +(+2.5,-0.5)
+  %  -- node [above, midway] {} (p6);
+  %\path [linepart] (p2.east) -- +(2.75,0.0) -- +(2.75,-5.85)
+  %  -- node [right] {} (p6);
+  %\path [line] (p6.south) -- +(0.0,-0.25) -- +(-2.5,-0.25)
+  %  -- node [above, midway] {} (p7);
+  %\path [line] (p6.south) -- +(0.0,-0.25) -- +(+2.5,-0.25)
+  %  -- node [above, midway] {} (p8);
+  %\path [linepart] (p7.east) -- node [left] {} (p8);
+  %\transreceptor{p8}{AM banda 40m}{ur1}
+
+  %\path [line] (p7.south) -- node [above] {} (p9) ;
+  %\path [line] (p8.south) -- node [above] {} (p10) ;
+  %\path [linepart] (p9.east) -- node [left] {} (p10);
+  %\transreceptor{p10}{CW}{ur2}
+  %\path [line] (p9.south) -- node [above] {} (p11) ;
+  %\path [line] (p10.south) -- node [above] {} (p12) ;
+  %\path [linepart] (p11.east) -- node [left] {} (p12);
+  %\transreceptor{p12}{FDMDV}{ur3}
+
+  %\path [line] (p11.south) -- node [above] {} (p13) ;
+  %\path [line] (p12.south) -- node [above] {} (p14) ;
+  %\path [linepart] (p13.east) -- node [left] {} (p14);
+  %\transreceptor{p14}{SSTV}{ur4}
+
+  %\path [line] (p14.south) -- +(0.0,-0.5) -- +(-2.5,-0.5)
+  %  -- node [above, midway] {} (p15);
+  %\path [line] (p13.south) -- +(0.0,-0.5) -- +(+2.5,-0.5)
+  %  -- node [above, midway] {} (p15);
+  %\path [line] (p15.south) -- node [above] {} (p16) ;
+  %\path [line] (p16.south) -- node [above] {} (p17) ;
+  %\path [line] (p17.south) -- node [above] {} (p18) ;
+
+  \background{p6}{p3}{p7}{p4}{Input}
+  \background{p6}{p1}{p7}{p1}{Computation}
+  \background{p6}{p5}{p7}{p5}{Output}
+  %\background{p3}{p3}{p4}{p5}{II}
+  %\background{p3}{p6}{p4}{p7}{III}
+  %\background{p3}{p9}{p4}{p10}{IV}
+  %\background{p3}{p11}{p4}{p12}{V}
+  %\background{p3}{p13}{p4}{p14}{VI}
+  %\background{p3}{p15}{p4}{p16}{VII}
+  %\background{p3}{p17}{p4}{p17}{VIII}
+  %\background{p3}{p18}{p4}{p18}{IX}
+\end{tikzpicture}

@@ -1,0 +1,7 @@
+\subsection{Parser}
+\label{sec:parser}
+The XML parser \texttt{parse.py} extracts the parameters and values from the XML file and stores them into a dictionary.
+Three dictionaries are used for the methods, input data from each method per dictionary.
+The parser looks for the tags 'torenbeek', 'raymer' and 'gd' and stores the parameters and values under 'type' and 'component' into the dictionary.
+Additionally, the information of the aircraft is stored in a separate dictionary.
+To prevent duplicate elements in a method the parser checks everytime it adds a new element if the element already exists in the dictionary, if so, it will show an error.
