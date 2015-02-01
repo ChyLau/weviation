@@ -20,12 +20,12 @@ class TabTorenbeek(wx.ScrolledWindow):
 
 
     def init_tab(self):
-        self.parameters = ['marker', 'line', 'w_g', 'w_to', 'marker', 'line','b_ref', 'Lambda', 'b', 'n_ult', 's_w', 't_r', 'marker', 'line', 'htail type', 'vtail type', 's_v', 's_h', 'Lambda_h', 'Lambda_v', 'marker', 'line', 'fuselage type', 'v_d', 'l_t', 'b_f', 'h_f', 's_g', 'marker', 'line', 'p_to', 'marker', 'line', 'main type', 'nose type', 'a_m', 'b_m', 'c_m', 'd_m', 'a_n', 'b_n', 'c_n', 'd_n', 'marker', 'line', 'surface controls type', 'n_e', 'w_e', 'marker', 'line', 'w_fto', 'marker', 'line', 'air induction type', 'l_d', 'n_i', 'a_i', 'marker', 'line', 'ax', 't_to', 'marker', 'line', 'n_ft', 'v_ft', 'marker', 'line', 'v_wt', 'marker', 'line', 'w_ba', 'marker', 'line', 'w_de','r_d', 'marker', 'line', 'hydr./elec. type', 'p_el','marker', 'line', 'l_pax', 'marker', 'line', 'oxygen type', 'n_pax', 'marker','line', 'w_zf']
+        self.parameters = ['marker', 'line', 'w_g', 'w_to', 'marker', 'line','b_ref', 'Lambda', 'b', 'n_ult', 's_w', 't_r', 'marker', 'line', 'htail type', 'vtail type', 's_v', 's_h', 'Lambda_h', 'Lambda_v', 'marker', 'line', 'fuselage type', 'v_d', 'l_t', 'b_f', 'h_f', 's_g', 'marker', 'line', 'main type', 'nose type', 'a_m', 'b_m', 'c_m', 'd_m', 'a_n', 'b_n', 'c_n', 'd_n', 'marker', 'line', 'surface controls type', 'n_e', 'w_e', 'marker', 'line', 'w_fto', 'marker', 'line', 'air induction type', 'l_d', 'n_i', 'a_i', 'marker', 'line', 'ax', 't_to', 'marker', 'line', 'n_ft', 'v_ft', 'marker', 'line', 'v_wt', 'marker', 'line', 'w_ba', 'marker', 'line', 'w_de','r_d', 'marker', 'line', 'hydr./elec. type', 'p_el','marker', 'line', 'l_pax', 'marker', 'line', 'oxygen type', 'n_pax', 'marker','line', 'w_zf']
 
         self.components = ['wing', 'tail', 'fuselage', 'nacelle', 'landing main', 'landing nose', 'surface controls', 'engine', 'accessory', 'air induction', 'exhaust', 'oil/cooler', 'fuel system', 'water injection', 'thrust reversers', 'APU', 'instruments', 'hydraulic/lectrical', 'AC/pressure/anti-ice', 'oxygen system', 'furnishing']
 
         ################ TOOLTIP LIST
-        tooltip = ['Gross weight', 'Takeoff weight', 'Reference wing span', 'Sweepback angle at 50% chord', 'Wing span', 'Ultimate load factor', 'Wing area', 'Maximum thickness of root chord', 'Vertical tail area', 'Horizontal tail area', 'Horizontal tail sweep angle', 'Vertical tail sweep angle', 'Design dive speed', 'Distance between 1/4-chord points of wing and horizontal tailplane root', 'Fuselage width', 'Fuselage height', 'Gross shell area of the fuselage', 'Takeoff horsepower per engine', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Number of engines', 'Engine weight', 'Fuel flow per engine', 'Duct length', 'Number of inlets', 'Capture area per inlet', 'TODO', 'Takeoff thrust per engine', 'Number of fuel tanks', 'Total fuel tank volume', 'Total water tank capacity', 'Rated bleed airflow of APU', 'Delivery empty weight', 'Maximum range with maximum fuel', 'Total electrical generator power', 'Length of passenger cabin', 'Number of passengers', 'Maximum zero fuel weight']
+        tooltip = ['Gross weight', 'Takeoff weight', 'Reference wing span', 'Sweepback angle at 50% chord', 'Wing span', 'Ultimate load factor', 'Wing area', 'Maximum thickness of root chord', 'Vertical tail area', 'Horizontal tail area', 'Horizontal tail sweep angle', 'Vertical tail sweep angle', 'Design dive speed', 'Distance between 1/4-chord points of wing and horizontal tailplane root', 'Fuselage width', 'Fuselage height', 'Gross shell area of the fuselage', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Number of engines', 'Engine weight', 'Fuel flow per engine', 'Duct length', 'Number of inlets', 'Capture area per inlet', 'TODO', 'Takeoff thrust per engine', 'Number of fuel tanks', 'Total fuel tank volume', 'Total water tank capacity', 'Rated bleed airflow of APU', 'Delivery empty weight', 'Maximum range with maximum fuel', 'Total electrical generator power', 'Length of passenger cabin', 'Number of passengers', 'Maximum zero fuel weight']
 
         hbox = wx.BoxSizer(wx.VERTICAL)
 
@@ -53,11 +53,11 @@ class TabTorenbeek(wx.ScrolledWindow):
         hbox.Add(gs, 0)
 
         # component list
-        comp_title = ['General', 'Wing', 'Tail', 'Fuselage', 'Nacelle,..', 'Landing gear,..', 'Engine,..', 'Accessory', 'Air induction', 'Exhaust', 'Fuel system', 'Water injection', 'APU', 'Instruments, ...', 'Electrical', 'Air conditioning', 'Oxygen system', 'Furnishing']
+        comp_title = ['General', 'Wing', 'Tail', 'Fuselage','Landing gear,..', 'Engine,..', 'Accessory', 'Air induction', 'Exhaust', 'Fuel system', 'Water injection', 'APU', 'Instruments, ...', 'Electrical', 'Air conditioning', 'Oxygen system', 'Furnishing']
 
-        units_im = ['lb', 'lb', 'ft', 'deg', 'ft', '', 'ft^2', 'ft', 'ft^2', 'ft^2', 'deg', 'deg', 'kts', 'ft', 'ft', 'ft', 'ft^2', 'hp', '', '', '', '', '', '', '', '', '', 'lb', '', 'ft', '', 'ft^2', 'ft^2', 'N', '', 'gal', 'gal',  '', 'lb', 'ft', 'kVA', 'ft', '', 'ft']
+        units_im = ['lb', 'lb', 'ft', 'deg', 'ft', '', 'ft^2', 'ft', 'ft^2', 'ft^2', 'deg', 'deg', 'kts', 'ft', 'ft', 'ft', 'ft^2', '', '', '', '', '', '', '', '', '', 'lb', '', 'ft', '', 'ft^2', 'ft^2', 'N', '', 'gal', 'gal',  '', 'lb', 'ft', 'kVA', 'ft', '', 'ft']
 
-        units_si = ['kg', 'kg', 'm', 'rad', 'm', '', 'm^2', 'm', 'm^2', 'm^2', 'rad', 'rad', 'm/s', 'm', 'm', 'm', 'm^2', '', '', '', '', '', '', '', '', '', '', 'kg', '', 'm', '', 'm^2', 'm^2', '', '', 'L', 'L',  '', 'kg', 'm', '', 'm', '', 'm']
+        units_si = ['kg', 'kg', 'm', 'rad', 'm', '', 'm^2', 'm', 'm^2', 'm^2', 'rad', 'rad', 'm/s', 'm', 'm', 'm', 'm^2', '', '', '', '', '', '', '', '', '', 'kg', '', 'm', '', 'm^2', 'm^2', '', '', 'L', 'L',  '', 'kg', 'm', '', 'm', '', 'm']
 
         htail_type = ['Fixed stabilizer', 'Variable-incidence']
         vtail_type = ['Fuselage-mounted', 'Fin-mounted']
@@ -261,7 +261,7 @@ class TabTorenbeek(wx.ScrolledWindow):
         tor['w_w'] = torenbeek.w_w(d1['w_g'], d1['b_ref'], d1['Lambda'], d1['b'], d1['n_ult'], d1['s_w'], d1['t_r'], d1['tunit_w'])
         tor['w_tail'] = torenbeek.w_htail(d1['s_h'], d1['v_d'], d1['Lambda_h'], d1['ttype_htail']) + torenbeek.w_vtail(d1['s_v'], d1['v_d'], d1['Lambda_v'], d1['ttype_vtail'])
         tor['w_f'] = torenbeek.w_f(d1['v_d'], d1['l_t'], d1['b_f'], d1['h_f'], d1['s_g'], d1['tunit_f'], d1['ttype_f'])
-        tor['w_n'] = torenbeek.w_n(d1['p_to'], d1['tunit_n'])
+        tor['w_n'] = torenbeek.w_n(d1['t_to'], d1['tunit_n'])
         tor['w_ucm'] = torenbeek.w_uc(d1['a_m'], d1['b_m'], d1['c_m'], d1['d_m'], d1['w_to'], d1['tunit_ucm'], d1['ttype_ucm'])
         tor['w_ucn'] = torenbeek.w_uc(d1['a_n'], d1['b_n'], d1['c_n'], d1['d_n'], d1['w_to'], d1['tunit_ucn'], d1['ttype_ucn'])
         tor['w_sc'] = torenbeek.w_sc(d1['w_to'], d1['tunit_sc'], d1['ttype_sc'])
@@ -376,9 +376,9 @@ class TabRaymer(wx.ScrolledWindow):
         self.parameters = ['marker', 'line', 'w_dg', 'n_z', 'marker', 'line', 'a', 't_c', 'lambda', 'Lambda', 's_w', 's_csw', 'marker', 'line', 'htail type', 'vtail type', 'a_h', 'a_v', 'b_h', 'f_w', 'h_t', 'h_v', 'Lambda_ht', 'Lambda_vt', 'l_t', 's_e', 's_ht', 's_vt', 'marker', 'line', 'fuselage type', 'fuselage door type', 'b_w', 'd', 'l', 's_f', 'marker', 'line', 'nacelle type', 'n_en', 'n_lt', 'n_w', 's_n', 'w_ec', 'marker', 'line', 'main type', 'nose type', 'l_m', 'l_n', 'n_l', 'n_mss', 'n_mw', 'n_nw', 'v_stall', 'w_l', 'marker', 'line', 'l_ec', 'marker', 'line', 'w_en', 'marker', 'line', 'n_t', 'v_i', 'v_p', 'v_t', 'marker', 'line', 'i_y', 'n_f', 'n_m', 's_cs', 'marker', 'line', 'w_apuu', 'marker', 'line', 'engine type', 'aircraft type', 'l_f', 'n_c', 'marker', 'line', 'l_a', 'n_gen', 'r_kva', 'marker', 'line', 'w_uav', 'marker', 'line', 'w_c', 'marker', 'line', 'n_p', 'v_pr']
 
 
-        self.components = ['wing', 'tail', 'fuselage', 'nacelle', 'landing main', 'landing nose', 'engine controls', 'pneumatic', 'fuel system', 'flight controls', 'APU', 'instruments', 'hydraulics', 'electrical', 'avionics', 'furnishing', 'air conditioning', 'anti-icing', 'handling gear']
+        self.components = ['wing', 'tail', 'fuselage', 'nacelle', 'landing main', 'landing nose', 'engine', 'engine controls', 'pneumatic', 'fuel system', 'flight controls', 'APU', 'instruments', 'hydraulics', 'electrical', 'avionics', 'furnishing', 'air conditioning', 'anti-icing', 'handling gear']
 
-        tooltip = ['Design gross weight', 'Ultimate load factor', 'Aspect ratio', 'TODO', 'Taper ratio', 'Wing sweep at 25% MAC', 'Trapezoidal wing area', 'Control surface area', 'Aspect ratio', 'Aspect ratio', 'Horizontal tail span', 'Fuselage width at horizontal tail intersection', 'Horizontal tail height above fuselage', 'Vertical tail height above fuselage', 'Horizontal tail sweep at 25% MAC', 'Vertical tail sweep at 25% MAC', 'Tail length; wing quarter-MAC to tail quarter-MAC', 'Elevator area', 'Horizontal tail area', 'Vertical tail area', 'Wing span', 'Fuselage structural depth', 'Fuselage structural length', 'Fuselage wetted area', 'Number of engines', 'Nacelle length', 'Nacelle width', 'Nacelle wetted area', 'Weight of engine and contents', 'Length of main landing gear', 'Nose gear length', 'Ultimate landing load factor; = N_gear * 1.5', 'Number of main gear shock struts', 'Number of main wheels', 'Number of nose wheels', 'TODO', 'Landing design gross weight', 'Length from engine front to cockpit -- total if multiengine', 'Engine weight, each', 'Number of fuel tanks', 'Integral tanks volume', 'Self-sealing protected tanks volume', 'Total fuel volume', 'Yawing moment of inertia', 'Number of functions performed by controls (typically 4-7)', 'Number of mechanical functions (typically 0-2)', 'Total area of control surfaces', 'Uninstalled APU weight', 'Total fuselage length', 'Number of crew', 'Electrical routing distance, generators to avionics to cockpit', 'Number of generators (typically = number of engines)', 'System electrical rating (typically 40-60)', 'Uninstalled avionics weight (typically = 800-1400 lb)', 'Maximum cargo weight', 'Number of personnel onboard (crew and passengers)', 'Volume of pressurized section']
+        tooltip = ['Design gross weight', 'Ultimate load factor', 'Aspect ratio', 'Airfoil thickness (%)', 'Taper ratio', 'Wing sweep at 25% MAC', 'Trapezoidal wing area', 'Control surface area', 'Aspect ratio', 'Aspect ratio', 'Horizontal tail span', 'Fuselage width at horizontal tail intersection', 'Horizontal tail height above fuselage', 'Vertical tail height above fuselage', 'Horizontal tail sweep at 25% MAC', 'Vertical tail sweep at 25% MAC', 'Tail length; wing quarter-MAC to tail quarter-MAC', 'Elevator area', 'Horizontal tail area', 'Vertical tail area', 'Wing span', 'Fuselage structural depth', 'Fuselage structural length', 'Fuselage wetted area', 'Number of engines', 'Nacelle length', 'Nacelle width', 'Nacelle wetted area', 'Weight of engine and contents', 'Length of main landing gear', 'Nose gear length', 'Ultimate landing load factor; = N_gear * 1.5', 'Number of main gear shock struts', 'Number of main wheels', 'Number of nose wheels', 'Stalling velocity', 'Landing design gross weight', 'Length from engine front to cockpit -- total if multiengine', 'Engine weight, each', 'Number of fuel tanks', 'Integral tanks volume', 'Self-sealing protected tanks volume', 'Total fuel volume', 'Yawing moment of inertia', 'Number of functions performed by controls (typically 4-7)', 'Number of mechanical functions (typically 0-2)', 'Total area of control surfaces', 'Uninstalled APU weight', 'Total fuselage length', 'Number of crew', 'Electrical routing distance, generators to avionics to cockpit', 'Number of generators (typically = number of engines)', 'System electrical rating (typically 40-60)', 'Uninstalled avionics weight (typically = 800-1400 lb)', 'Maximum cargo weight', 'Number of personnel onboard (crew and passengers)', 'Volume of pressurized section']
 
         hbox = wx.BoxSizer(wx.VERTICAL)
 
@@ -407,9 +407,9 @@ class TabRaymer(wx.ScrolledWindow):
         # component list
         comp_title = ['General', 'Wing', 'Tail', 'Fuselage', 'Nacelle,..', 'Landing gear,..', 'Engine', 'Pneumatic', 'Fuel system', 'Flight controls,...', 'APU', 'Instruments,...', 'Electrical', 'Avionics', 'Furnishing', 'Air-conditioning']
 
-        units_im = ['lb', '', '', '', '', 'deg', 'ft^2', 'ft^2', '', '', 'ft', 'ft', 'ft', 'ft', 'deg', 'deg', 'ft', 'ft^2', 'ft^2', 'ft^2', 'ft', 'ft', 'ft', 'ft^2', '', 'ft', 'ft', 'ft^2', 'lb', 'in.', 'in.', '', '', '', '', '', 'lb', 'ft', 'lb',  '', 'gal', 'gal', 'gal', 'lb-ft^2', '', '', 'ft^2', 'lb', 'ft', '', 'ft', '', 'kvA', 'lb', 'lb', '', 'ft^3']
+        units_im = ['lb', '', '', '', '', 'deg', 'ft^2', 'ft^2', '', '', 'ft', 'ft', 'ft', 'ft', 'deg', 'deg', 'ft', 'ft^2', 'ft^2', 'ft^2', 'ft', 'ft', 'ft', 'ft^2', '', 'ft', 'ft', 'ft^2', 'lb', 'ft', 'ft', '', '', '', '', '', 'lb', 'ft', 'lb',  '', 'gal', 'gal', 'gal', 'lb-ft^2', '', '', 'ft^2', 'lb', 'ft', '', 'ft', '', 'kvA', 'lb', 'lb', '', 'ft^3']
 
-        units_si = ['kg', '', '', '', '', 'rad', 'm^2', 'm^2', '', '', 'm', 'm', 'm', 'm', 'rad', 'rad', 'm', 'm^2', 'm^2', 'm^2', 'm', 'm', 'm', 'm^2', '', 'm', 'm', 'm^2', 'kg', 'cm', 'cm', '', '', '', '', '', 'kg', 'm', 'kg',  '', 'L', 'L', 'L', 'kg-m^2', '', '', 'm^2', 'kg', 'm', '', 'm', '', '', 'lg', 'kg', '', 'm^3']
+        units_si = ['kg', '', '', '', '', 'rad', 'm^2', 'm^2', '', '', 'm', 'm', 'm', 'm', 'rad', 'rad', 'm', 'm^2', 'm^2', 'm^2', 'm', 'm', 'm', 'm^2', '', 'm', 'm', 'm^2', 'kg', 'm', 'm', '', '', '', '', '', 'kg', 'm', 'kg',  '', 'L', 'L', 'L', 'kg-m^2', '', '', 'm^2', 'kg', 'm', '', 'm', '', '', 'lg', 'kg', '', 'm^3']
 
 
         htail_type = ['All-moving', 'Other']
@@ -593,7 +593,7 @@ class TabRaymer(wx.ScrolledWindow):
         raymer = methods.Raymer()
         ray = {}
 
-        weights = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_ucm', 'w_ucn', 'w_enc', 'w_s', 'w_fs', 'w_fc', 'w_apui', 'w_instr', 'w_hydr', 'w_el', 'w_av', 'w_furn', 'w_ac', 'w_ai', 'w_hand']
+        weights = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_ucm', 'w_ucn', 'w_e', 'w_enc', 'w_s', 'w_fs', 'w_fc', 'w_apui', 'w_instr', 'w_hydr', 'w_el', 'w_av', 'w_furn', 'w_ac', 'w_ai', 'w_hand']
 
         # dictionary of weights and components
         reference = {}
@@ -606,6 +606,7 @@ class TabRaymer(wx.ScrolledWindow):
         ray['w_ucm'] = raymer.w_ucm(d2['w_l'], d2['n_l'], d2['l_m'], d2['n_mw'], d2['n_mss'], d2['v_stall'], d2['rtype_ucm'])
         ray['w_ucn'] = raymer.w_ucn(d2['w_l'], d2['n_l'], d2['l_n'], d2['n_nw'], d2['rtype_ucn'])
         ray['w_n'] = raymer.w_n(d2['n_lt'], d2['n_w'], d2['n_z'], d2['w_ec'], d2['n_en'], d2['s_n'], d2['rtype_n'])
+        ray['w_e'] = raymer.w_e(d2['n_en'], d2['w_en'])
         ray['w_enc'] = raymer.w_enc(d2['n_en'], d2['l_ec'])
         ray['w_s'] = raymer.w_s(d2['n_en'], d2['w_en'])
         ray['w_fs'] = raymer.w_fs(d2['v_t'], d2['v_i'], d2['v_p'], d2['n_t'])
@@ -623,7 +624,7 @@ class TabRaymer(wx.ScrolledWindow):
         ret = ""
         ret += " RAYMER" + "\n" + " ------------------------------" + "\n"
 
-        var = ['w_w', 'w_tail', 'w_f', 'w_ucm', 'w_ucn', 'w_n', 'w_enc', 'w_s', 'w_fs', 'w_fc', 'w_apui', 'w_instr', 'w_hydr', 'w_el', 'w_av', 'w_furn', 'w_ac', 'w_ai', 'w_hand']
+        var = ['w_w', 'w_tail', 'w_f', 'w_ucm', 'w_ucn', 'w_n', 'w_e', 'w_enc', 'w_s', 'w_fs', 'w_fc', 'w_apui', 'w_instr', 'w_hydr', 'w_el', 'w_av', 'w_furn', 'w_ac', 'w_ai', 'w_hand']
 
         compvar = dict(zip(self.components, var))
 
@@ -635,8 +636,8 @@ class TabRaymer(wx.ScrolledWindow):
             s_ret = "kg"
 
         struct_group = ['wing', 'tail', 'fuselage', 'nacelle', 'landing main', 'landing nose']
-        prop_group = ['engine controls', 'pneumatic', 'fuel system', 'flight controls']
-        equip_group = ['APU', 'instruments', 'hydraulics', 'electrical', 'avionics', 'furnishing', 'air conditioning', 'anti-icing', 'handling gear']
+        prop_group = ['engine', 'engine controls', 'pneumatic', 'fuel system']
+        equip_group = ['flight controls', 'APU', 'instruments', 'hydraulics', 'electrical', 'avionics', 'furnishing', 'air conditioning', 'anti-icing', 'handling gear']
 
         flag_struct = True
         flag_prop = True
@@ -711,9 +712,9 @@ class TabGeneralDynamics(wx.ScrolledWindow):
         self.parameters = ['marker', 'line', 'w_to', 'n_ult', 'marker', 'line', 'a', 'lambda', 'Lambda_12', 'm_h', 's', 't_cm', 'marker', 'line', 'a_v', 'b_h', 'b_v', 'c', 'lambda_v', 'Lambda_14v', 'l_h', 'l_v', 's_h', 's_r', 's_v', 't_rh', 'z_h', 'marker', 'line', 'fuselage type','h_f', 'l_f', 'q_d', 'marker', 'line', 'nacelle type','a_in', 'l_n', 'n_inl', 'p_2', 'marker', 'line', 'engine controls type', 'engine s.s. type','n_e', 'w_eng', 'marker', 'line', 'duct type', 'air induction type', 'a_inl', 'l_d', 'marker', 'line', 'fuel system type', 'fuel type', 'w_f', 'w_supp', 'marker', 'line', 'b', 'marker', 'line', 'k_hydr', 'marker', 'line', 'w_fs', 'w_iae',  'marker', 'line', 'n_pil', 'marker', 'line', 'baggage type', 'n_cr', 'n_pax', 'v_pax', 'marker', 'line', 'k_apu', 'marker', 'line', 'furnishing type', 'n_cc', 'n_fdc', 'p_c', 'marker', 'line', 'k_pt']
 
 
-        self.components = ['wing', 'tail', 'fuselage', 'nacelle', 'landing gear', 'air induction', 'engine', 'fuel system', 'engine controls', 'engine starting system', 'flight controls', 'hydraulic/pneumatic', 'electrical', 'instr./avio./elec.', 'API', 'oxygen system', 'APU', 'furnishing', 'baggage', 'auxiliary gear', 'paint']
+        self.components = ['wing', 'tail', 'fuselage', 'nacelle', 'landing gear', 'air induction', 'engine', 'fuel system', 'engine controls', 'engine starting system', 'flight controls', 'hydraulic/pneumatic', 'electrical', 'instr./avio./elec.', 'AC/pressure/anti-ice', 'oxygen system', 'APU', 'furnishing', 'baggage', 'auxiliary gear', 'paint']
 
-        tooltip = ['Takeoff weight', 'Ultimate load factor', 'Aspect ratio (typically 4-12)', 'Taper ratio', 'Sweepback angle at 50% chord', 'Maximum Mach number at sealevel (typically 0.4-0.8)', 'Wing area', 'TODO (typically 0.08-0.15)', 'Vertical tail aspect ratio', 'Horizontal tail span', 'Vertical tail span', 'Chord length (?)', 'Vertical tail taper ratio', 'Vertical tail sweep at 25% MAC', 'Distance from wing c/4 to horizontal tail c_h/4', 'Distance from wing c/4 to vertical tail c_v/4', 'Horizontal tail area', 'Rudder area', 'Vertical tail area', 'Horizontal tail thickness root', 'Distance from the vertical tail root to where the horizontal tail is mounted on the vertical tail; = 0 for fuselage mounted horizontal tails', 'Fuselage height', 'Fuselage length', 'Design dive dynamic pressure', 'Capture area per inlet', 'Nacelle length from inlet lip to compressor face', 'Number of inlets', 'Maximum static pressure at engine compressor face (typically 15-50)', 'Number of engines', 'Weight per engine', 'Capture area per inlet', 'Duct length', 'Mission fuel weight (includes reserves)', 'Bladder support structure weight', 'Wing span', 'Typically 0.0060-0.0120', 'Fuel system weight', 'Instrumentation, avionics and electronics weight', 'Number of pilots', 'Number of crew', 'Number of passengers', 'Passenger cabin volume', 'Typically 0.004-0.013', 'TODO', 'TODO', 'Design ultimate cabin pressure', 'Typically 0.003-0.006']
+        tooltip = ['Takeoff weight', 'Ultimate load factor', 'Aspect ratio (typically 4-12)', 'Taper ratio', 'Sweepback angle at 50% chord', 'Maximum Mach number at sealevel (typically 0.4-0.8)', 'Wing area', 'Airfoil thickness ratio (typically 0.08-0.15)', 'Vertical tail aspect ratio', 'Horizontal tail span', 'Vertical tail span', 'Chord length (?)', 'Vertical tail taper ratio', 'Vertical tail sweep at 25% MAC', 'Distance from wing c/4 to horizontal tail c_h/4', 'Distance from wing c/4 to vertical tail c_v/4', 'Horizontal tail area', 'Rudder area', 'Vertical tail area', 'Horizontal tail thickness root', 'Distance from the vertical tail root to where the horizontal tail is mounted on the vertical tail; = 0 for fuselage mounted horizontal tails', 'Fuselage height', 'Fuselage length', 'Design dive dynamic pressure', 'Capture area per inlet', 'Nacelle length from inlet lip to compressor face', 'Number of inlets', 'Maximum static pressure at engine compressor face (typically 15-50)', 'Number of engines', 'Weight per engine', 'Capture area per inlet', 'Duct length', 'Mission fuel weight (includes reserves)', 'Bladder support structure weight', 'Wing span', 'Typically 0.0060-0.0120', 'Fuel system weight', 'Instrumentation, avionics and electronics weight', 'Number of pilots', 'Number of crew', 'Number of passengers', 'Passenger cabin volume', 'Typically 0.004-0.013', 'TODO', 'TODO', 'Design ultimate cabin pressure', 'Typically 0.003-0.006']
 
         hbox = wx.BoxSizer(wx.VERTICAL)
 
@@ -740,7 +741,7 @@ class TabGeneralDynamics(wx.ScrolledWindow):
         hbox.Add(gs, 0)
 
         # component list
-        comp_title = ['General', 'Wing', 'Tail', 'Fuselage', 'Nacelle', 'Engine,...', 'Air induction,...', 'Propeller', 'Fuel system', 'Propulsion', 'Hydraulics', 'Electrical','Instruments', 'Air-donditioning', 'Auxiliary power', 'Furnishing', 'Paint']
+        comp_title = ['General', 'Wing', 'Tail', 'Fuselage', 'Nacelle', 'Engine,...', 'Air induction,...', 'Fuel system', 'Propulsion', 'Hydraulics', 'Electrical','Instruments', 'Air-donditioning', 'Auxiliary power', 'Furnishing', 'Paint']
 
         units_im = ['lb', '', '', '', 'deg', '', 'ft^2', '', 'ft', 'ft', 'ft', 'ft', '', 'deg', 'ft', 'ft', 'ft^2', 'ft^2', 'ft^2', 'ft', 'ft', 'ft', 'ft', 'psf', 'ft^2', 'ft', '', 'psi', '', 'lb', 'ft^2', 'ft', 'lb', 'lb',  'ft', '', 'lb', 'lb', '', '', '', '', '', '', '', 'psi', '', '']
 
@@ -971,7 +972,7 @@ class TabGeneralDynamics(wx.ScrolledWindow):
 
         struct_group = ['wing', 'tail', 'fuselage', 'nacelle', 'landing gear', 'air induction']
         prop_group = [ 'engine', 'fuel system', 'engine controls', 'engine starting system']
-        equip_group = ['flight controls', 'hydraulic/pneumatic', 'electrical', 'instr./avio./elec.', 'API', 'oxygen system', 'APU', 'furnishing', 'baggage', 'auxiliary gear', 'paint']
+        equip_group = ['flight controls', 'hydraulic/pneumatic', 'electrical', 'instr./avio./elec.', 'AC/pressure/anti-ice', 'oxygen system', 'APU', 'furnishing', 'baggage', 'auxiliary gear', 'paint']
 
         flag_struct = True
         flag_prop = True

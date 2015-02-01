@@ -54,7 +54,7 @@ class Torenbeek:
         else:
             print "USAGE: 'mounted' is 'fuselage' or 'fin'."
 
-        return k_v*s_v*(3.81*(s_v**0.2*v_d)/(1000*cos(radians(Lambda_v))**0.5) - 0.287)
+        return k_v*s_v*(3.81*(s_v**0.2*v_d/1000*cos(radians(Lambda_v))**0.5) - 0.287)
 
 ## 3) torenbeek body (fuselage) weight estimation w_f
 # k_wf = 0.021 (lb), v_d (kts), s_g (ft^2)
@@ -85,13 +85,13 @@ class Torenbeek:
 # k_n = 2.5 (lb), k_n = 1.134 (kg)
     def w_n(self, p_to, unit):
         if unit == 'im':
-            k_n = 2.5
+            k_n = 1
         elif unit == 'si':
-            k_n = 1.134
+            k_n = 1
         else:
             print "USAGE: 'unit' is 'im' or 'si'."
 
-        return k_n*p_to**0.5
+        return k_n*0.06*p_to
 
 # k_nh  = 0.32 (lb), k_nh = 0.145 (kg)
     def w_nh(self, p_to, unit):
@@ -693,6 +693,9 @@ class Raymer:
 ## 6) raymer engine controls weight estimation
     def w_enc(self, n_en, l_ec):
         return 5.0*n_en + 0.80*l_ec
+
+    def w_e(self, n_en, w_en):
+        return 2.331*n_en*w_en**0.901
 
 ## 7) raymer started (pneumatic) weight estimation
     def w_s(self, n_en, w_en):
