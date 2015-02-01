@@ -711,7 +711,7 @@ class TabGeneralDynamics(wx.ScrolledWindow):
         self.parameters = ['marker', 'line', 'w_to', 'n_ult', 'marker', 'line', 'a', 'lambda', 'Lambda_12', 'm_h', 's', 't_cm', 'marker', 'line', 'a_v', 'b_h', 'b_v', 'c', 'lambda_v', 'Lambda_14v', 'l_h', 'l_v', 's_h', 's_r', 's_v', 't_rh', 'z_h', 'marker', 'line', 'fuselage type','h_f', 'l_f', 'q_d', 'marker', 'line', 'nacelle type','a_in', 'l_n', 'n_inl', 'p_2', 'marker', 'line', 'engine controls type', 'engine s.s. type','n_e', 'w_eng', 'marker', 'line', 'duct type', 'air induction type', 'a_inl', 'l_d', 'marker', 'line', 'fuel system type', 'fuel type', 'w_f', 'w_supp', 'marker', 'line', 'b', 'marker', 'line', 'k_hydr', 'marker', 'line', 'w_fs', 'w_iae',  'marker', 'line', 'n_pil', 'marker', 'line', 'baggage type', 'n_cr', 'n_pax', 'v_pax', 'marker', 'line', 'k_apu', 'marker', 'line', 'furnishing type', 'n_cc', 'n_fdc', 'p_c', 'marker', 'line', 'k_pt']
 
 
-        self.components = ['wing', 'tail', 'fuselage', 'nacelle', 'landing gear', 'engine', 'air induction', 'fuel system', 'engine controls', 'engine starting system', 'flight controls', 'hydraulic/pneumatic', 'electrical', 'instr./avio./elec.', 'API', 'oxygen system', 'APU', 'furnishing', 'baggage', 'auxiliary gear', 'paint']
+        self.components = ['wing', 'tail', 'fuselage', 'nacelle', 'landing gear', 'air induction', 'engine', 'fuel system', 'engine controls', 'engine starting system', 'flight controls', 'hydraulic/pneumatic', 'electrical', 'instr./avio./elec.', 'API', 'oxygen system', 'APU', 'furnishing', 'baggage', 'auxiliary gear', 'paint']
 
         tooltip = ['Takeoff weight', 'Ultimate load factor', 'Aspect ratio (typically 4-12)', 'Taper ratio', 'Sweepback angle at 50% chord', 'Maximum Mach number at sealevel (typically 0.4-0.8)', 'Wing area', 'TODO (typically 0.08-0.15)', 'Vertical tail aspect ratio', 'Horizontal tail span', 'Vertical tail span', 'Chord length (?)', 'Vertical tail taper ratio', 'Vertical tail sweep at 25% MAC', 'Distance from wing c/4 to horizontal tail c_h/4', 'Distance from wing c/4 to vertical tail c_v/4', 'Horizontal tail area', 'Rudder area', 'Vertical tail area', 'Horizontal tail thickness root', 'Distance from the vertical tail root to where the horizontal tail is mounted on the vertical tail; = 0 for fuselage mounted horizontal tails', 'Fuselage height', 'Fuselage length', 'Design dive dynamic pressure', 'Capture area per inlet', 'Nacelle length from inlet lip to compressor face', 'Number of inlets', 'Maximum static pressure at engine compressor face (typically 15-50)', 'Number of engines', 'Weight per engine', 'Capture area per inlet', 'Duct length', 'Mission fuel weight (includes reserves)', 'Bladder support structure weight', 'Wing span', 'Typically 0.0060-0.0120', 'Fuel system weight', 'Instrumentation, avionics and electronics weight', 'Number of pilots', 'Number of crew', 'Number of passengers', 'Passenger cabin volume', 'Typically 0.004-0.013', 'TODO', 'TODO', 'Design ultimate cabin pressure', 'Typically 0.003-0.006']
 
@@ -926,7 +926,7 @@ class TabGeneralDynamics(wx.ScrolledWindow):
         gendyn = methods.Gd()
         gd = {}
 
-        weights = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_g', 'w_e', 'w_ai', 'w_fs', 'w_ec', 'w_ess', 'w_fc', 'w_hydr', 'w_els', 'w_i', 'w_api', 'w_ox', 'w_apu', 'w_fur', 'w_bc', 'w_aux', 'w_pt']
+        weights = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_g', 'w_ai', 'w_e', 'w_fs', 'w_ec', 'w_ess', 'w_fc', 'w_hydr', 'w_els', 'w_i', 'w_api', 'w_ox', 'w_apu', 'w_fur', 'w_bc', 'w_aux', 'w_pt']
 
         # dictionary of weights and components
         reference = {}
@@ -958,7 +958,7 @@ class TabGeneralDynamics(wx.ScrolledWindow):
         ret = ""
         ret += " GENERAL DYNAMICS" + "\n" + " ------------------------------" + "\n"
 
-        var = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_g', 'w_e', 'w_ai', 'w_fs', 'w_ec', 'w_ess', 'w_fc', 'w_hydr', 'w_els', 'w_i', 'w_api', 'w_ox', 'w_apu', 'w_fur', 'w_bc', 'w_aux', 'w_pt']
+        var = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_g', 'w_ai', 'w_e', 'w_fs', 'w_ec', 'w_ess', 'w_fc', 'w_hydr', 'w_els', 'w_i', 'w_api', 'w_ox', 'w_apu', 'w_fur', 'w_bc', 'w_aux', 'w_pt']
 
         compvar = dict(zip(self.components, var))
 
@@ -969,9 +969,9 @@ class TabGeneralDynamics(wx.ScrolledWindow):
             k_ret = 0.453592
             s_ret = "kg"
 
-        struct_group = ['wing', 'tail', 'fuselage', 'nacelle', 'landing gear', 'engine', 'air induction']
-        prop_group = ['fuel system', 'engine controls', 'engine starting system', 'flight controls']
-        equip_group = ['hydraulic/pneumatic', 'electrical', 'instr./avio./elec.', 'API', 'oxygen system', 'APU', 'furnishing', 'baggage', 'auxiliary gear', 'paint']
+        struct_group = ['wing', 'tail', 'fuselage', 'nacelle', 'landing gear', 'air induction']
+        prop_group = [ 'engine', 'fuel system', 'engine controls', 'engine starting system']
+        equip_group = ['flight controls', 'hydraulic/pneumatic', 'electrical', 'instr./avio./elec.', 'API', 'oxygen system', 'APU', 'furnishing', 'baggage', 'auxiliary gear', 'paint']
 
         flag_struct = True
         flag_prop = True
