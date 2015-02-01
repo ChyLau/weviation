@@ -1,13 +1,25 @@
 \section{Introduction}
+For document describes the code and how it is build up.
+The code can be found in the delivered files and is also available online at \url{https://github.com/ChyLau/weviation/tree/master/weviation}.
+Additionally, the logbook can be found at \url{https://github.com/ChyLau/weviation/commits/master} and gives a good indication of how much time is spend on this case study.
+
+In Figure~\ref{fig:flow_bb} and~\ref{fig:flow_gui} the flow diagrams can be seen. Each diagram has three main parts: input, computation and output.
+The input section is the same for both the black box and GUI, but they differ in the output part.
+The black box can be used as a module for another project, and the GUI is for users.
+For more customizability the GUI is used, which allows user interaction.
+
+The following sections describe the parts of the flow diagram, starting with the Input (section~\ref{sec:input}), following with the Computation (section~\ref{sec:comp}) and ending with the Output (section~\ref{sec:output}).
+
+Next the validation of the blackbox/GUI is described in section~\ref{sec:validation}, which check if each method gives a similar result.
 
 \begin{figure}[h]
 \centering
 \input{image/diagram_bb.tex}
-\caption{Test} \label{fig:test}
+\caption{Flow diagram for the black box.} \label{fig:flow_bb}
 \end{figure}
 
 \begin{figure}[h]
 \centering
 \input{image/diagram_gui.tex}
-\caption{Test2} \label{fig:test2}
+\caption{Flow diagram for the GUI.} \label{fig:flow_gui}
 \end{figure}
