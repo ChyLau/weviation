@@ -1,2 +1,12 @@
 \section{Validation}
 \label{sec:validation}
+Most of the values are taken from the Civil Jet Aircraft Design website~\cite{data} and some other values are estimated or taken from other aircrafts.
+The XML input file (provided) contains all the input values, the GUI can also be used to view the input values in a more user-friendly way.
+The result of the weight estimation as the following (in Appendix~\ref{sec:outputxml} the output XML can be seen),
+\VerbatimInput{code/output.txt}
+What is noticable is that the total weight of Raymer is less than that of the other two.
+The total weights of Torenbeek and General Dynamics are quite similar, 238,357 lb and 246,080 lb respectively.
+The estimated weights under the structures group are quite similar for all three methods, however they simply differ in the propulsion and equipment group.
+This is because parameter values in those groups are much harder to find or estimate and some are guessed.
+
+Therefore, based on the results for the weight estimation, Torenbeek and General dynamics are more suitable.

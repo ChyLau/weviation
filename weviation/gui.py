@@ -1094,16 +1094,6 @@ class DemoFrame(wx.Frame):
         btnClear = wx.Button(self.panel, label='Clear', size=(80,30))
         self.Bind(wx.EVT_BUTTON, self.clear_button, btnClear)
 
-        """
-        # load xml button
-        btnLoad = wx.Button(self.panel, label='Load XML', size=(80,30))
-        self.Bind(wx.EVT_BUTTON, self.load_button, btnLoad)
-
-        # export button
-        btnExport = wx.Button(self.panel, label='Export', size=(80,30))
-        self.Bind(wx.EVT_BUTTON, self.export_button, btnExport)
-        """
-
         # unit button
         self.rb_lb = wx.RadioButton(self.panel, label='lb', style=wx.RB_GROUP)
         self.rb_kg = wx.RadioButton(self.panel, label='kg')
@@ -1147,14 +1137,6 @@ class DemoFrame(wx.Frame):
         bsizer3.Fit(self.tabBar)
         self.notebook3.AddPage(self.tabBar, "Bar chart")
 
-
-        """
-        self.tabRay = OutputData2(self.notebook2, None)
-        self.notebook2.AddPage(self.tabRay, "Raymer")
-
-        self.tabGd = OutputData2(self.notebook2, None)
-        self.notebook2.AddPage(self.tabGd, "General Dynamics")
-        """
 
         # adding stuff
         sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -1244,41 +1226,6 @@ class DemoFrame(wx.Frame):
             self.Fit()
             self.Update()
             #self.Refresh()
-
-    """
-    def export_button(self, evt):
-        label = evt.GetEventObject().GetLabel()
-
-        if label == 'Export':
-            root = ET.Element("output")
-
-            torenbeek = ET.SubElement(root, "torenbeek")
-            for key, value in self.tor.iteritems():
-                item = ET.SubElement(torenbeek, key)
-                item.text = str(round(value, 2))
-
-            raymer = ET.SubElement(root, "raymer")
-            for key, value in self.ray.iteritems():
-                item = ET.SubElement(raymer, key)
-                item.text = str(round(value, 2))
-
-            gd = ET.SubElement(root, "general_dynamics")
-            for key, value in self.gd.iteritems():
-                item = ET.SubElement(gd, key)
-                item.text = str(round(value, 2))
-
-            tree = ET.ElementTree(root)
-            tree.write("output.xml", pretty_print=True)
-
-            with open("output.xml", 'r+') as f:
-                content = f.read()
-                f.seek(0,0)
-                line = "<!-- Output of the weight estimation method(s), in lb. -->"
-                f.write(line.rstrip('\r\n') + '\n\n' + content)
-
-            dial = wx.MessageDialog(None, 'Export completed', 'Info', wx.OK)
-            dial.ShowModal()
-    """
 
     def clear_button(self, evt):
         self.txt1.SetValue("")
@@ -1379,16 +1326,7 @@ class DemoFrame(wx.Frame):
         #sizer.Add(self.canvas)
 
         #self.Layout()
-    """
-    def load_button(self, evt):
-        label = evt.GetEventObject().GetLabel()
 
-        if label == 'Load XML':
-            d1, d2, d3 = p.parse_xml()
-            self.tabOne.load_xml(d1)
-            self.tabTwo.load_xml(d2)
-            self.tabThree.load_xml(d3)
-    """
 
     def barchart(self, panel,  tor, ray, gd):
         a = []

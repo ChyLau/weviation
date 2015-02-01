@@ -1,0 +1,93 @@
+ INFORMATION
+------------------------------
+ manufacturer: AIRBUS
+ type: A3XX
+ model: 100
+ initial service date: 2004
+
+ TORENBEEK
+ ------------------------------
+ STRUCTURES GROUP
+	 wing (w_w): 12175.74 lb
+	 tail (w_tail): 17674.49 lb
+	 fuselage (w_f): 32943.78 lb
+	 nacelle (w_n): 21000.0 lb
+	 landing main (w_ucm): 18248.61 lb
+	 landing nose (w_ucn): 1640.56 lb
+	 surface controls (w_sc): 3841.29 lb
+ PROPULSION GROUP
+	 engine (w_eni): 55080.0 lb
+	 accessory (w_acc): 0.12 lb
+	 air induction (w_airi): 1005.2 lb
+	 exhaust (w_ext): 3.0 lb
+	 oil/cooler (w_oc): 1101.6 lb
+	 fuel system (w_fsi): 2580.38 lb
+	 water injection (w_wis): 8.59 lb
+	 thrust reversers (w_tr): 9914.4 lb
+ EQUIPMENT GROUP
+	 APU (w_apu): 16.0 lb
+	 instruments (w_navp): 6565.68 lb
+	 hydraulic/lectrical (w_heu): 722.46 lb
+	 AC/pressure/anti-ice (w_api): 4724.77 lb
+	 oxygen system (w_ox): 297.5 lb
+	 furnishing (w_fur): 48813.03 lb
+ ..................................
+ TOTAL: 238357.2 lb
+
+ RAYMER
+ ------------------------------
+ STRUCTURES GROUP
+	 wing (w_w): 14270.61 lb
+	 tail (w_tail): 15402.42 lb
+	 fuselage (w_f): 27392.41 lb
+	 nacelle (w_ucm): 13614.38 lb
+	 landing main (w_ucn): 16115.74 lb
+	 landing nose (w_n): 1428.7 lb
+ PROPULSION GROUP
+	 engine (w_e): 49978.33 lb
+	 engine controls (w_enc): 85.6 lb
+	 pneumatic (w_s): 430.28 lb
+	 fuel system (w_fs): 4283.91 lb
+ EQUIPMENT GROUP
+	 flight controls (w_fc): 836.2 lb
+	 APU (w_apui): 6600.0 lb
+	 instruments (w_instr): 2282.67 lb
+	 hydraulics (w_hydr): 437.35 lb
+	 electrical (w_el): 819.91 lb
+	 avionics (w_av): 1538.32 lb
+	 furnishing (w_furn): 2376.2 lb
+	 air conditioning (w_ac): 5175.65 lb
+	 anti-icing (w_ai): 1569.69 lb
+	 handling gear (w_hand): 235.45 lb
+ ..................................
+ TOTAL: 164873.82 lb
+
+ GENERAL DYNAMICS
+ ------------------------------
+ STRUCTURES GROUP
+	 wing (w_w): 16183.86 lb
+	 tail (w_tail): 23852.37 lb
+	 fuselage (w_f): 31026.33 lb
+	 nacelle (w_n): 16332.92 lb
+	 landing gear (w_g): 17471.64 lb
+	 air induction (w_ai): 7375.12 lb
+ PROPULSION GROUP
+	 engine (w_e): 55080.0 lb
+	 fuel system (w_fs): 175.82 lb
+	 engine controls (w_ec): 211.27 lb
+	 engine starting system (w_ess): 702.54 lb
+ EQUIPMENT GROUP
+	 flight controls (w_fc): 474.15 lb
+	 hydraulic/pneumatic (w_hydr): 8157.1 lb
+	 electrical (w_els): 1163.59 lb
+	 instr./avio./elec. (w_i): 10032.66 lb
+	 AC/pressure/anti-ice (w_api): 4091.06 lb
+	 oxygen system (w_ox): 613.99 lb
+	 APU (w_apu): 5709.97 lb
+	 furnishing (w_fur): 42972.59 lb
+	 baggage (w_bc): 639.62 lb
+	 auxiliary gear (w_aux): 550.8 lb
+	 paint (w_pt): 3262.84 lb
+ ..................................
+ TOTAL: 246080.23 lb
+

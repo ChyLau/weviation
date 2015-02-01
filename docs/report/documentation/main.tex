@@ -13,6 +13,26 @@
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \input{image/tikz_req.tex}
 
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage{fancyvrb}
+
+% redefine \VerbatimInput
+\RecustomVerbatimCommand{\VerbatimInput}{VerbatimInput}%
+{fontsize=\footnotesize,
+ %
+ frame=lines,  % top and bottom rule only
+ framesep=2em, % separation between frame and text
+ rulecolor=\color{Gray},
+ %
+ label=\fbox{\color{Black}output.txt},
+ labelposition=topline,
+ %
+ commandchars=\|\(\), % escape character and argument delimiters for
+                      % commands within the verbatim
+ commentchar=*        % comment character
+}
+
 \begin{document}
 
 \title{\textbf{Case Study [AE3T50]: \\Weight estimation tool for Commercial Transport Airplanes\\ "DOCUMENTATION"}}
@@ -37,12 +57,12 @@
 \input{section/text.tex}
 \input{section/chart.tex}
 \input{section/terminal.tex}
-\input{section/validation.tex}
+\input{section/validation.tex}\clearpage
 
-%\bibliographystyle{unsrt}
-%\bibliography{references}
-%\appendix
-% \input{appendix}
+\bibliographystyle{unsrt}
+\bibliography{references}\clearpage
+\appendix
+\input{section/appendix.tex}
 
 \end{document}
 
