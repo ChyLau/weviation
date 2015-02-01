@@ -1,4 +1,17 @@
-\section{Weviation}
-\label{sec:weviation}
+\section{Overview}
+\label{sec:overview}
+\subsection{Weviation}
+\label{subsec:weviation}
+Weviation stands for "Weight Estimation of Aviation" and three methods for each type of aircraft are used to estimate the weight, for commercial transport aircrafts: Torenbeek, Raymer, General Dynamics. The implementation of these methods is in Python as well as the user interface.
 
-Weviation stands for "Weight Estimation Aviation" and uses three methods: Torenbeek, Raymer and General Dynamics to esimate the weight of a commercial transport aircraft.
+\subsection{Tool overview}
+\label{subsec:purpose}
+The weight estimation tool utilizes an input file, in XML format, to obtain the necessary parameters for the three methods of the commercial transport type aircrafts.
+This input file can either be provided by the user, or from a Class I system.
+The obtained parameters are then fed into the equations, resulting in the weight of each component, which then is summed up to give the total estimated weight.
+The results and additional necessary information is parsed into an output file; the type is an XML, like the input file.
+These operations together form a module which can be used for a larger project, Class III.
+
+The weight estimation tool has a GUI to make it more user-friendly and give the user more options. The GUI is used to provide more information to the user e.g. suggestions of values. To start simple, the user either loads or creates an input file in the GUI and it outputs a bar chart and pie chart of each used method, which can be saved or discarded. The pie chart shows the weight of each component as a value and percentage of the total weight. The input and output unit system can be either metric or imperial. Additionally, the output file can be written in a more user-friendly format (text), or XML.
+
+

@@ -1381,7 +1381,7 @@ class DemoFrame(wx.Frame):
         labels = self.rc.keys()
         sizes = self.rc.values()
         cs=cm.Set1(np.arange(len(labels))/float(len(labels)))
-        self.axes.pie(sizes, colors=cs, autopct='%.2f')
+        self.axes.pie(sizes, colors=cs, autopct='%.2f%%')
         self.axes.axis('equal')
         fontP = FontProperties()
         fontP.set_size('small')
