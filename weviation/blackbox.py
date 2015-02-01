@@ -22,7 +22,7 @@ def weight():
     tor['w_w'] = torenbeek.w_w(d1['w_g'], d1['b_ref'], d1['Lambda'], d1['b'], d1['n_ult'], d1['s_w'], d1['t_r'], d1['tunit_w'])
     tor['w_tail'] = torenbeek.w_htail(d1['s_h'], d1['v_d'], d1['Lambda_h'], d1['ttype_htail']) + torenbeek.w_vtail(d1['s_v'], d1['v_d'], d1['Lambda_v'], d1['ttype_vtail'])
     tor['w_f'] = torenbeek.w_f(d1['v_d'], d1['l_t'], d1['b_f'], d1['h_f'], d1['s_g'], d1['tunit_f'], d1['ttype_f'])
-    tor['w_n'] = torenbeek.w_n(d1['p_to'], d1['tunit_n'])
+    tor['w_n'] = torenbeek.w_n(d1['t_to'], d1['tunit_n'])
     tor['w_ucm'] = torenbeek.w_uc(d1['a_m'], d1['b_m'], d1['c_m'], d1['d_m'], d1['w_to'], d1['tunit_ucm'], d1['ttype_ucm'])
     tor['w_ucn'] = torenbeek.w_uc(d1['a_n'], d1['b_n'], d1['c_n'], d1['d_n'], d1['w_to'], d1['tunit_ucn'], d1['ttype_ucn'])
     tor['w_sc'] = torenbeek.w_sc(d1['w_to'], d1['tunit_sc'], d1['ttype_sc'])
@@ -33,7 +33,6 @@ def weight():
     tor['w_oc'] = torenbeek.w_oc(d1['n_e'], d1['w_e'])
     tor['w_fsi'] = torenbeek.w_fsi(d1['n_e'], d1['n_ft'], d1['v_ft'], d1['tunit_fsi'])
     tor['w_wis'] = torenbeek.w_wis(d1['v_wt'], d1['tunit_wis'])
-    tor['w_pi'] = torenbeek.w_pi(d1['n_p'], d1['b_p'], d1['d_p'], d1['p_to'], d1['tunit_pi'])
     tor['w_tr'] = torenbeek.w_tr(d1['n_e'], d1['w_e'])
     tor['w_apu'] = torenbeek.w_apu(d1['w_ba'], d1['tunit_apu'])
     tor['w_navp'] = torenbeek.w_navp(d1['w_to'], d1['tunit_navp'])
@@ -52,6 +51,7 @@ def weight():
     ray['w_ucm'] = raymer.w_ucm(d2['w_l'], d2['n_l'], d2['l_m'], d2['n_mw'], d2['n_mss'], d2['v_stall'], d2['rtype_ucm'])
     ray['w_ucn'] = raymer.w_ucn(d2['w_l'], d2['n_l'], d2['l_n'], d2['n_nw'], d2['rtype_ucn'])
     ray['w_n'] = raymer.w_n(d2['n_lt'], d2['n_w'], d2['n_z'], d2['w_ec'], d2['n_en'], d2['s_n'], d2['rtype_n'])
+    ray['w_e'] = raymer.w_e(d2['n_en'], d2['w_en'])
     ray['w_enc'] = raymer.w_enc(d2['n_en'], d2['l_ec'])
     ray['w_s'] = raymer.w_s(d2['n_en'], d2['w_en'])
     ray['w_fs'] = raymer.w_fs(d2['v_t'], d2['v_i'], d2['v_p'], d2['n_t'])
@@ -77,11 +77,9 @@ def weight():
     gd['w_uc'] = gendyn.w_g(d3['w_to'])
     gd['w_e'] = gendyn.w_e(d3['n_e'], d3['w_eng'])
     gd['w_ai'] = gendyn.w_ai(d3['n_inl'], d3['l_d'], d3['a_inl'], d3['p_2'], d3['gtype_ai1'], d3['gtype_ai2'])
-    gd['w_prop'] = gendyn.w_prop(d3['n_p'], d3['n_bl'], d3['d_p'], d3['p_to'], d3['n_e'], d3['gtype_prop'])
     gd['w_fs'] = gendyn.w_fs(d3['w_f'], d3['w_supp'], d3['gtype_fs1'], d3['gtype_fs2'])
     gd['w_ec'] = gendyn.w_ec(d3['l_f'], d3['n_e'], d3['gtype_ec'], d3['b'])
     gd['w_ess'] = gendyn.w_ess(gd['w_e'], d3['gtype_ess'])
-    gd['w_pc'] = gendyn.w_pc(d3['n_bl'], d3['n_p'], d3['d_p'], d3['p_to'], d3['n_e'], d3['gtype_pc'])
     gd['w_fc'] = gendyn.w_fc(d3['w_to'], d3['q_d'])
     gd['w_hydr'] = gendyn.w_hydr(d3['k_hydr'], d3['w_to'])
     gd['w_els'] = gendyn.w_els(d3['w_fs'], d3['w_iae'])
@@ -144,74 +142,96 @@ def export_xml(tor, ray, gd):
 def main():
     tor, ray, gd, info = weight()
     print "--------- TORENBEEK ----------"
-    print "wing (w_w):", tor['w_w'], 'lb.'
-    print "tail (w_tail):", tor['w_tail'], 'lb.'
-    print "fuselage (w_f):", tor['w_f'], 'lb.'
-    print "nacelle (w_n):", tor['w_n'], 'lb.'
-    print "landing main (w_ucm):", tor['w_ucm'], 'lb.'
-    print "landing nose (w_ucn):", tor['w_ucn'], 'lb.'
-    print "surface controls (w_sc):", tor['w_sc'], 'lb.'
-    print "engine system (w_eni):", tor['w_eni'], 'lb.'
-    print "accessory (w_acc):", tor['w_acc'], 'lb.'
-    print "air induction (w_airi):", tor['w_airi'], 'lb.'
-    print "exhaust (w_ext):", tor['w_ext'], 'lb.'
-    print "oil/cooler (w_oc):", tor['w_oc'], 'lb.'
-    print "fuel system (w_fsi)", tor['w_fsi'], 'lb.'
-    print "water injection (w_wis):", tor['w_wis'], 'lb.'
-    print "thrust reversers (w_tr):", tor['w_tr'], 'lb.'
-    print "apu (w_apu):", tor['w_apu'], 'lb.'
-    print "instruments (w_navp):", tor['w_navp'], 'lb.'
-    print "hydraulic/electrical (w_heu):", tor['w_heu'], 'lb.'
-    print "air-cond./pressure/anti-ice (w_api):", tor['w_api'], 'lb.'
-    print "oxygen (w_ox):", tor['w_ox'], 'lb.'
-    print "furnishing (w_fur):", tor['w_fur'], 'lb.'
-    print "torenbeek total:", sum(tor.values()), 'lb.'
+    print "STRUCTURES GROUP"
+    print ".............................."
+    print "\twing (w_w):", tor['w_w'], 'lb.'
+    print "\ttail (w_tail):", tor['w_tail'], 'lb.'
+    print "\tfuselage (w_f):", tor['w_f'], 'lb.'
+    print "\tnacelle (w_n):", tor['w_n'], 'lb.'
+    print "\tlanding main (w_ucm):", tor['w_ucm'], 'lb.'
+    print "\tlanding nose (w_ucn):", tor['w_ucn'], 'lb.'
+    print "\tsurface controls (w_sc):", tor['w_sc'], 'lb.'
+    print "PROPULSION GROUP"
+    print ".............................."
+    print "\tengine system (w_eni):", tor['w_eni'], 'lb.'
+    print "\taccessory (w_acc):", tor['w_acc'], 'lb.'
+    print "\tair induction (w_airi):", tor['w_airi'], 'lb.'
+    print "\texhaust (w_ext):", tor['w_ext'], 'lb.'
+    print "\toil/cooler (w_oc):", tor['w_oc'], 'lb.'
+    print "\tfuel system (w_fsi)", tor['w_fsi'], 'lb.'
+    print "\twater injection (w_wis):", tor['w_wis'], 'lb.'
+    print "\tthrust reversers (w_tr):", tor['w_tr'], 'lb.'
+    print "EQUIPMENT GROUP"
+    print ".............................."
+    print "\tapu (w_apu):", tor['w_apu'], 'lb.'
+    print "\tinstruments (w_navp):", tor['w_navp'], 'lb.'
+    print "\thydraulic/electrical (w_heu):", tor['w_heu'], 'lb.'
+    print "\tair-cond./pressure/anti-ice (w_api):", tor['w_api'], 'lb.'
+    print "\toxygen (w_ox):", tor['w_ox'], 'lb.'
+    print "\tfurnishing (w_fur):", tor['w_fur'], 'lb.'
+    print ".............................."
+    print "TORENBEEK TOTAL:", sum(tor.values()), 'lb.'
 
     print "\n----------- RAYMER -----------"
-    print "wing (w_w):", ray['w_w'], 'lb.'
-    print "tail (w_tail):", ray['w_tail'], 'lb.'
-    print "fuselage (w_f):", ray['w_f'], 'lb.'
-    print "landing main (w_ucm):", ray['w_ucm'], 'lb.'
-    print "landing nose (w_ucn):", ray['w_ucn'], 'lb.'
-    print "nacelle (w_n):", ray['w_n'], 'lb.'
-    print "engine control (w_enc):", ray['w_enc'], 'lb.'
-    print "starter (w_s):", ray['w_s'], 'lb.'
-    print "fuel system (w_fs):", ray['w_fs'], 'lb.'
-    print "flight controls (w_fc):", ray['w_fc'], 'lb.'
-    print "apu (w_apui):", ray['w_apui'], 'lb.'
-    print "instruments (w_instr):", ray['w_instr'], 'lb.'
-    print "hydraulics (w_hydr):", ray['w_hydr'], 'lb.'
-    print "electrical system (w_el):", ray['w_el'], 'lb.'
-    print "avionics (w_av):", ray['w_av'], 'lb.'
-    print "furnishing (w_furn):", ray['w_furn'], 'lb.'
-    print "air-cond. (w_ac):", ray['w_ac'], 'lb.'
-    print "anti-ice (w_ai):", ray['w_ai'], 'lb.'
-    print "handling gear (w_hand):", ray['w_hand'], 'lb.'
-    print "raymer total:", sum(ray.values()), 'lb.'
+    print "STRUCTURES GROUP"
+    print ".............................."
+    print "\twing (w_w):", ray['w_w'], 'lb.'
+    print "\ttail (w_tail):", ray['w_tail'], 'lb.'
+    print "\tfuselage (w_f):", ray['w_f'], 'lb.'
+    print "\tlanding main (w_ucm):", ray['w_ucm'], 'lb.'
+    print "\tlanding nose (w_ucn):", ray['w_ucn'], 'lb.'
+    print "\tnacelle (w_n):", ray['w_n'], 'lb.'
+    print "PROPULSION GROUP"
+    print ".............................."
+    print "\tengine (w_e):", ray['w_e'], 'lb'
+    print "\tengine control (w_enc):", ray['w_enc'], 'lb.'
+    print "\tstarter (w_s):", ray['w_s'], 'lb.'
+    print "\tfuel system (w_fs):", ray['w_fs'], 'lb.'
+    print "EQUIPMENT GROUP"
+    print ".............................."
+    print "\tflight controls (w_fc):", ray['w_fc'], 'lb.'
+    print "\tapu (w_apui):", ray['w_apui'], 'lb.'
+    print "\tinstruments (w_instr):", ray['w_instr'], 'lb.'
+    print "\thydraulics (w_hydr):", ray['w_hydr'], 'lb.'
+    print "\telectrical system (w_el):", ray['w_el'], 'lb.'
+    print "\tavionics (w_av):", ray['w_av'], 'lb.'
+    print "\tfurnishing (w_furn):", ray['w_furn'], 'lb.'
+    print "\tair-cond. (w_ac):", ray['w_ac'], 'lb.'
+    print "\tanti-ice (w_ai):", ray['w_ai'], 'lb.'
+    print "\thandling gear (w_hand):", ray['w_hand'], 'lb.'
+    print ".............................."
+    print "RAYMER TOTAL:", sum(ray.values()), 'lb.'
 
     print "\n------------- GENERAL DYNAMICS -------------"
-    print "wing (w_w):", gd['w_w'], 'lb.'
-    print "tail (w_tail):", gd['w_tail'], 'lb.'
-    print "fuselage (w_f):", gd['w_f'], 'lb.'
-    print "nacelle (w_n):", gd['w_n'], 'lb.'
-    print "landing gear (w_uc):", gd['w_uc'], 'lb.'
-    print "engine (w_e):", gd['w_e'], 'lb.'
-    print "air induction (w_ai):", gd['w_ai'], 'lb.'
-    print "fuel system (w_fs):", gd['w_fs'], 'lb.'
-    print "engine controls (w_ec):", gd['w_ec'], 'lb.'
-    print "engine starting system (w_ess):", gd['w_ess'], 'lb.'
-    print "flight control (w_fc):", gd['w_fc'], 'lb.'
-    print "hydraulic/pneumatic (w_hydr):", gd['w_hydr'], 'lb.'
-    print "electrical system (w_els):", gd['w_els'], 'lb.'
-    print "instruments/avionics/electronics (w_i):", gd['w_i'], 'lb.'
-    print "api (w_api):", gd['w_api'], 'lb.'
-    print "oxygen (w_ox):", gd['w_ox'], 'lb.'
-    print "apu (w_apu)", gd['w_apu'], 'lb.'
-    print "furnishing (w_fur):", gd['w_fur'], 'lb.'
-    print "baggage (w_bc):", gd['w_bc'], 'lb.'
-    print "auxiliary (w_aux):", gd['w_aux'], 'lb.'
-    print "paint (w_pt)", gd['w_pt'], 'lb.'
-    print "gd total:", sum(gd.values()), 'lb.\n'
+    print "STRUCTURES GROUP"
+    print ".............................."
+    print "\twing (w_w):", gd['w_w'], 'lb.'
+    print "\ttail (w_tail):", gd['w_tail'], 'lb.'
+    print "\tfuselage (w_f):", gd['w_f'], 'lb.'
+    print "\tnacelle (w_n):", gd['w_n'], 'lb.'
+    print "\tlanding gear (w_uc):", gd['w_uc'], 'lb.'
+    print "\tair induction (w_ai):", gd['w_ai'], 'lb.'
+    print "PROPULSION GROUP"
+    print ".............................."
+    print "\tengine (w_e):", gd['w_e'], 'lb.'
+    print "\tfuel system (w_fs):", gd['w_fs'], 'lb.'
+    print "\tengine controls (w_ec):", gd['w_ec'], 'lb.'
+    print "\tengine starting system (w_ess):", gd['w_ess'], 'lb.'
+    print "EQUIPMENT GROUP"
+    print ".............................."
+    print "\tflight control (w_fc):", gd['w_fc'], 'lb.'
+    print "\thydraulic/pneumatic (w_hydr):", gd['w_hydr'], 'lb.'
+    print "\telectrical system (w_els):", gd['w_els'], 'lb.'
+    print "\tinstruments/avionics/electronics (w_i):", gd['w_i'], 'lb.'
+    print "\tAC/pressure/anti-ice (w_api):", gd['w_api'], 'lb.'
+    print "\toxygen (w_ox):", gd['w_ox'], 'lb.'
+    print "\tapu (w_apu)", gd['w_apu'], 'lb.'
+    print "\tfurnishing (w_fur):", gd['w_fur'], 'lb.'
+    print "\tbaggage (w_bc):", gd['w_bc'], 'lb.'
+    print "\tauxiliary (w_aux):", gd['w_aux'], 'lb.'
+    print "\tpaint (w_pt)", gd['w_pt'], 'lb.'
+    print ".............................."
+    print "GD TOTAL:", sum(gd.values()), 'lb.\n'
 
     pie_chart(tor, ray, gd)
     export_xml(tor, ray, gd)
