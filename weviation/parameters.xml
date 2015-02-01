@@ -240,12 +240,10 @@
             <gtype_n>turbojet</gtype_n>
             <gtype_ai1>flat</gtype_ai1>
             <gtype_ai2>abovemd</gtype_ai2>
-            <gtype_prop>below</gtype_prop>
             <gtype_fs1>self</gtype_fs1>
             <gtype_fs2>aviation</gtype_fs2>
             <gtype_ec>jet</gtype_ec>
             <gtype_ess>jetcp</gtype_ess>
-            <gtype_pc>turboprops</gtype_pc>
             <gtype_fur>business</gtype_fur>
             <gtype_bc>no</gtype_bc>
         </type>
@@ -296,12 +294,6 @@
             <!-- AIR INDUCTION -->
             <l_d>1</l_d>
             <a_inl>1</a_inl>
-
-            <!-- PROPELLER -->
-            <n_p>4</n_p>
-            <n_bl>24</n_bl>
-            <d_p>5.3</d_p>
-            <p_to>2950</p_to>
 
             <!-- FUEL SYSTEM -->
             <w_f>33951</w_f>
