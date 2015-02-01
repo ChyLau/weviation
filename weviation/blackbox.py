@@ -1,5 +1,7 @@
 """
-The weight estimation is done by summing the necessary equations of each method.
+Author: Chy Lau
+Created: 2014-2015
+Desciption: The weight estimation is done by summing the necessary equations of each method.
 """
 
 import parse as p
@@ -165,7 +167,7 @@ def main():
     print "furnishing (w_fur):", tor['w_fur'], 'lb.'
     print "torenbeek total:", sum(tor.values()), 'lb.'
 
-    print "----------- RAYMER -----------"
+    print "\n----------- RAYMER -----------"
     print "wing (w_w):", ray['w_w'], 'lb.'
     print "tail (w_tail):", ray['w_tail'], 'lb.'
     print "fuselage (w_f):", ray['w_f'], 'lb.'
@@ -187,7 +189,7 @@ def main():
     print "handling gear (w_hand):", ray['w_hand'], 'lb.'
     print "raymer total:", sum(ray.values()), 'lb.'
 
-    print "------------- GD -------------"
+    print "\n------------- GENERAL DYNAMICS -------------"
     print "wing (w_w):", gd['w_w'], 'lb.'
     print "tail (w_tail):", gd['w_tail'], 'lb.'
     print "fuselage (w_f):", gd['w_f'], 'lb.'
@@ -209,7 +211,7 @@ def main():
     print "baggage (w_bc):", gd['w_bc'], 'lb.'
     print "auxiliary (w_aux):", gd['w_aux'], 'lb.'
     print "paint (w_pt)", gd['w_pt'], 'lb.'
-    print "gd total:", sum(gd.values()), 'lb.'
+    print "gd total:", sum(gd.values()), 'lb.\n'
 
     pie_chart(tor, ray, gd)
     export_xml(tor, ray, gd)

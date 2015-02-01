@@ -3,3 +3,14 @@
 
 \subsection{Black box}
 \label{subsec:blackbox}
+The computation is done in the black box \texttt{blackbox.py}, which makes use of the input data and methods.
+First the parser (see Section~\ref{subsec:parser}) is imported and then  called, which returns four dictionaries, with three of them containing data for the methods and one containing the aircraft information.
+To use the functions described in the \texttt{methods.py} file it is first imported.
+The arguments of the functions are set by specifying the key of the desired element, this is done for all of the functions.
+The results of those functions are stored in dictionaries, one for each method, and are printed in the terminal/console window.
+Additionally, the pie charts and output XML file are created using the dictionaries.
+The pie charts are saved automatically as \texttt{pie\_tor.png}, \texttt{pie\_ray.png} and \texttt{pie\_gd.png} for Torenbeek, Raymer and General Dynamics, respectively.
+The output XML file is saved as \texttt{output.xml.}
+
+
+
