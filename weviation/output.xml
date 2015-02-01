@@ -1,0 +1,56 @@
+<!-- Output of the weight estimation method(s), in lb. -->
+
+<output>
+  <info>
+    <model>100</model>
+    <type>A3XX</type>
+    <sdate>2004</sdate>
+    <manufacturer>AIRBUS</manufacturer>
+  </info>
+  <raymer>
+    <w_ai>727.52</w_ai>
+    <w_n>10236.73</w_n>
+    <w_tail>17925.23</w_tail>
+    <w_hand>109.13</w_hand>
+    <w_apui>2.2</w_apui>
+    <w_furn>2376.2</w_furn>
+    <w_f>18648.57</w_f>
+    <w_av>1538.32</w_av>
+    <w_fs>4283.91</w_fs>
+    <w_enc>20.8</w_enc>
+    <w_instr>2282.67</w_instr>
+    <w_s>430.28</w_s>
+    <w_ac>2.71</w_ac>
+    <w_el>178.48</w_el>
+    <w_w>58670.74</w_w>
+    <w_hydr>437.35</w_hydr>
+    <w_ucn>1428.7</w_ucn>
+    <w_ucm>10071.89</w_ucm>
+    <w_fc>112.75</w_fc>
+  </raymer>
+  <general_dynamics>
+    <w_ai>27.81</w_ai>
+    <w_n>26.8</w_n>
+    <w_i>14619.29</w_i>
+    <w_ec>211.27</w_ec>
+    <w_e>55080.0</w_e>
+    <w_g>24002.43</w_g>
+    <w_f>28177.62</w_f>
+    <w_els>1163.59</w_els>
+    <w_w>22233.28</w_w>
+    <w_hydr>11904.96</w_hydr>
+    <w_tail>28351.27</w_tail>
+    <w_pt>4761.98</w_pt>
+    <w_aux>550.8</w_aux>
+    <w_pc>53.39</w_pc>
+    <w_ox>613.99</w_ox>
+    <w_ess>702.54</w_ess>
+    <w_bc>639.62</w_bc>
+    <w_apu>8333.47</w_apu>
+    <w_fs>175.82</w_fs>
+    <w_fur>43261.55</w_fur>
+    <w_prop>1284.57</w_prop>
+    <w_api>4091.06</w_api>
+    <w_fc>233.28</w_fc>
+  </general_dynamics>
+</output>

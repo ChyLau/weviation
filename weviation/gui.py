@@ -1308,20 +1308,24 @@ class DemoFrame(wx.Frame):
         for key, value in self.info.iteritems():
             item = ET.SubElement(info, key)
             item.text = value
-        torenbeek = ET.SubElement(root, "torenbeek")
-        for key, value in self.tor.iteritems():
-            item = ET.SubElement(torenbeek, key)
-            item.text = str(round(value, 2))
 
-        raymer = ET.SubElement(root, "raymer")
-        for key, value in self.ray.iteritems():
-            item = ET.SubElement(raymer, key)
-            item.text = str(round(value, 2))
+        if self.tor != None:
+            torenbeek = ET.SubElement(root, "torenbeek")
+            for key, value in self.tor.iteritems():
+                item = ET.SubElement(torenbeek, key)
+                item.text = str(round(value, 2))
 
-        gd = ET.SubElement(root, "general_dynamics")
-        for key, value in self.gd.iteritems():
-            item = ET.SubElement(gd, key)
-            item.text = str(round(value, 2))
+        if self.ray != None:
+            raymer = ET.SubElement(root, "raymer")
+            for key, value in self.ray.iteritems():
+                item = ET.SubElement(raymer, key)
+                item.text = str(round(value, 2))
+
+        if self.gd != None:
+            gd = ET.SubElement(root, "general_dynamics")
+            for key, value in self.gd.iteritems():
+                item = ET.SubElement(gd, key)
+                item.text = str(round(value, 2))
 
         tree = ET.ElementTree(root)
         tree.write("output.xml", pretty_print=True)
