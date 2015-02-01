@@ -20,12 +20,12 @@ class TabTorenbeek(wx.ScrolledWindow):
 
 
     def init_tab(self):
-        self.parameters = ['marker', 'line', 'w_g', 'w_to', 'marker', 'line','b_ref', 'Lambda', 'b', 'n_ult', 's_w', 't_r', 'marker', 'line', 'htail type', 'vtail type', 's_v', 's_h', 'Lambda_h', 'Lambda_v', 'marker', 'line', 'fuselage type', 'v_d', 'l_t', 'b_f', 'h_f', 's_g', 'marker', 'line', 'p_to', 'marker', 'line', 'main type', 'nose type', 'a_m', 'b_m', 'c_m', 'd_m', 'a_n', 'b_n', 'c_n', 'd_n', 'marker', 'line', 'surface controls type', 'n_e', 'w_e', 'marker', 'line', 'w_fto', 'marker', 'line', 'air induction type', 'l_d', 'n_i', 'a_i', 'marker', 'line', 'ax', 't_to', 'marker', 'line', 'n_ft', 'v_ft', 'marker', 'line', 'v_wt', 'marker', 'line', 'n_p','b_p','d_p', 'marker', 'line', 'w_ba', 'marker', 'line', 'w_de','r_d', 'marker', 'line', 'hydr./elec. type', 'p_el','marker', 'line', 'l_pax', 'marker', 'line', 'oxygen type', 'n_pax', 'marker','line', 'w_zf']
+        self.parameters = ['marker', 'line', 'w_g', 'w_to', 'marker', 'line','b_ref', 'Lambda', 'b', 'n_ult', 's_w', 't_r', 'marker', 'line', 'htail type', 'vtail type', 's_v', 's_h', 'Lambda_h', 'Lambda_v', 'marker', 'line', 'fuselage type', 'v_d', 'l_t', 'b_f', 'h_f', 's_g', 'marker', 'line', 'p_to', 'marker', 'line', 'main type', 'nose type', 'a_m', 'b_m', 'c_m', 'd_m', 'a_n', 'b_n', 'c_n', 'd_n', 'marker', 'line', 'surface controls type', 'n_e', 'w_e', 'marker', 'line', 'w_fto', 'marker', 'line', 'air induction type', 'l_d', 'n_i', 'a_i', 'marker', 'line', 'ax', 't_to', 'marker', 'line', 'n_ft', 'v_ft', 'marker', 'line', 'v_wt', 'marker', 'line', 'w_ba', 'marker', 'line', 'w_de','r_d', 'marker', 'line', 'hydr./elec. type', 'p_el','marker', 'line', 'l_pax', 'marker', 'line', 'oxygen type', 'n_pax', 'marker','line', 'w_zf']
 
-        self.components = ['wing', 'tail', 'fuselage', 'nacelle', 'landing main', 'landing nose', 'surface controls', 'engine', 'accessory', 'air induction', 'exhaust', 'oil/cooler', 'fuel system', 'water injection', 'propeller installation', 'thrust reversers', 'APU', 'instruments', 'hydraulic/lectrical', 'AC/pressure/anti-ice', 'oxygen system', 'furnishing']
+        self.components = ['wing', 'tail', 'fuselage', 'nacelle', 'landing main', 'landing nose', 'surface controls', 'engine', 'accessory', 'air induction', 'exhaust', 'oil/cooler', 'fuel system', 'water injection', 'thrust reversers', 'APU', 'instruments', 'hydraulic/lectrical', 'AC/pressure/anti-ice', 'oxygen system', 'furnishing']
 
         ################ TOOLTIP LIST
-        tooltip = ['Gross weight', 'Takeoff weight', 'Reference wing span', 'Sweepback angle at 50% chord', 'Wing span', 'Ultimate load factor', 'Wing area', 'Maximum thickness of root chord', 'Vertical tail area', 'Horizontal tail area', 'Horizontal tail sweep angle', 'Vertical tail sweep angle', 'Design dive speed', 'Distance between 1/4-chord points of wing and horizontal tailplane root', 'Fuselage width', 'Fuselage height', 'Gross shell area of the fuselage', 'Takeoff horsepower per engine', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Number of engines', 'Engine weight', 'Fuel flow per engine', 'Duct length', 'Number of inlets', 'Capture area per inlet', 'TODO', 'Takeoff thrust per engine', 'Number of fuel tanks', 'Total fuel tank volume', 'Total water tank capacity', 'Number of propellers', 'Number of blades/propeller', 'Propeller diameter', 'Rated bleed airflow of APU', 'Delivery empty weight', 'Maximum range with maximum fuel', 'Total electrical generator power', 'Length of passenger cabin', 'Number of passengers', 'Maximum zero fuel weight']
+        tooltip = ['Gross weight', 'Takeoff weight', 'Reference wing span', 'Sweepback angle at 50% chord', 'Wing span', 'Ultimate load factor', 'Wing area', 'Maximum thickness of root chord', 'Vertical tail area', 'Horizontal tail area', 'Horizontal tail sweep angle', 'Vertical tail sweep angle', 'Design dive speed', 'Distance between 1/4-chord points of wing and horizontal tailplane root', 'Fuselage width', 'Fuselage height', 'Gross shell area of the fuselage', 'Takeoff horsepower per engine', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient main landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Coefficient nose landing gear', 'Number of engines', 'Engine weight', 'Fuel flow per engine', 'Duct length', 'Number of inlets', 'Capture area per inlet', 'TODO', 'Takeoff thrust per engine', 'Number of fuel tanks', 'Total fuel tank volume', 'Total water tank capacity', 'Rated bleed airflow of APU', 'Delivery empty weight', 'Maximum range with maximum fuel', 'Total electrical generator power', 'Length of passenger cabin', 'Number of passengers', 'Maximum zero fuel weight']
 
         hbox = wx.BoxSizer(wx.VERTICAL)
 
@@ -53,11 +53,11 @@ class TabTorenbeek(wx.ScrolledWindow):
         hbox.Add(gs, 0)
 
         # component list
-        comp_title = ['General', 'Wing', 'Tail', 'Fuselage', 'Nacelle,..', 'Landing gear,..', 'Engine,..', 'Accessory', 'Air induction', 'Exhaust', 'Fuel system', 'Water injection', 'Propeller installation', 'APU', 'Instruments, ...', 'Electrical', 'Air conditioning', 'Oxygen system', 'Furnishing']
+        comp_title = ['General', 'Wing', 'Tail', 'Fuselage', 'Nacelle,..', 'Landing gear,..', 'Engine,..', 'Accessory', 'Air induction', 'Exhaust', 'Fuel system', 'Water injection', 'APU', 'Instruments, ...', 'Electrical', 'Air conditioning', 'Oxygen system', 'Furnishing']
 
-        units_im = ['lb', 'lb', 'ft', 'deg', 'ft', '', 'ft^2', 'ft', 'ft^2', 'ft^2', 'deg', 'deg', 'kts', 'ft', 'ft', 'ft', 'ft^2', 'hp', '', '', '', '', '', '', '', '', '', 'lb', '', 'ft', '', 'ft^2', 'ft^2', 'N', '', 'gal', 'gal', '', '', 'ft',  '', 'lb', 'ft', 'kVA', 'ft', '', 'ft']
+        units_im = ['lb', 'lb', 'ft', 'deg', 'ft', '', 'ft^2', 'ft', 'ft^2', 'ft^2', 'deg', 'deg', 'kts', 'ft', 'ft', 'ft', 'ft^2', 'hp', '', '', '', '', '', '', '', '', '', 'lb', '', 'ft', '', 'ft^2', 'ft^2', 'N', '', 'gal', 'gal',  '', 'lb', 'ft', 'kVA', 'ft', '', 'ft']
 
-        units_si = ['kg', 'kg', 'm', 'rad', 'm', '', 'm^2', 'm', 'm^2', 'm^2', 'rad', 'rad', 'm/s', 'm', 'm', 'm', 'm^2', '', '', '', '', '', '', '', '', '', '', 'kg', '', 'm', '', 'm^2', 'm^2', '', '', 'L', 'L', '', '', 'm',  '', 'kg', 'm', '', 'm', '', 'm']
+        units_si = ['kg', 'kg', 'm', 'rad', 'm', '', 'm^2', 'm', 'm^2', 'm^2', 'rad', 'rad', 'm/s', 'm', 'm', 'm', 'm^2', '', '', '', '', '', '', '', '', '', '', 'kg', '', 'm', '', 'm^2', 'm^2', '', '', 'L', 'L',  '', 'kg', 'm', '', 'm', '', 'm']
 
         htail_type = ['Fixed stabilizer', 'Variable-incidence']
         vtail_type = ['Fuselage-mounted', 'Fin-mounted']
@@ -251,7 +251,7 @@ class TabTorenbeek(wx.ScrolledWindow):
         d1['tunit_ox']= 'im'
         d1['tunit_fur']= 'im'
 
-        weights = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_ucm', 'w_ucn', 'w_sc', 'w_eni', 'w_acc', 'w_airi', 'w_ext', 'w_oc', 'w_fsi', 'w_wis', 'w_pi', 'w_tr', 'w_apu', 'w_navp', 'w_heu', 'w_api', 'w_ox', 'w_fur']
+        weights = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_ucm', 'w_ucn', 'w_sc', 'w_eni', 'w_acc', 'w_airi', 'w_ext', 'w_oc', 'w_fsi', 'w_wis', 'w_tr', 'w_apu', 'w_navp', 'w_heu', 'w_api', 'w_ox', 'w_fur']
 
         # dictionary of weights and components
         reference = {}
@@ -272,7 +272,6 @@ class TabTorenbeek(wx.ScrolledWindow):
         tor['w_oc'] = torenbeek.w_oc(d1['n_e'], d1['w_e'])
         tor['w_fsi'] = torenbeek.w_fsi(d1['n_e'], d1['n_ft'], d1['v_ft'], d1['tunit_fsi'])
         tor['w_wis'] = torenbeek.w_wis(d1['v_wt'], d1['tunit_wis'])
-        tor['w_pi'] = torenbeek.w_pi(d1['n_p'], d1['b_p'], d1['d_p'], d1['p_to'], d1['tunit_pi'])
         tor['w_tr'] = torenbeek.w_tr(d1['n_e'], d1['w_e'])
         tor['w_apu'] = torenbeek.w_apu(d1['w_ba'], d1['tunit_apu'])
         tor['w_navp'] = torenbeek.w_navp(d1['w_to'], d1['tunit_navp'])
@@ -284,7 +283,7 @@ class TabTorenbeek(wx.ScrolledWindow):
         ret = ""
         ret += " TORENBEEK" + "\n" + " ------------------------------" + "\n"
 
-        var = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_ucm', 'w_ucn', 'w_sc', 'w_eni', 'w_acc', 'w_airi', 'w_ext', 'w_oc', 'w_fsi', 'w_wis', 'w_pi', 'w_tr', 'w_apu', 'w_navp', 'w_heu', 'w_api', 'w_ox', 'w_fur']
+        var = ['w_w', 'w_tail', 'w_f', 'w_n', 'w_ucm', 'w_ucn', 'w_sc', 'w_eni', 'w_acc', 'w_airi', 'w_ext', 'w_oc', 'w_fsi', 'w_wis', 'w_tr', 'w_apu', 'w_navp', 'w_heu', 'w_api', 'w_ox', 'w_fur']
 
         compvar = dict(zip(self.components, var))
 
@@ -297,7 +296,7 @@ class TabTorenbeek(wx.ScrolledWindow):
 
         struct_group = ['wing', 'tail', 'fuselage', 'nacelle', 'landing main', 'landing nose', 'surface controls']
 
-        prop_group = ['engine', 'accessory', 'air induction', 'exhaust', 'oil/cooler', 'fuel system', 'water injection', 'propeller installation', 'thrust reversers']
+        prop_group = ['engine', 'accessory', 'air induction', 'exhaust', 'oil/cooler', 'fuel system', 'water injection', 'thrust reversers']
 
         equip_group = ['APU', 'instruments', 'hydraulic/lectrical', 'AC/pressure/anti-ice', 'oxygen system', 'furnishing']
 

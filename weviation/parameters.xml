@@ -27,7 +27,6 @@
             <tunit_oc>im</tunit_oc>
             <tunit_fsi>im</tunit_fsi>
             <tunit_wis>im</tunit_wis>
-            <tunit_pi>im</tunit_pi>
             <tunit_tr>im</tunit_tr>
             <tunit_apu>im</tunit_apu>
             <tunit_navp>im</tunit_navp>
@@ -108,11 +107,6 @@
 
             <!-- WATER INJECTION-->
             <v_wt>1</v_wt>
-
-            <!-- PROPELLER INSTALL. -->
-            <n_p>4</n_p>
-            <b_p>24</b_p>
-            <d_p>5.3</d_p>
 
             <!-- APU -->
             <w_ba>1</w_ba>
