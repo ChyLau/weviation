@@ -2,4 +2,9 @@
 \label{sec:output}
 
 \subsection{XML}
+The output XML file is generated in the GUI file and makes use of the library \texttt{lxml.etree}.
+The three dictionaries with the results of each method are arguments for the export function.
+Tags for each method are specified 'torenbeek', 'raymer' and 'general\_dynamics' where the results are placed.
+The function looks at the key of the dictionary and sets that as the tag and the value as the value of the element.
+For example a dictionary for one method might look like, \texttt{my\_dict = \{'w\_w':100, 'w\_e':200, 'w\_n':300\}}, the function loops through the dictionary and sets the first element as, \texttt{\textless w\_w\textgreater 100\textless/w\_w\textgreater} in the output XML file, and so on.
 

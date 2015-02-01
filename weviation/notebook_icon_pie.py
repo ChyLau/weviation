@@ -1219,12 +1219,12 @@ class DemoFrame(wx.Frame):
         if label == 'Calculate':
 
             flag_info = True
-            info = " INFORMATION\n" + "------------------------------\n" + " manufacturer: " + self.info['manufacturer'] + "\n" + " type: " + self.info['type'] + "\n" + " model: " + self.info['model'] + "\n" + " initial service date: " + self.info['sdate'] + "\n\n"
+            self.ret_info = " INFORMATION\n" + "------------------------------\n" + " manufacturer: " + self.info['manufacturer'] + "\n" + " type: " + self.info['type'] + "\n" + " model: " + self.info['model'] + "\n" + " initial service date: " + self.info['sdate'] + "\n\n"
 
 
             if self.cb_tor.GetValue() == True:
                 if flag_info == True:
-                    self.txt1.AppendText(info)
+                    self.txt1.AppendText(self.ret_info)
                     flag_info = False
                 self.ret_tor, self.tor = self.tabOne.calculate_weight(self.rb_lb.GetValue())
                 self.txt1.AppendText(self.ret_tor)
@@ -1234,7 +1234,7 @@ class DemoFrame(wx.Frame):
 
             if self.cb_ray.GetValue() == True:
                 if flag_info == True:
-                    self.txt1.AppendText(info)
+                    self.txt1.AppendText(self.ret_info)
                     flag_info = False
                 self.ret_ray, self.ray = self.tabTwo.calculate_weight(self.rb_lb.GetValue())
                 self.txt1.AppendText(self.ret_ray)
@@ -1244,7 +1244,7 @@ class DemoFrame(wx.Frame):
 
             if self.cb_gd.GetValue() == True:
                 if flag_info == True:
-                    self.txt1.AppendText(info)
+                    self.txt1.AppendText(self.ret_info)
                     flag_info = False
                 self.ret_gd, self.gd = self.tabThree.calculate_weight(self.rb_lb.GetValue())
                 self.txt1.AppendText(self.ret_gd)
@@ -1304,6 +1304,10 @@ class DemoFrame(wx.Frame):
     def export_button(self, evt):
         root = ET.Element("output")
 
+        info = ET.SubElement(root, "info")
+        for key, value in self.info.iteritems():
+            item = ET.SubElement(info, key)
+            item.text = value
         torenbeek = ET.SubElement(root, "torenbeek")
         for key, value in self.tor.iteritems():
             item = ET.SubElement(torenbeek, key)
@@ -1343,8 +1347,11 @@ class DemoFrame(wx.Frame):
         except OSError:
             pass
 
+        with open("output.txt", 'w') as f:
+            f.write(self.ret_info)
+
         if self.ret_tor != None:
-            with open("output.txt", 'w') as f:
+            with open("output.txt", 'a') as f:
                 f.write(self.ret_tor)
 
         if self.ret_ray != None:
